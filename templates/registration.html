@@ -1,0 +1,19 @@
+{{ define "content"}}
+<div class="page">
+  <div class="wrap">
+    <div class="form">
+      <form name="form-reg" id="form-reg" class="form-action" role="form" action="/registration_account" method="post" required>
+        <input type="text" name="first_name" id="first_name" value="" placeholder="First name" required>
+        <input type="text" name="last_name" value="" placeholder="Last name" required>
+        <input type="text" name="email" value="" placeholder="E-mail" required>
+        <input type="password" name="password" id="password" value="" placeholder="Password" onchange="checkPassword()" required>
+        <input type="password" name="repeatpassword" id="repeatPassword" value="" placeholder="Repeat password" onchange="checkPassword()" required>
+        <p class="danger-pswd" id="alert_text">Passwords don't match!</p>
+        <button class="light-blue" type="submit" name="registration" id="registration-btn" >Registration</button>
+        <p class="message">Already registered? <a href="/login">Login</a></p>
+      </form>
+    </div>
+  </div>
+</div>
+<script src="/static/js/auth.js"></script>
+{{ end }}

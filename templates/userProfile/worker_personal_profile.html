@@ -1,0 +1,39 @@
+{{define "content"}}
+<div class="page">
+  <div class="wrap">
+    <div class="container">
+      <div class="row center-align">
+        <div class="col s12 m12 l4 xl3 profile-navigation">
+          <div class="container__img">
+            <img src="../static/image/profile-icon.png" alt="">
+          </div>
+          <div class="vertical-menu">
+            <a id="icon-user-mobile" href="javascript:void(0);" onclick="showMobileMenu()">Menu<i class="material-icons right">menu</i></a>
+            <ul id="user-menu">
+              <li><a class="" href="/my_profile/about" onclick="setSelected(this)">About me</a></li>
+              <li><a href="/my_profile/works" onclick="setSelected(this)">My works</a></li>
+              <li><a href="/my_profile/contacts" onclick="setSelected(this)">Contacts</a></li>
+              <hr>
+              <li><a href="#" onclick="setSelected(this)">Setting</a></li>
+              <li><a href="/my_profile/logout">Logout</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="col s12 m12 l8 xl9">
+          <div class="base-info">
+            <div class="name">{{ .FirstName }} {{ .LastName }}</div>
+            <div class="rating">
+              <span class="fa fa-star checked"></span>
+              <span class="fa fa-star checked"></span>
+              <span class="fa fa-star checked"></span>
+              <span class="fa fa-star"></span>
+              <span class="fa fa-star"></span>
+            </div>
+          </div>
+          {{ template "profile_content" }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{{ end }}

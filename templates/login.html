@@ -1,0 +1,14 @@
+{{define "content"}}
+<div class="page">
+  <div class="wrap">
+    <div class="form">
+      <form name="form-login" class="form-action" role="form" action="/login_account" method="post">
+        <input type="email" name="email" value="" placeholder="username" required>
+        <input type="password" name="password" value="" placeholder="password" required>
+        <button class="light-blue" type="submit" name="login">Login</button>
+        <p class="message">Don't have account? <a href="/registration">Registration</a></p>
+      </form>
+    </div>
+  </div>
+</div>
+{{ end }}

@@ -1,0 +1,26 @@
+{{define "header"}}
+<!DOCTYPE html>
+<nav class="light-blue darken-3">
+  <div class="nav-wrapper container">
+    <a href="#" data-target="mobile-menu" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+
+      <ul class="left hide-on-med-and-down 5">
+        <li><a href="/#home"><i class="material-icons left"> <img src="../static/image/home.png" alt="Home"></i>Home </a></li>
+        <li><a href="/#about"><i class="material-icons left"> <img src="../static/image/information-outline.png" alt="About"></i>About</a></li>
+        <li><a href="/#contacts"><i class="material-icons left"> <img src="../static/image/contacts.png" alt="Contacts"></i>Contacts</a></li>
+      </ul>
+    <ul class="right hide-on-med-and-down">
+      <li><a href="/login"><i class="material-icons left"> <img src="../static/image/login.png" alt=""></i>Login</a></li>
+      <li><a href="/registration"><i class="material-icons left"> <img src="../static/image/account-plus-outline.png" alt=""></i>Registration</a></li>
+    </ul>
+  </div>
+</nav>
+<ul class="sidenav light-blue darken-3" id="mobile-menu">
+  <li><a href="/login"><i class="material-icons left"> <img src="../static/image/login.png" alt=""></i>Login</a></li>
+  <li><a href="/registration"><i class="material-icons left"> <img src="../static/image/account-plus-outline.png" alt=""></i>Registration</a></li>
+  <hr>
+  <li><a href="/#home"><i class="material-icons left"> <img src="../static/image/home.png" alt="Home"></i>Home</a></li>
+  <li><a href="/#about"><i class="material-icons left"> <img src="../static/image/information-outline.png" alt=""></i>About</a></li>
+  <li><a href="/#contacts"><i class="material-icons left"> <img src="../static/image/contacts.png" alt=""></i>Contacts</a></li>
+</ul>
+{{end}}
