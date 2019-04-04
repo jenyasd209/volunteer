@@ -2,20 +2,23 @@ package freelancer
 
 import (
 	"graduate/data"
+	"graduate/data/user"
 	"time"
 )
 
 //Freelancer truct for "freelancer" table
 type Freelancer struct {
-	ID        int
+	user.UserType
+	// ID        int
 	FirstName string
 	LastName  string
-	Email     string
+	// Email     string
 	Password  string
 	Phone     string
 	Facebook  string
 	Skype     string
 	About     string
+	Rait      float32
 	CreatedAt time.Time
 }
 
@@ -27,13 +30,23 @@ type Session struct {
 	CreatedAt    time.Time
 }
 
+const DB_TABLE_NAME = "freelancer_session"
+const DB_FIELD_NAME = "freelancer_id"
+
+func (freelancer *Freelancer) CreateSession() (err error) {
+	session := user.Session{}
+	session.Create(DB_TABLE_NAME, DB_FIELD_NAME)
+
+	return
+}
+
 //Create new row from "freelancer" table
 func (freelancer *Freelancer) Create() (err error) {
 	statement := `insert into freelancers (first_name, last_name, email, password, created_at)
 								values ($1, $2, $3, $4, $5) returning id, created_at`
 	stmt, err := data.Db.Prepare(statement)
 	if err != nil {
-		return
+		panic(err)
 	}
 	defer stmt.Close()
 
@@ -83,12 +96,15 @@ func GetAllUsers() (freelancers []Freelancer, r error) {
 //GetUserByEmail return rows with required email
 func GetUserByEmail(email string) (freelancer Freelancer, err error) {
 	freelancer = Freelancer{}
-	err = data.Db.QueryRow(`SELECT first_name, last_name, email, password, phone,
-		 											facebook, skype, about, created_at FROM freelancers
-													WHERE email = $1`, email).Scan(&freelancer.FirstName,
-		&freelancer.LastName, &freelancer.Email, &freelancer.Password,
-		&freelancer.Phone, &freelancer.Facebook, &freelancer.Skype,
-		&freelancer.About, &freelancer.CreatedAt)
+	err = data.Db.QueryRow(`SELECT id, first_name, last_name, email, password FROM freelancers
+													WHERE email = $1`, email).Scan(&freelancer.ID, &freelancer.FirstName,
+		&freelancer.LastName, &freelancer.Email, &freelancer.Password)
+	// err = data.Db.QueryRow(`SELECT first_name, last_name, email, password, phone,
+	// 	 											facebook, skype, about, rait, created_at FROM freelancers
+	// 												WHERE email = $1`, email).Scan(&freelancer.FirstName,
+	// 	&freelancer.LastName, &freelancer.Email, &freelancer.Password,
+	// 	&freelancer.Phone, &freelancer.Facebook, &freelancer.Skype,
+	// 	&freelancer.About, &freelancer.Rait, &freelancer.CreatedAt)
 	return
 }
 

@@ -7,6 +7,11 @@ import (
 	"net/http"
 )
 
+type Data struct {
+	PageTitle string
+	Other     interface{}
+}
+
 func generateHTML(w http.ResponseWriter, data interface{}, filenames ...string) {
 	var files []string
 

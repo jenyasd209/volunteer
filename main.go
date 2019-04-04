@@ -37,5 +37,6 @@ func main() {
 }
 
 func home(w http.ResponseWriter, r *http.Request) {
-	generateHTML(w, r.URL.Path, "base", "header", "footer", "home_page")
+	data := &Data{"Home", nil}
+	generateHTML(w, data, "base", "header", "footer", "home_page")
 }

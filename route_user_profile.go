@@ -9,13 +9,16 @@ func freelancerProfile(w http.ResponseWriter, r *http.Request) {
 }
 
 func freelancerProfileAbout(w http.ResponseWriter, r *http.Request) {
-	generateHTML(w, &freelancer, "base", "header", "footer", "userProfile/worker_personal_profile", "userProfile/about")
+	data := &Data{"About", nil}
+	generateHTML(w, data, "base", "header", "footer", "userProfile/worker_personal_profile", "userProfile/about")
 }
 
 func freelancerProfileWorks(w http.ResponseWriter, r *http.Request) {
-	generateHTML(w, nil, "base", "header", "footer", "userProfile/worker_personal_profile", "userProfile/my_works")
+	data := &Data{"My works", nil}
+	generateHTML(w, data, "base", "header", "footer", "userProfile/worker_personal_profile", "userProfile/my_works")
 }
 
 func freelancerProfileContacts(w http.ResponseWriter, r *http.Request) {
-	generateHTML(w, nil, "base", "header", "footer", "userProfile/worker_personal_profile", "userProfile/contacts")
+	data := &Data{"Contacts", nil}
+	generateHTML(w, data, "base", "header", "footer", "userProfile/worker_personal_profile", "userProfile/contacts")
 }
