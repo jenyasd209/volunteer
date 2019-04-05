@@ -1,6 +1,7 @@
 package freelancer
 
 import (
+	"fmt"
 	"graduate/data"
 	"graduate/data/user"
 	"time"
@@ -8,11 +9,10 @@ import (
 
 //Freelancer truct for "freelancer" table
 type Freelancer struct {
-	user.UserType
-	// ID        int
+	ID        int
 	FirstName string
 	LastName  string
-	// Email     string
+	Email     string
 	Password  string
 	Phone     string
 	Facebook  string
@@ -22,23 +22,8 @@ type Freelancer struct {
 	CreatedAt time.Time
 }
 
-//Session truct for "freelancer_session" table
-type Session struct {
-	ID           int
-	Email        string
-	FreelancerID int
-	CreatedAt    time.Time
-}
-
 const DB_TABLE_NAME = "freelancer_session"
 const DB_FIELD_NAME = "freelancer_id"
-
-func (freelancer *Freelancer) CreateSession() (err error) {
-	session := user.Session{}
-	session.Create(DB_TABLE_NAME, DB_FIELD_NAME)
-
-	return
-}
 
 //Create new row from "freelancer" table
 func (freelancer *Freelancer) Create() (err error) {
@@ -57,7 +42,7 @@ func (freelancer *Freelancer) Create() (err error) {
 	return
 }
 
-//Delete row from "freelancer" table
+// Delete row from "freelancer" table
 func (freelancer *Freelancer) Delete() (err error) {
 	statement := "DELETE FROM freelancers WHERE id = $1"
 	stmt, err := data.Db.Prepare(statement)
@@ -71,10 +56,31 @@ func (freelancer *Freelancer) Delete() (err error) {
 	return
 }
 
+func (freelancer *Freelancer) CreateSession() (session user.Session, err error) {
+	statement := `INSERT INTO freelancer_session (uuid, email, freelancer_id, created_at) values
+	                ($1, $2, $3, $4) returning id, uuid, email, freelancer_id, created_at`
+	stmt, err := data.Db.Prepare(statement)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	defer stmt.Close()
+	err = stmt.QueryRow(data.CreateUUID(), freelancer.Email, freelancer.ID, time.Now()).Scan(&session.ID,
+		&session.UUID, &session.Email, &session.UserID, &session.CreatrdAt)
+
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	return
+}
+
 //GetAllUsers return all rows from table "freelancer"
 func GetAllUsers() (freelancers []Freelancer, r error) {
 	rows, err := data.Db.Query(`SELECT id, first_name, last_name, email, password,
-															phone, facebook, skype, about, created_at FROM freelancer`)
+															phone, facebook, skype, about, rait, created_at FROM freelancer`)
 	if err != nil {
 		return
 	}
@@ -84,7 +90,7 @@ func GetAllUsers() (freelancers []Freelancer, r error) {
 
 		if err = rows.Scan(&freelancer.ID, &freelancer.FirstName, &freelancer.LastName,
 			&freelancer.Email, &freelancer.Password, &freelancer.Phone, &freelancer.Facebook,
-			&freelancer.Skype, &freelancer.About, &freelancer.CreatedAt); err != nil {
+			&freelancer.Skype, &freelancer.About, &freelancer.Rait, &freelancer.CreatedAt); err != nil {
 			freelancers = append(freelancers, freelancer)
 		}
 	}
@@ -96,26 +102,23 @@ func GetAllUsers() (freelancers []Freelancer, r error) {
 //GetUserByEmail return rows with required email
 func GetUserByEmail(email string) (freelancer Freelancer, err error) {
 	freelancer = Freelancer{}
-	err = data.Db.QueryRow(`SELECT id, first_name, last_name, email, password FROM freelancers
+	err = data.Db.QueryRow(`SELECT id, first_name, last_name, email, password, phone,
+		 											facebook, skype, about, rait, created_at FROM freelancers
 													WHERE email = $1`, email).Scan(&freelancer.ID, &freelancer.FirstName,
-		&freelancer.LastName, &freelancer.Email, &freelancer.Password)
-	// err = data.Db.QueryRow(`SELECT first_name, last_name, email, password, phone,
-	// 	 											facebook, skype, about, rait, created_at FROM freelancers
-	// 												WHERE email = $1`, email).Scan(&freelancer.FirstName,
-	// 	&freelancer.LastName, &freelancer.Email, &freelancer.Password,
-	// 	&freelancer.Phone, &freelancer.Facebook, &freelancer.Skype,
-	// 	&freelancer.About, &freelancer.Rait, &freelancer.CreatedAt)
+		&freelancer.LastName, &freelancer.Email, &freelancer.Password,
+		&freelancer.Phone, &freelancer.Facebook, &freelancer.Skype,
+		&freelancer.About, &freelancer.Rait, &freelancer.CreatedAt)
 	return
 }
 
 //GetUserByID return rows with required ID
 func GetUserByID(id int) (freelancer Freelancer, err error) {
 	freelancer = Freelancer{}
-	err = data.Db.QueryRow(`SELECT first_name, last_name, email, password, phone,
-		 											facebook, skype, about,created_at FROM freelancers
-													WHERE id = $1`, id).Scan(&freelancer.FirstName,
+	err = data.Db.QueryRow(`SELECT id, first_name, last_name, email, password, phone,
+		 											facebook, skype, about, rait, created_at FROM freelancers
+													WHERE id = $1`, id).Scan(&freelancer.ID, &freelancer.FirstName,
 		&freelancer.LastName, &freelancer.Email, &freelancer.Password,
 		&freelancer.Phone, &freelancer.Facebook, &freelancer.Skype,
-		&freelancer.About, &freelancer.CreatedAt)
+		&freelancer.About, &freelancer.Rait, &freelancer.CreatedAt)
 	return
 }

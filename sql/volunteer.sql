@@ -13,11 +13,11 @@ create table freelancers (
   last_name varchar(255) not null,
   email varchar(255) not null unique,
   password varchar(255) not null,
-  phone varchar(255),
-  facebook varchar(255),
-  skype varchar(255),
-  about text,
-  rait float,
+  phone varchar(255) DEFAULT '',
+  facebook varchar(255) DEFAULT '',
+  skype varchar(255) DEFAULT '',
+  about text DEFAULT '',
+  rait float DEFAULT 0,
   created_at timestamp not null
 );
 
@@ -30,11 +30,11 @@ create table customers (
   id serial primary key,
   email varchar(255) not null unique,
   password varchar(255) not null,
-  phone varchar(255),
-  facebook varchar(255),
-  skype varchar(255),
-  about text,
-  rait float,
+  phone varchar(255) DEFAULT '',
+  facebook varchar(255) DEFAULT '',
+  skype varchar(255) DEFAULT '',
+  about text DEFAULT '',
+  rait float DEFAULT 0,
   company_id integer references companies(id),
   created_at timestamp not null
 );
@@ -44,7 +44,7 @@ create table orders (
   title varchar(255) not null,
   content text not null,
   id_customer integer references customers(id),
-  status varchar(255),
+  status varchar(255) DEFAULT 'not done',
   created_at timestamp not null
 );
 
@@ -60,20 +60,22 @@ create table complete_orders(
   order_id integer references orders(id),
   freelancer_id integer references freelancers(id),
   data_complete timestamp not null,
-  rait float,
+  rait float DEFAULT 0,
   comment text
 );
 
 create table freelancer_session(
   id serial primary key,
-  email varchar(255),
+  uuid varchar(64) not null unique,
+  email varchar(255) not null,
   freelancer_id integer references freelancers(id),
   created_at timestamp not null
 );
 
 create table customers_session(
   id serial primary key,
-  email varchar(255),
+  uuid varchar(64) not null unique,
+  email varchar(255) not null,
   customer_id integer references customers(id),
   created_at timestamp not null
 );

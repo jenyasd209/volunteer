@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 	"graduate/data"
-	siteUser "graduate/data/user"
+	"graduate/data/user"
 	"graduate/data/user/freelancer"
 	"net/http"
 )
@@ -19,20 +19,19 @@ func registration(w http.ResponseWriter, r *http.Request) {
 }
 
 func registrationAccount(w http.ResponseWriter, r *http.Request) {
+	var user user.User
 	err := r.ParseForm()
 	if err != nil {
 		panic(err)
 	}
-	freelancer := freelancer.Freelancer{
+	user = &freelancer.Freelancer{
 		FirstName: r.PostFormValue("first_name"),
 		LastName:  r.PostFormValue("last_name"),
 		Password:  r.PostFormValue("password"),
-		UserType: siteUser.UserType{
-			Email: r.PostFormValue("email"),
-		},
+		Email:     r.PostFormValue("email"),
 	}
 
-	if err := freelancer.Create(); err != nil {
+	if err := user.Create(); err != nil {
 		panic(err)
 	}
 
@@ -42,15 +41,27 @@ func registrationAccount(w http.ResponseWriter, r *http.Request) {
 func loginAccount(w http.ResponseWriter, r *http.Request) {
 	err := r.ParseForm()
 	freelancer, err := freelancer.GetUserByEmail(r.PostFormValue("email"))
+
 	if err != nil {
 		fmt.Println(err)
 		http.Redirect(w, r, "/login", 302)
 	}
 
 	if freelancer.Password == data.Encrypt(r.PostFormValue("password")) {
-		siteUser.User.Set(freelancer.Email, freelancer.ID, true)
-		freelancer.CreateSession()
-		generateHTML(w, nil, "base", "header", "footer", "userProfile/worker_personal_profile", "userProfile/about")
+		session, err := freelancer.CreateSession()
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+		fmt.Println(session)
+		cookie := http.Cookie{
+			Name:     "_cookie",
+			Value:    session.UUID,
+			HttpOnly: true,
+		}
+		http.SetCookie(w, &cookie)
+
+		http.Redirect(w, r, "/my_profile/about", 302)
 	} else {
 		http.Redirect(w, r, "/login", 302)
 	}
