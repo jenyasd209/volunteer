@@ -79,3 +79,5 @@ create table customers_session(
   customer_id integer references customers(id),
   created_at timestamp not null
 );
+
+INSERT INTO companies (title) values ('No company');

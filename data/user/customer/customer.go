@@ -7,5 +7,10 @@ type Customer struct {
 	Email      string
 	Password   string
 	Company_id int
+	Phone      string
+	Facebook   string
+	Skype      string
+	About      string
+	Rait       float32
 	Created_at time.Time
 }

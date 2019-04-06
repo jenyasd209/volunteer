@@ -56,7 +56,9 @@ func (freelancer *Freelancer) Delete() (err error) {
 	return
 }
 
-func (freelancer *Freelancer) CreateSession() (session user.Session, err error) {
+func (freelancer *Freelancer) CreateSession() (sess user.Sessionable, err error) {
+	session := Session{}
+
 	statement := `INSERT INTO freelancer_session (uuid, email, freelancer_id, created_at) values
 	                ($1, $2, $3, $4) returning id, uuid, email, freelancer_id, created_at`
 	stmt, err := data.Db.Prepare(statement)
@@ -73,6 +75,8 @@ func (freelancer *Freelancer) CreateSession() (session user.Session, err error) 
 		fmt.Println(err)
 		return
 	}
+
+	sess = &session
 
 	return
 }
@@ -101,7 +105,7 @@ func GetAllUsers() (freelancers []Freelancer, r error) {
 
 //GetUserByEmail return rows with required email
 func GetUserByEmail(email string) (freelancer Freelancer, err error) {
-	freelancer = Freelancer{}
+	// var freelancer *Freelancer
 	err = data.Db.QueryRow(`SELECT id, first_name, last_name, email, password, phone,
 		 											facebook, skype, about, rait, created_at FROM freelancers
 													WHERE email = $1`, email).Scan(&freelancer.ID, &freelancer.FirstName,
@@ -113,12 +117,12 @@ func GetUserByEmail(email string) (freelancer Freelancer, err error) {
 
 //GetUserByID return rows with required ID
 func GetUserByID(id int) (freelancer Freelancer, err error) {
-	freelancer = Freelancer{}
+	// freelancer = Freelancer{}
 	err = data.Db.QueryRow(`SELECT id, first_name, last_name, email, password, phone,
 		 											facebook, skype, about, rait, created_at FROM freelancers
 													WHERE id = $1`, id).Scan(&freelancer.ID, &freelancer.FirstName,
-		&freelancer.LastName, &freelancer.Email, &freelancer.Password,
-		&freelancer.Phone, &freelancer.Facebook, &freelancer.Skype,
-		&freelancer.About, &freelancer.Rait, &freelancer.CreatedAt)
+		&freelancer.LastName, &freelancer.Email, &freelancer.Password, &freelancer.Phone,
+		&freelancer.Facebook, &freelancer.Skype, &freelancer.About, &freelancer.Rait,
+		&freelancer.CreatedAt)
 	return
 }

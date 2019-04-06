@@ -9,17 +9,25 @@ import (
 )
 
 func login(w http.ResponseWriter, r *http.Request) {
-	data := &Data{"Login", nil}
-	generateHTML(w, data, "base", "header", "footer", "login")
+	if _, err := r.Cookie("_cookie"); err == nil {
+		http.Redirect(w, r, "/my_profile/about", 302)
+	} else {
+		data := &Data{"Login", nil}
+		generateHTML(w, data, "base", "header", "footer", "login")
+	}
 }
 
 func registration(w http.ResponseWriter, r *http.Request) {
-	data := &Data{"Registation", nil}
-	generateHTML(w, data, "base", "header", "footer", "registration")
+	if _, err := r.Cookie("_cookie"); err == nil {
+		http.Redirect(w, r, "/my_profile/about", 302)
+	} else {
+		data := &Data{"Registation", nil}
+		generateHTML(w, data, "base", "header", "footer", "registration")
+	}
 }
 
 func registrationAccount(w http.ResponseWriter, r *http.Request) {
-	var user user.User
+	var user user.Userable
 	err := r.ParseForm()
 	if err != nil {
 		panic(err)
@@ -53,10 +61,9 @@ func loginAccount(w http.ResponseWriter, r *http.Request) {
 			fmt.Println(err)
 			return
 		}
-		fmt.Println(session)
 		cookie := http.Cookie{
 			Name:     "_cookie",
-			Value:    session.UUID,
+			Value:    session.GetUUID(),
 			HttpOnly: true,
 		}
 		http.SetCookie(w, &cookie)

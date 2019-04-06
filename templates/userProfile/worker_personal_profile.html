@@ -21,7 +21,7 @@
         </div>
         <div class="col s12 m12 l8 xl9">
           <div class="base-info">
-            <div class="name">John Doe</div>
+            <div class="name">{{ .Other.FirstName }} {{ .Other.LastName }}</div>
             <div class="rating">
               <span class="fa fa-star checked"></span>
               <span class="fa fa-star checked"></span>
@@ -30,7 +30,7 @@
               <span class="fa fa-star"></span>
             </div>
           </div>
-          {{ template "profile_content" }}
+          {{ template "profile_content" .}}
         </div>
       </div>
     </div>

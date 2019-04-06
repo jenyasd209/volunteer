@@ -1,7 +1,7 @@
 package user
 
-type User interface {
+type Userable interface {
 	Create() error
 	Delete() error
-	CreateSession() (Session, error)
+	CreateSession() (Sessionable, error)
 }
