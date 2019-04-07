@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"graduate/data/user"
 	"html/template"
 	"log"
 	"net/http"
@@ -24,23 +23,23 @@ func generateHTML(w http.ResponseWriter, data interface{}, filenames ...string) 
 	templates.ExecuteTemplate(w, "base", data)
 }
 
-func session(w http.ResponseWriter, r *http.Request, session user.Sessionable) (s user.Sessionable, err error) {
-	cookie, err := r.Cookie("_cookie")
-	if err == nil {
-		session.SetUUID(cookie.Value)
-		s = session
-		// session := freelancer.Session{UUID: cookie.Value}
-		if ok, err := session.Check(); !ok {
-			fmt.Println(err)
-		}
-	}
-
-	return
-}
+// func session(w http.ResponseWriter, r *http.Request, session *user.Sessionable) (err error) {
+// 	cookie, err := r.Cookie("_cookie")
+// 	if err == nil {
+// 		// sess = session
+// 		(*session).SetUUID(cookie.Value)
+// 		// session := freelancer.Session{UUID: cookie.Value}
+// 		if ok, err := (*session).Check(); !ok {
+// 			fmt.Println(err)
+// 		}
+// 	}
+//
+// 	return
+// }
 
 func logging(f http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		log.Println(r.URL.Path)
+		log.Println(r.RemoteAddr + " - " + r.URL.Path)
 		f(w, r)
 	}
 }

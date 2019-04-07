@@ -3,8 +3,8 @@ package main
 import (
 	"fmt"
 	"graduate/data"
-	"graduate/data/user"
-	"graduate/data/user/freelancer"
+	"graduate/data/freelancer"
+	"graduate/user"
 	"net/http"
 )
 
@@ -27,7 +27,7 @@ func registration(w http.ResponseWriter, r *http.Request) {
 }
 
 func registrationAccount(w http.ResponseWriter, r *http.Request) {
-	var user user.Userable
+	var user user.UserHelper
 	err := r.ParseForm()
 	if err != nil {
 		panic(err)

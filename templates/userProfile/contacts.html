@@ -1,18 +1,19 @@
 {{ define "profile_content"}}
 
 <div class="content">
+  <p>Contacts</p>
   <div class="contacts card">
     <div class="telephone">
-      <span class="bold">Telephone:</span> +3800000000
+      <span class="bold">Telephone:</span> {{.Other.Phone}}
     </div>
     <div class="email">
       <span class="bold">Email:</span> {{.Other.Email}}
     </div>
     <div class="facebook">
-      <span class="bold">Facebook:</span> facebook.com
+      <span class="bold">Facebook:</span> {{.Other.Facebook}}
     </div>
     <div class="Skype">
-      <span class="bold">Skype:</span> nickname
+      <span class="bold">Skype:</span> {{.Other.Skype}}
     </div>
   </div>
 </div>
