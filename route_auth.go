@@ -3,8 +3,7 @@ package main
 import (
 	"fmt"
 	"graduate/data"
-	"graduate/data/freelancer"
-	"graduate/user"
+	"graduate/data/user"
 	"net/http"
 )
 
@@ -27,19 +26,22 @@ func registration(w http.ResponseWriter, r *http.Request) {
 }
 
 func registrationAccount(w http.ResponseWriter, r *http.Request) {
-	var user user.UserHelper
+	// var user user.Freelancer
 	err := r.ParseForm()
 	if err != nil {
 		panic(err)
 	}
-	user = &freelancer.Freelancer{
+	user := &user.Freelancer{
 		FirstName: r.PostFormValue("first_name"),
 		LastName:  r.PostFormValue("last_name"),
-		Password:  r.PostFormValue("password"),
-		Email:     r.PostFormValue("email"),
+		User: user.User{
+			Password: r.PostFormValue("password"),
+			Email:    r.PostFormValue("email"),
+		},
 	}
 
 	if err := user.Create(); err != nil {
+		fmt.Println(err)
 		panic(err)
 	}
 
@@ -48,7 +50,13 @@ func registrationAccount(w http.ResponseWriter, r *http.Request) {
 
 func loginAccount(w http.ResponseWriter, r *http.Request) {
 	err := r.ParseForm()
-	freelancer, err := freelancer.GetUserByEmail(r.PostFormValue("email"))
+	if err != nil {
+		fmt.Println(err)
+		panic(err)
+	}
+
+	freelancer := user.Freelancer{}
+	freelancer.User, err = user.GetUserByEmail(r.PostFormValue("email"))
 
 	if err != nil {
 		fmt.Println(err)
