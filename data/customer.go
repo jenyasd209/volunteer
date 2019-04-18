@@ -17,8 +17,8 @@ func (customer *Customer) Create() (err error) {
 	if err = customer.User.Create(); err != nil {
 		return
 	}
-	statement := `insert into customers (user_id, first_name, last_name)
-								values ($1, $2, $3) returning id`
+	statement := `insert into customers (user_id, organization)
+								values ($1, $2) returning id`
 	stmt, err := Db.Prepare(statement)
 	if err != nil {
 		return
@@ -71,7 +71,7 @@ func (customer *Customer) Delete() (err error) {
 
 //CheckCustomer - check exist user in table "customers"
 func CheckCustomer(userID int) (exist bool, err error) {
-	err = Db.QueryRow(`SELECT EXISTS(SELECT id FROM customers WHERE id = $1)`, userID).Scan(&exist)
+	err = Db.QueryRow(`SELECT EXISTS(SELECT id FROM customers WHERE user_id = $1)`, userID).Scan(&exist)
 	if err != nil {
 		log.Println(err)
 		exist = false

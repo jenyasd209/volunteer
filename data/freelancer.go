@@ -78,7 +78,7 @@ func GetFreelancerByUserID(id int) (freelancer Freelancer, err error) {
 
 //CheckFreelancer - check exist user in table "freelancers"
 func CheckFreelancer(userID int) (exist bool, err error) {
-	err = Db.QueryRow(`SELECT EXISTS(SELECT id FROM freelancers WHERE id = $1)`, userID).Scan(&exist)
+	err = Db.QueryRow(`SELECT EXISTS(SELECT id FROM freelancers WHERE user_id = $1)`, userID).Scan(&exist)
 	if err != nil {
 		log.Println(err)
 		exist = false
