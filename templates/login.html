@@ -2,13 +2,34 @@
 <div class="page">
   <div class="wrap">
     <div class="form">
-      <form name="form-login" class="form-action" role="form" action="/login_account" method="post">
-        <input type="email" name="email" value="" placeholder="username" required>
-        <input type="password" name="password" value="" placeholder="password" required>
+      <form name="form-login" id="form-login" class="col s12" role="form" action="/login_account" method="post">
+        <p class="group-radio">
+          <label id="volunteer">
+            <input name="group" type="radio" value="volunteer" checked >
+            <span class="black-text">I'm volunteer</span>
+          </label>
+          <label id="customer">
+            <input name="group" type="radio" value="customer" >
+            <span class="black-text">I'm customer</span>
+          </label>
+        </p>
+        <div class="row">
+          <div class="input-field col s12">
+            <input class="validate" type="email" name="email" id="email" required>
+            <label for="email">Email</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12">
+            <input class="validate" type="password" name="password" id="password" required>
+            <label for="password">Password</label>
+          </div>
+        </div>
         <button class="light-blue" type="submit" name="login">Login</button>
         <p class="message">Don't have account? <a href="/registration">Registration</a></p>
       </form>
     </div>
   </div>
 </div>
+<script src="/static/js/login.js"></script>
 {{ end }}

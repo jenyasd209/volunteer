@@ -1,19 +1,94 @@
 {{ define "content"}}
 <div class="page">
-  <div class="wrap">
-    <div class="form">
-      <form name="form-reg" id="form-reg" class="form-action" role="form" action="/registration_account" method="post" required>
-        <input type="text" name="first_name" id="first_name" value="" placeholder="First name" required>
-        <input type="text" name="last_name" value="" placeholder="Last name" required>
-        <input type="text" name="email" value="" placeholder="E-mail" required>
-        <input type="password" name="password" id="password" value="" placeholder="Password" onchange="checkPassword()" required>
-        <input type="password" name="repeatpassword" id="repeatPassword" value="" placeholder="Repeat password" onchange="checkPassword()" required>
-        <p class="danger-pswd" id="alert_text">Passwords don't match!</p>
-        <button class="light-blue" type="submit" name="registration" id="registration-btn" >Registration</button>
-        <p class="message">Already registered? <a href="/login">Login</a></p>
-      </form>
-    </div>
+  <div class="form">
+    <form name="form-reg" id="form-reg" role="form" action="/registration_account" method="post">
+      <div class="row">
+        <div class="col s12">
+          <p class="center">Fields with * are required</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s6">
+          <input name="first_name" id="first_name" type="text" class="validate" required>
+          <label for="first_name">First Name*</label>
+        </div>
+        <div class="input-field col s6">
+          <input name="last_name" id="last_name" type="text" class="validate" required>
+          <label for="last_name">Last Name*</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <input type="email" name="email" id="email" class="validate" required>
+          <label for="email">Email*</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <input class="validate" type="password" name="password" id="password" onchange="checkPassword()" required>
+          <label for="Password">Password*</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <input class="validate" type="password" name="repeatPassword" id="repeatPassword" onchange="checkPassword()" required>
+          <label for="repeatPassword">Repeat password*</label>
+        </div>
+      </div>
+      <p class="danger-pswd hide" id="alert_text">Passwords don't match!</p>
+      <div class="row">
+        <div class="input-field col s12">
+          <input class="validate" type="number" name="phone" id="phone">
+          <label for="phone">Phone</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <input class="validate" type="text" name="skype" id="skype">
+          <label for="skype">Skype</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <input class="validate" type="text" name="facebook" id="facebook">
+          <label for="facebook">Facebook</label>
+        </div>
+      </div>
+      <p class="group-radio">
+        <label id="volunteer" onclick="selectGroupCheck()">
+          <input name="group" type="radio" value="volunteer" checked >
+          <span class="black-text">I'm volunteer</span>
+        </label>
+        <label id="customer" onclick="selectGroupCheck()">
+          <input name="group" type="radio" value="customer" >
+          <span class="black-text">I'm customer</span>
+        </label>
+      </p>
+      <div id="freelancer-block">
+        <div class="row">
+          <div class="input-field col s12">
+            <select multiple id="specialization" name="specialization[]">
+              <option value="" disabled>Choose your specialization</option>
+              <option value="1">Web</option>
+              <option value="2">Mobile</option>
+              <option value="3">Desctop</option>
+            </select>
+            <label for="specialization">Specialization*</label>
+          </div>
+        </div>
+      </div>
+      <div id="customer-block" class="hide">
+        <div class="row">
+          <div class="input-field col s12 m12 l12 xl12">
+            <input name="organization-name" id="organization-name" type="text" class="validate">
+            <label for="organization-name">Organization</label>
+          </div>
+        </div>
+      </div>
+      <button class="light-blue" type="submit" name="registration" id="registration-btn" >Registration</button>
+      <p class="message">Already registered? <a href="/login">Login</a></p>
+    </form>
   </div>
 </div>
-<script src="/static/js/auth.js"></script>
+<script src="/static/js/reg.js"></script>
 {{ end }}

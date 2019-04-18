@@ -17,6 +17,7 @@ func main() {
 	r.HandleFunc("/registration", logging(registration))
 	r.HandleFunc("/registration_account", logging(registrationAccount))
 	r.HandleFunc("/login_account", logging(loginAccount))
+	r.HandleFunc("/logout", logging(logout))
 
 	// route_user_profile
 	r.HandleFunc("/my_profile", logging(freelancerProfile))

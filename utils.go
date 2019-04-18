@@ -5,6 +5,7 @@ import (
 	"html/template"
 	"log"
 	"net/http"
+	"strconv"
 )
 
 type Data struct {
@@ -23,13 +24,32 @@ func generateHTML(w http.ResponseWriter, data interface{}, filenames ...string) 
 	templates.ExecuteTemplate(w, "base", data)
 }
 
-// func session(w http.ResponseWriter, r *http.Request, session *user.Sessionable) (err error) {
+//arrayStringToArrayInt conver []string to []int
+func arrayStringToArrayInt(strArray []string) (intArry []int) {
+	for _, i := range strArray {
+		j, err := strconv.Atoi(i)
+		if err != nil {
+			panic(err)
+		}
+		intArry = append(intArry, j)
+	}
+	return
+}
+
+// func checkAuth(f http.HandleFunc) http.HandleFunc {
+// 	return func(w http.ResponseWriter, r *http.Request) {
+//
+// 		f(w http.ResponseWriter, r *http.Request)
+// 	}
+// }
+
+// func sess(w http.ResponseWriter, r *http.Request) (err error) {
 // 	cookie, err := r.Cookie("_cookie")
 // 	if err == nil {
-// 		// sess = session
-// 		(*session).SetUUID(cookie.Value)
+// 		sess := data.Session{}
+// 		sess.SetUUID(cookie.Value)
 // 		// session := freelancer.Session{UUID: cookie.Value}
-// 		if ok, err := (*session).Check(); !ok {
+// 		if ok, err := session.Check(); !ok {
 // 			fmt.Println(err)
 // 		}
 // 	}

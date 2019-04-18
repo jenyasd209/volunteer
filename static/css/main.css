@@ -24,6 +24,11 @@ li{
 a{
     text-decoration: none;
 }
+
+nav img{
+  max-height: 40%;
+}
+
 footer {
   flex:  0 auto;
 }
@@ -32,13 +37,16 @@ footer {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-}
-
-.wrap{
   padding: 20px 0;
 }
 
-.parallax-container{
+.small-nav {
+    height: 35px;
+    line-height: 35px;
+}
+
+.small-nav ul li i{
+  display: none;
 }
 
 .hidden-menu-item{
@@ -94,10 +102,11 @@ footer {
 
 .form{
   background: #FFFFFF;
-  max-width: 40%;
-  width: auto;
+  max-width: 60%;
+  min-width: 300px;
+  width: 60%;
   padding: 20px 25px;
-  margin: auto;
+  margin: auto auto;
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
 }
 
@@ -127,6 +136,26 @@ footer {
   cursor: pointer;
 }
 
+.group-radio{
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.group-radio label{
+  text-align: center;
+  width: 50%;
+  padding: 10px 0;
+}
+
+.group-radio input{
+  width: auto;
+}
+
+.selected-group{
+  background-color: #26a69a;
+  pointer-events: none;
+}
+
 .message{
   padding-top: 2%;
   text-align: center;
@@ -139,7 +168,6 @@ footer {
 .danger-pswd{
   color: red;
   text-align: center;
-  visibility: hidden;
 }
 
 @media screen and (max-width: 580px) {
