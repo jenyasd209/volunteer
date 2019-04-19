@@ -17,12 +17,19 @@ type User struct {
 	Skype     string
 	About     string
 	Rait      float32
+	Role
 	CreatedAt time.Time
+}
+
+//Role struct for "roles" table
+type Role struct {
+	ID   int
+	Name string
 }
 
 //Create new row from "freelancer" table
 func (user *User) Create() (err error) {
-	statement := `insert into users (first_name, last_name, email, password, phone, facebook, skype, about, rait, created_at)
+	statement := `insert into users (first_name, last_name, email, password, phone, facebook, skype, about, rait, role_id, created_at)
 								values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) returning id, created_at`
 	stmt, err := Db.Prepare(statement)
 	if err != nil {
@@ -31,24 +38,40 @@ func (user *User) Create() (err error) {
 
 	defer stmt.Close()
 	err = stmt.QueryRow(user.FirstName, user.LastName, user.Email, Encrypt(user.Password), user.Phone,
-		user.Facebook, user.Skype, user.About, user.Rait, time.Now()).Scan(&user.ID, &user.CreatedAt)
+		user.Facebook, user.Skype, user.About, user.Rait, user.Role.ID, time.Now()).Scan(&user.ID, &user.CreatedAt)
 	if err != nil {
 		fmt.Println(err)
 	}
 	return
 }
 
-// Update row in "freelancer" table
-func (user *User) Update() (err error) {
-	statement := `UPDATE users SET first_name = $1, last_name = $2, email = $3, password = $4,
-	 							phone = $5, facebook = $6, skype = $7, about = $8 WHERE id = $9 returning id`
+// UpdateInformation row in "freelancer" table
+func (user *User) UpdateInformation() (err error) {
+	statement := `UPDATE users SET first_name = $1, last_name = $2,	phone = $3,
+	 							facebook = $4, skype = $5, about = $6 WHERE id = $6 returning id`
 	stmt, err := Db.Prepare(statement)
 	if err != nil {
 		panic(err)
 	}
 
 	defer stmt.Close()
-	err = stmt.QueryRow(user.FirstName, user.LastName, user.Email, Encrypt(user.Password), user.Phone, user.Facebook, user.Skype, user.About, user.ID).Scan()
+	err = stmt.QueryRow(user.FirstName, user.LastName, user.Phone, user.Facebook, user.Skype, user.About, user.ID).Scan(&user.ID)
+	if err != nil {
+		fmt.Println(err)
+	}
+	return
+}
+
+// UpdateLoginData row in "freelancer" table
+func (user *User) UpdateLoginData() (err error) {
+	statement := `UPDATE users SET email = $1, password = $2 WHERE id = $3 returning id`
+	stmt, err := Db.Prepare(statement)
+	if err != nil {
+		panic(err)
+	}
+
+	defer stmt.Close()
+	err = stmt.QueryRow(user.Email, Encrypt(user.Password), user.ID).Scan(&user.ID)
 	if err != nil {
 		fmt.Println(err)
 	}

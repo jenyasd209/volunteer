@@ -6,7 +6,8 @@ import (
 	"net/http"
 )
 
-var session data.SessionHelper = &data.Session{}
+// var session data.SessionHelper = &data.Session{}
+var session data.Session
 
 func freelancerProfile(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/my_profile/about", 302)

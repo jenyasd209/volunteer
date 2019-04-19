@@ -1,13 +1,24 @@
 drop table if exists users cascade;
+drop table if exists roles cascade;
 drop table if exists freelancers cascade;
 drop table if exists specialization cascade;
-drop table if exists orders cascade;
-drop table if exists order_status cascade;
-drop table if exists requests cascade;
 drop table if exists customers cascade;
+drop table if exists order_status cascade;
+drop table if exists orders cascade;
+drop table if exists requests cascade;
+drop table if exists performed_orders cascade;
 drop table if exists complete_orders cascade;
-drop table if exists message cascade;
+drop table if exists comments cascade;
+drop table if exists messages cascade;
 drop table if exists session cascade;
+
+create table roles (
+  id serial primary key,
+  name varchar(255) not null unique
+);
+INSERT INTO roles (name) values ('Freelancer');
+INSERT INTO roles (name) values ('Customer');
+INSERT INTO roles (name) values ('Moderator');
 
 create table users(
   id serial primary key,
@@ -20,7 +31,7 @@ create table users(
   phone varchar(255) DEFAULT '',
   facebook varchar(255) DEFAULT '',
   skype varchar(255) DEFAULT '',
-  is_superuser boolean DEFAULT FALSE,
+  role_id integer references roles(id) on delete cascade on update cascade,
   created_at timestamp not null
 );
 
@@ -32,7 +43,7 @@ create table freelancers (
 
 create table specialization(
   id serial primary key,
-  name text not null
+  name varchar(255) not null unique
 );
 INSERT INTO specialization (name) values ('Web');
 INSERT INTO specialization (name) values ('Mobile');
@@ -68,13 +79,35 @@ create table requests (
   created_at timestamp not null
 );
 
+create table performed_orders(
+  id serial primary key,
+  order_id integer references orders(id) on delete cascade on update cascade,
+  freelancer_id integer references freelancers(id) on delete cascade on update cascade
+);
+
+create table comments(
+  id serial primary key,
+  rait float not null,
+  comment_text text,
+  created_at timestamp not null
+);
+
 create table complete_orders(
   id serial primary key,
   order_id integer references orders(id) on delete cascade on update cascade,
   freelancer_id integer references freelancers(id) on delete cascade on update cascade,
-  data_complete timestamp not null,
-  rait float DEFAULT 0,
-  comment text
+  freelancer_comment_id integer references comments(id) on delete cascade on update cascade,
+  customer_comment_id integer references comments(id) on delete cascade on update cascade,
+  data_complete timestamp not null
+);
+
+create table messages(
+  id serial primary key,
+  sender_id integer references users(id) on delete cascade on update cascade,
+  receiver_id integer references users(id) on delete cascade on update cascade,
+  text_message text not null,
+  read boolean DEFAULT FALSE,
+  date_send timestamp not null
 );
 
 create table session(
@@ -83,13 +116,4 @@ create table session(
   email varchar(255) not null,
   user_id integer references users(id) on delete cascade on update cascade,
   created_at timestamp not null
-);
-
-create table message(
-  id serial primary key,
-  from_user integer references users(id) on delete cascade on update cascade,
-  to_user integer references users(id) on delete cascade on update cascade,
-  text_message text not null,
-  read boolean DEFAULT FALSE,
-  date_send timestamp not null
 );

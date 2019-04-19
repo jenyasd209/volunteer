@@ -5,6 +5,7 @@ import (
 	"time"
 )
 
+//Customer struct for "customers" table
 type Customer struct {
 	ID           int
 	Organization string
@@ -31,7 +32,7 @@ func (customer *Customer) Create() (err error) {
 
 //Update row in "customer" table
 func (customer *Customer) Update() (err error) {
-	if err = customer.User.Update(); err != nil {
+	if err = customer.User.UpdateInformation(); err != nil {
 		panic(err)
 	}
 	statement := `UPDATE customer SET organization WHERE id = $1`
@@ -45,17 +46,6 @@ func (customer *Customer) Update() (err error) {
 	return
 }
 
-//GetCustomerUserID - retuen user with set ID
-func GetCustomerUserID(id int) (customer Customer, err error) {
-	err = Db.QueryRow(`SELECT C.user_id, C.organization, U.email, U.password,
-								U.phone, U.facebook, U.skype, U.about, U.rait, U.created_at FROM customers C, users U
-								WHERE F.user_id = U.id and F.user_id = $1`, id).Scan(&customer.User.ID,
-		&customer.Organization, &customer.Email, &customer.Password,
-		&customer.Phone, &customer.Facebook, &customer.Skype, &customer.About,
-		&customer.Rait, &customer.CreatedAt)
-	return
-}
-
 // Delete row from "customer" table
 func (customer *Customer) Delete() (err error) {
 	statement := "DELETE FROM customers WHERE id = $1"
@@ -66,6 +56,24 @@ func (customer *Customer) Delete() (err error) {
 
 	defer stmt.Close()
 	_, err = stmt.Exec(customer.ID)
+	return
+}
+
+//GetCustomerUserID - return customer by user ID
+func GetCustomerUserID(id int) (customer Customer, err error) {
+	customer.User, err = GetUserByID(id)
+	if err != nil {
+		return
+	}
+	err = Db.QueryRow(`SELECT id, user_id, organization, created_at FROM customers
+								WHERE user_id = $1`, id).Scan(&customer.ID, &customer.User.ID,
+		&customer.Organization, &customer.CreatedAt)
+	// err = Db.QueryRow(`SELECT C.user_id, C.organization, U.email, U.password,
+	// 							U.phone, U.facebook, U.skype, U.about, U.rait, U.created_at FROM customers C, users U
+	// 							WHERE F.user_id = U.id and F.user_id = $1`, id).Scan(&customer.User.ID,
+	// 	&customer.Organization, &customer.Email, &customer.Password,
+	// 	&customer.Phone, &customer.Facebook, &customer.Skype, &customer.About,
+	// 	&customer.Rait, &customer.CreatedAt)
 	return
 }
 

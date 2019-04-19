@@ -38,7 +38,7 @@ func (freelancer *Freelancer) Create() (err error) {
 
 //Update row in "freelancer" table
 func (freelancer *Freelancer) Update() (err error) {
-	if err = freelancer.User.Update(); err != nil {
+	if err = freelancer.User.UpdateInformation(); err != nil {
 		panic(err)
 	}
 	statement := `UPDATE freelancers SET spetialization WHERE id = $1`

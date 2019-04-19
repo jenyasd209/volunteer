@@ -13,15 +13,15 @@ type Session struct {
 	CreatrdAt time.Time
 }
 
-type SessionHelper interface {
-	SetUUID(string)
-	GetUUID() string
-	GetUserID() int
-	User() (User, error)
-	Delete() error
-	Check() (bool, error)
-	DeleteByUUID() error
-}
+// type SessionHelper interface {
+// 	SetUUID(string)
+// 	GetUUID() string
+// 	GetUserID() int
+// 	User() (User, error)
+// 	Delete() error
+// 	Check() (bool, error)
+// 	DeleteByUUID() error
+// }
 
 func (session *Session) Check() (valid bool, err error) {
 	err = Db.QueryRow(`SELECT id, uuid, email, user_id, created_at FROM session
@@ -46,24 +46,24 @@ func (session *Session) User() (user User, err error) {
 	return
 }
 
-func (session *Session) GetUserID() (id int) {
-	id = session.UserID
-	return
-}
-
-func (session *Session) SetUUID(uuid string) {
-	session.UUID = uuid
-	return
-}
-
-func (session *Session) GetUUID() (uuid string) {
-	uuid = session.UUID
-	return
-}
-
-func (session *Session) Delete() (err error) {
-	return
-}
+// func (session *Session) GetUserID() (id int) {
+// 	id = session.UserID
+// 	return
+// }
+//
+// func (session *Session) SetUUID(uuid string) {
+// 	session.UUID = uuid
+// 	return
+// }
+//
+// func (session *Session) GetUUID() (uuid string) {
+// 	uuid = session.UUID
+// 	return
+// }
+//
+// func (session *Session) Delete() (err error) {
+// 	return
+// }
 
 func GetSessionByUUID(uuid string) (session Session) {
 	statement := `SELECT id, uuid, email, user_id, created_at FROM user_session

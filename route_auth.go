@@ -83,17 +83,17 @@ func loginAccount(w http.ResponseWriter, r *http.Request) {
 		if group == "volunteer" {
 			if ok, _ := data.CheckFreelancer(user.ID); !ok {
 				http.Redirect(w, r, "/login", 302)
-				log.Println("not freelancer")
 				return
 			}
 		} else if group == "customer" {
 			if ok, _ := data.CheckCustomer(user.ID); !ok {
 				http.Redirect(w, r, "/login", 302)
-				log.Println("not customer")
 				return
 			}
+		} else {
+			http.Redirect(w, r, "/login", 302)
+			return
 		}
-		log.Println("next")
 		session, err := user.CreateSession()
 		if err != nil {
 			fmt.Println(err)
