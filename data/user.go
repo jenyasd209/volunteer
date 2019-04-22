@@ -5,6 +5,12 @@ import (
 	"time"
 )
 
+const (
+	UserRoleFreelancer = 1
+	UserRoleCustomer   = 2
+	UserRoleModerator  = 3
+)
+
 //User struct for "users" table
 type User struct {
 	ID        int
@@ -17,7 +23,7 @@ type User struct {
 	Skype     string
 	About     string
 	Rait      float32
-	Role
+	RoleID    int
 	CreatedAt time.Time
 }
 
@@ -30,7 +36,7 @@ type Role struct {
 //Create new row from "freelancer" table
 func (user *User) Create() (err error) {
 	statement := `insert into users (first_name, last_name, email, password, phone, facebook, skype, about, rait, role_id, created_at)
-								values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) returning id, created_at`
+								values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) returning id, created_at`
 	stmt, err := Db.Prepare(statement)
 	if err != nil {
 		return
@@ -38,7 +44,7 @@ func (user *User) Create() (err error) {
 
 	defer stmt.Close()
 	err = stmt.QueryRow(user.FirstName, user.LastName, user.Email, Encrypt(user.Password), user.Phone,
-		user.Facebook, user.Skype, user.About, user.Rait, user.Role.ID, time.Now()).Scan(&user.ID, &user.CreatedAt)
+		user.Facebook, user.Skype, user.About, user.Rait, user.RoleID, time.Now()).Scan(&user.ID, &user.CreatedAt)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -152,5 +158,12 @@ func GetUserByID(id int) (user User, err error) {
 		 								 facebook, skype, about, rait, created_at FROM users
 										 WHERE id = $1`, id).Scan(&user.ID, &user.FirstName, &user.LastName, &user.Email,
 		&user.Password, &user.Phone, &user.Facebook, &user.Skype, &user.About, &user.Rait, &user.CreatedAt)
+	return
+}
+
+//UserDeleteAll - delete all rows in table "users"
+func UserDeleteAll() (err error) {
+	statement := "delete from users"
+	_, err = Db.Exec(statement)
 	return
 }

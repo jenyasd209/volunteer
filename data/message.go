@@ -89,3 +89,10 @@ func GetAllMessageByReceiverID(receiverID int) (messages []Message, err error) {
 	}
 	return
 }
+
+//MessagesDeleteAll - delete all rows in table "messages"
+func MessagesDeleteAll() (err error) {
+	statement := "delete from messages"
+	_, err = Db.Exec(statement)
+	return
+}

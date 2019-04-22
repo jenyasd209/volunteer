@@ -18,7 +18,8 @@ func freelancerProfileAbout(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		http.Redirect(w, r, "/login", 302)
 	} else {
-		freelancer, err := data.GetFreelancerByUserID(session.GetUserID())
+		// freelancer, err := data.GetFreelancerByUserID(session.GetUserID())
+		freelancer, err := data.GetFreelancerByUserID(session.UserID)
 		if err != nil {
 			fmt.Println(err)
 		}
@@ -32,7 +33,8 @@ func freelancerProfileWorks(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		http.Redirect(w, r, "/login", 302)
 	} else {
-		freelancer, _ := data.GetFreelancerByUserID(session.GetUserID())
+		// freelancer, _ := data.GetFreelancerByUserID(session.GetUserID())
+		freelancer, _ := data.GetFreelancerByUserID(session.UserID)
 		data := &Data{"My works", &freelancer}
 		generateHTML(w, data, "base", "header", "footer", "userProfile/worker_personal_profile", "userProfile/my_works")
 	}
@@ -43,7 +45,8 @@ func freelancerProfileContacts(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		http.Redirect(w, r, "/login", 302)
 	} else {
-		freelancer, _ := data.GetFreelancerByUserID(session.GetUserID())
+		// freelancer, _ := data.GetFreelancerByUserID(session.GetUserID())
+		freelancer, _ := data.GetFreelancerByUserID(session.UserID)
 		data := &Data{"Contacts", &freelancer}
 		generateHTML(w, data, "base", "header", "footer", "userProfile/worker_personal_profile", "userProfile/contacts")
 	}

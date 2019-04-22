@@ -67,12 +67,19 @@ func (freelancer *Freelancer) Delete() (err error) {
 
 //GetFreelancerByUserID - return user with set ID
 func GetFreelancerByUserID(id int) (freelancer Freelancer, err error) {
-	err = Db.QueryRow(`SELECT F.user_id, F.specialization, U.email, U.password,
-								U.phone, U.facebook, U.skype, U.about, U.rait, U.created_at FROM freelancers F, users U
-								WHERE F.user_id = U.id and F.user_id = $1`, id).Scan(&freelancer.User.ID,
-		&freelancer.Specialization, &freelancer.Email, &freelancer.Password,
-		&freelancer.Phone, &freelancer.Facebook, &freelancer.Skype, &freelancer.About,
-		&freelancer.Rait, &freelancer.CreatedAt)
+	freelancer.User, err = GetUserByID(id)
+	if err != nil {
+		return
+	}
+	err = Db.QueryRow(`SELECT id, user_id, specialixation, created_at FROM customers
+								WHERE user_id = $1`, id).Scan(&freelancer.ID, &freelancer.User.ID,
+		&freelancer.Specialization, &freelancer.CreatedAt)
+	// err = Db.QueryRow(`SELECT F.user_id, F.specialization, U.email, U.password,
+	// 							U.phone, U.facebook, U.skype, U.about, U.rait, U.created_at FROM freelancers F, users U
+	// 							WHERE F.user_id = U.id and F.user_id = $1`, id).Scan(&freelancer.User.ID,
+	// 	&freelancer.Specialization, &freelancer.Email, &freelancer.Password,
+	// 	&freelancer.Phone, &freelancer.Facebook, &freelancer.Skype, &freelancer.About,
+	// 	&freelancer.Rait, &freelancer.CreatedAt)
 	return
 }
 

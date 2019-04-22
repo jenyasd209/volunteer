@@ -10,7 +10,7 @@
           <div class="vertical-menu">
             <a id="icon-user-mobile" href="javascript:void(0);" onclick="showMobileMenu()">Menu<i class="material-icons right">menu</i></a>
             <ul id="user-menu">
-              <li><a class="" href="/my_profile/about" onclick="setSelected(this)">About me</a></li>
+              <li><a href="/my_profile/about" onclick="setSelected(this)">About me</a></li>
               <li><a href="/my_profile/works" onclick="setSelected(this)">My works</a></li>
               <li><a href="/my_profile/contacts" onclick="setSelected(this)">Contacts</a></li>
               <hr>
@@ -26,8 +26,9 @@
               <span class="fa fa-star checked"></span>
               <span class="fa fa-star checked"></span>
               <span class="fa fa-star checked"></span>
+              <span class="fa fa-star-half-empty checked"></span>
               <span class="fa fa-star"></span>
-              <span class="fa fa-star"></span>
+              <span>({{ .Other.Rait }})</span>
             </div>
           </div>
           {{ template "profile_content" .}}

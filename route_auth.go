@@ -44,6 +44,7 @@ func registrationAccount(w http.ResponseWriter, r *http.Request) {
 	}
 	if group == "volunteer" {
 		specialization := arrayStringToArrayInt(r.Form["specialization[]"])
+		(*user).RoleID = data.UserRoleFreelancer
 		freelancer := &data.Freelancer{
 			Specialization: specialization,
 			User:           *user,
@@ -53,6 +54,7 @@ func registrationAccount(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 	if group == "customer" {
+		(*user).RoleID = data.UserRoleCustomer
 		customer := &data.Customer{
 			Organization: r.PostFormValue("organization-name"),
 			User:         *user,
@@ -100,8 +102,9 @@ func loginAccount(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		cookie := http.Cookie{
-			Name:     "_cookie",
-			Value:    session.GetUUID(),
+			Name: "_cookie",
+			// Value:    session.GetUUID(),
+			Value:    session.UUID,
 			HttpOnly: true,
 		}
 		http.SetCookie(w, &cookie)

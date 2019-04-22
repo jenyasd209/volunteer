@@ -28,7 +28,6 @@ func (session *Session) Check() (valid bool, err error) {
 	                WHERE uuid = $1`, session.UUID).Scan(&session.ID, &session.UUID, &session.Email,
 		&session.UserID, &session.CreatrdAt)
 	if err != nil {
-		valid = false
 		return
 	}
 	if session.ID != 0 {
@@ -94,5 +93,12 @@ func (session *Session) DeleteByUUID() (err error) {
 	}
 	defer stmt.Close()
 	_, err = stmt.Exec(session.UUID)
+	return
+}
+
+//SessionsDeleteAll - delete all rows in table "session"
+func SessionsDeleteAll() (err error) {
+	statement := "delete from session"
+	_, err = Db.Exec(statement)
 	return
 }

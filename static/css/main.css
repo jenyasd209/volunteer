@@ -49,6 +49,13 @@ footer {
   display: none;
 }
 
+@media screen and (max-width: 1000px) {
+  .small-nav a.sidenav-trigger i, .small-nav i.material-icons{
+    height: 35px;
+    line-height: 35px;
+  }
+}
+
 .hidden-menu-item{
   /* visibility: hidden; */
   display: flex;
@@ -218,11 +225,6 @@ footer {
 
 .name{
   font-size: 150%;
-}
-
-.rating{
-  /* background-color: blue; */
-  /* display: inline-block; */
 }
 
 .content p{

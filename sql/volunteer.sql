@@ -67,14 +67,14 @@ create table orders (
   id serial primary key,
   title varchar(255) not null,
   content text not null,
-  customer_id integer references customers(id),
+  customer_id integer references customers(user_id),
   status_id integer references order_status(id) on delete cascade on update cascade DEFAULT 1,
   created_at timestamp not null
 );
 
 create table requests (
   id serial primary key,
-  freelancer_id integer references freelancers(id) on delete cascade on update cascade,
+  freelancer_id integer references freelancers(user_id) on delete cascade on update cascade,
   order_id integer references orders(id) on delete cascade on update cascade,
   created_at timestamp not null
 );
@@ -82,23 +82,24 @@ create table requests (
 create table performed_orders(
   id serial primary key,
   order_id integer references orders(id) on delete cascade on update cascade,
-  freelancer_id integer references freelancers(id) on delete cascade on update cascade
+  freelancer_id integer references freelancers(user_id) on delete cascade on update cascade
 );
 
 create table comments(
   id serial primary key,
-  rait float not null,
   comment_text text,
+  rait float not null,
+  user_id integer references users(id) on delete cascade on update cascade,
   created_at timestamp not null
 );
 
 create table complete_orders(
   id serial primary key,
   order_id integer references orders(id) on delete cascade on update cascade,
-  freelancer_id integer references freelancers(id) on delete cascade on update cascade,
-  freelancer_comment_id integer references comments(id) on delete cascade on update cascade,
-  customer_comment_id integer references comments(id) on delete cascade on update cascade,
-  data_complete timestamp not null
+  freelancer_id integer references freelancers(user_id) on delete cascade on update cascade,
+  freelancer_comment_id integer unique references comments(id) on delete cascade on update cascade,
+  customer_comment_id integer unique references comments(id) on delete cascade on update cascade,
+  date_complete timestamp not null
 );
 
 create table messages(

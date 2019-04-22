@@ -6,6 +6,13 @@ import (
 	"time"
 )
 
+//Constant status for table "Status"
+const (
+	OrderStatusAvailable = 1
+	OrderStatusPerformed = 2
+	OrderStatusDone      = 3
+)
+
 //Order struct for "orders" table
 type Order struct {
 	ID      int
@@ -19,11 +26,18 @@ type Order struct {
 //PerformedOrder struct for "performed_order" table
 type PerformedOrder struct {
 	ID int
+	Order
+	FreelancerID int
 }
 
 //CompleteOrder struct for "complete_order" table
 type CompleteOrder struct {
 	ID int
+	Order
+	FreelancerID      int
+	FreelancerComment Comment
+	CustomerComment   Comment
+	DateComplete      time.Time
 }
 
 //Status struct for "order_status" table
@@ -93,18 +107,31 @@ func (customer *Customer) DeleteOrder(order Order) (err error) {
 	return
 }
 
+func (customer *Customer) deletePerformedOrder(orderID int) {
+	statement := `DELETE FROM performed_order WHERE order_id = $1`
+	stmt, err := Db.Prepare(statement)
+	if err != nil {
+		log.Println(err)
+	}
+	defer stmt.Close()
+	stmt.QueryRow(orderID).Scan()
+}
+
 //MakeOrderPerformed row in "order" table
-func (customer *Customer) MakeOrderPerformed(order *Order) (err error) {
-	if order.Customer.ID == customer.ID {
-		statement := `UPDATE orders SET status_id = 2 WHERE id = $1
-									returning id`
+func (customer *Customer) MakeOrderPerformed(performedOrder *PerformedOrder) (err error) {
+	if performedOrder.Customer.ID == customer.ID {
+		statement := `INSERT INTO performed_orders (order_id, freelancer_id) values ($1, $2)`
 		stmt, err := Db.Prepare(statement)
 		if err != nil {
 			log.Println(err)
 		}
-
 		defer stmt.Close()
-		stmt.QueryRow(order.ID).Scan(&order.ID)
+		err = stmt.QueryRow(performedOrder.Order.ID, performedOrder.FreelancerID).Scan(&performedOrder.ID)
+		if err != nil {
+			log.Println(err)
+		}
+		performedOrder.Order.changeStatus(OrderStatusPerformed)
+		customer.deletePerformedOrder(performedOrder.Order.ID)
 	} else {
 		return errors.New("Insufficient rights make order performed")
 	}
@@ -112,17 +139,24 @@ func (customer *Customer) MakeOrderPerformed(order *Order) (err error) {
 }
 
 //MakeOrderDone row in "order" table
-func (customer *Customer) MakeOrderDone(order *Order) (err error) {
-	if order.Customer.ID == customer.ID {
-		statement := `UPDATE orders SET status_id = 2 WHERE id = $1
-									returning id`
+func (customer *Customer) MakeOrderDone(completeOrder *CompleteOrder) (err error) {
+	if completeOrder.Customer.ID == customer.ID {
+		statement := `INSERT INTO complete_orders (order_id, freelancer_id)
+									values ($1, $2)`
 		stmt, err := Db.Prepare(statement)
 		if err != nil {
 			log.Println(err)
+			return err
 		}
 
+		err = customer.CreateComment(completeOrder.CustomerComment)
+		if err != nil {
+			log.Println(err)
+			return err
+		}
 		defer stmt.Close()
-		stmt.QueryRow(order.ID).Scan(&order.ID)
+		stmt.QueryRow(completeOrder.Order.ID, completeOrder.FreelancerID).Scan(&completeOrder.ID)
+		completeOrder.Order.changeStatus(OrderStatusDone)
 	} else {
 		return errors.New("Insufficient rights make order done")
 	}
@@ -134,5 +168,23 @@ func (order *Order) IsAvailable() (available bool) {
 	if order.Status.Name == "Available" {
 		available = true
 	}
+	return
+}
+
+//changeStatus - change status order in table "orders"
+func (order *Order) changeStatus(status int) {
+	statement := `UPDATE orders SET status_id = $1 WHERE id = $2 returning id;`
+	stmt, err := Db.Prepare(statement)
+	if err != nil {
+		log.Println(err)
+	}
+	defer stmt.Close()
+	stmt.QueryRow(status, order.ID).Scan()
+}
+
+//OrderDeleteAll - delete all rows in table "orders"
+func OrderDeleteAll() (err error) {
+	statement := "delete from orders"
+	_, err = Db.Exec(statement)
 	return
 }
