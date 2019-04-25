@@ -1,21 +1,52 @@
 {{ define "profile_content"}}
-
 <div class="content">
-  <p>Contacts</p>
-  <div class="contacts card">
-    <div class="telephone">
-      <span class="bold">Telephone:</span> {{.Other.Phone}}
-    </div>
-    <div class="email">
-      <span class="bold">Email:</span> {{.Other.Email}}
-    </div>
-    <div class="facebook">
-      <span class="bold">Facebook:</span> {{.Other.Facebook}}
-    </div>
-    <div class="Skype">
-      <span class="bold">Skype:</span> {{.Other.Skype}}
+  <div class="row white z-depth-2">
+    <div class="col s12">
+      <h5 class="center">Contacts</h5>
+      <div class="row">
+        <div class="col s12 m6">
+          <div class="section">
+            <span class="bold">Telephone:</span> {{.Content.Phone}}
+          </div>
+        </div>
+        <div class="col s12 m6">
+          <div class="section">
+            <span class="bold">Email:</span> {{.Content.Email}}
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col s12 m6">
+          <div class="section">
+            <span class="bold">Facebook:</span> {{.Content.Facebook}}
+          </div>
+        </div>
+        <div class="col s12 m6">
+          <div class="section">
+            <span class="bold">Skype:</span> {{.Content.Skype}}
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
+
+<!-- <div class="content">
+  <p>Contacts</p>
+  <div class="contacts card">
+    <div class="telephone">
+      <span class="bold">Telephone:</span> {{.Content.Phone}}
+    </div>
+    <div class="email">
+      <span class="bold">Email:</span> {{.Content.Email}}
+    </div>
+    <div class="facebook">
+      <span class="bold">Facebook:</span> {{.Content.Facebook}}
+    </div>
+    <div class="Skype">
+      <span class="bold">Skype:</span> {{.Content.Skype}}
+    </div>
+  </div>
+</div> -->
 
 {{ end }}

@@ -14,7 +14,7 @@ func login(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/my_profile/about", 302)
 	} else {
 		pageData = &Data{"Login", nil}
-		generateHTML(w, pageData, "base", "header", "footer", "login")
+		generateHTML(w, pageData, nil, "base", "header", "footer", "login")
 	}
 }
 
@@ -23,7 +23,7 @@ func registration(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/my_profile/about", 302)
 	} else {
 		pageData := &Data{"Registation", nil}
-		generateHTML(w, pageData, "base", "header", "footer", "registration")
+		generateHTML(w, pageData, nil, "base", "header", "footer", "registration")
 	}
 }
 
@@ -77,7 +77,7 @@ func loginAccount(w http.ResponseWriter, r *http.Request) {
 	user, err := data.GetUserByEmail(r.PostFormValue("email"))
 	if err != nil {
 		fmt.Println(err)
-		http.Redirect(w, r, "/login", 404)
+		http.Redirect(w, r, "/login", 302)
 	}
 
 	if user.Password == data.Encrypt(r.PostFormValue("password")) {

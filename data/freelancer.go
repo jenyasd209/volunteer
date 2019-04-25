@@ -1,6 +1,7 @@
 package data
 
 import (
+	"database/sql"
 	"log"
 
 	"github.com/lib/pq"
@@ -41,14 +42,14 @@ func (freelancer *Freelancer) Update() (err error) {
 	if err = freelancer.User.UpdateInformation(); err != nil {
 		panic(err)
 	}
-	statement := `UPDATE freelancers SET spetialization WHERE id = $1`
+	statement := `UPDATE freelancers SET specialization = $1 WHERE id = $2`
 	stmt, err := Db.Prepare(statement)
 	if err != nil {
 		panic(err)
 	}
 
 	defer stmt.Close()
-	err = stmt.QueryRow(freelancer.Specialization).Scan(&freelancer.ID)
+	err = stmt.QueryRow(pq.Array(freelancer.Specialization), freelancer.ID).Scan(&freelancer.ID)
 	return
 }
 
@@ -71,9 +72,14 @@ func GetFreelancerByUserID(id int) (freelancer Freelancer, err error) {
 	if err != nil {
 		return
 	}
-	err = Db.QueryRow(`SELECT id, user_id, specialixation, created_at FROM customers
+	var tmp []sql.NullInt64
+	err = Db.QueryRow(`SELECT id, user_id, specialization FROM freelancers
 								WHERE user_id = $1`, id).Scan(&freelancer.ID, &freelancer.User.ID,
-		&freelancer.Specialization, &freelancer.CreatedAt)
+		pq.Array(&tmp))
+	for _, j := range tmp {
+		x := j.Int64
+		freelancer.Specialization = append(freelancer.Specialization, int(x))
+	}
 	// err = Db.QueryRow(`SELECT F.user_id, F.specialization, U.email, U.password,
 	// 							U.phone, U.facebook, U.skype, U.about, U.rait, U.created_at FROM freelancers F, users U
 	// 							WHERE F.user_id = U.id and F.user_id = $1`, id).Scan(&freelancer.User.ID,
@@ -91,5 +97,11 @@ func CheckFreelancer(userID int) (exist bool, err error) {
 		exist = false
 		return
 	}
+	return
+}
+
+//GetSpecializationName -
+func GetSpecializationName(id int) (name string) {
+	Db.QueryRow(`SELECT name FROM specialization WHERE id = $1`, id).Scan(&name)
 	return
 }

@@ -54,7 +54,7 @@ func (user *User) Create() (err error) {
 // UpdateInformation row in "freelancer" table
 func (user *User) UpdateInformation() (err error) {
 	statement := `UPDATE users SET first_name = $1, last_name = $2,	phone = $3,
-	 							facebook = $4, skype = $5, about = $6 WHERE id = $6 returning id`
+	 							facebook = $4, skype = $5, about = $6 WHERE id = $7 returning id`
 	stmt, err := Db.Prepare(statement)
 	if err != nil {
 		panic(err)

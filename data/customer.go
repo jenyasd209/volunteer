@@ -3,6 +3,8 @@ package data
 import (
 	"log"
 	"time"
+
+	"github.com/lib/pq"
 )
 
 //Customer struct for "customers" table
@@ -65,9 +67,9 @@ func GetCustomerUserID(id int) (customer Customer, err error) {
 	if err != nil {
 		return
 	}
-	err = Db.QueryRow(`SELECT id, user_id, organization, created_at FROM customers
+	err = Db.QueryRow(`SELECT id, user_id, organization FROM customers
 								WHERE user_id = $1`, id).Scan(&customer.ID, &customer.User.ID,
-		&customer.Organization, &customer.CreatedAt)
+		pq.Array(&customer.Organization))
 	// err = Db.QueryRow(`SELECT C.user_id, C.organization, U.email, U.password,
 	// 							U.phone, U.facebook, U.skype, U.about, U.rait, U.created_at FROM customers C, users U
 	// 							WHERE F.user_id = U.id and F.user_id = $1`, id).Scan(&customer.User.ID,

@@ -10,17 +10,20 @@ import (
 
 type Data struct {
 	PageTitle string
-	Other     interface{}
+	Content   interface{}
 }
 
-func generateHTML(w http.ResponseWriter, data interface{}, filenames ...string) {
+func generateHTML(w http.ResponseWriter, data interface{}, funcMap template.FuncMap, filenames ...string) {
 	var files []string
+	var templates *template.Template
 
 	for _, file := range filenames {
 		files = append(files, fmt.Sprintf("templates/%s.html", file))
 	}
 
-	templates := template.Must(template.ParseFiles(files...))
+	// templates = template.Must(templates.Funcs(funcMap).ParseFiles(files...))
+	templates, _ = template.New("").Funcs(funcMap).ParseFiles(files...)
+
 	templates.ExecuteTemplate(w, "base", data)
 }
 

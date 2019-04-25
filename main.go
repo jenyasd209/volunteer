@@ -1,6 +1,7 @@
 package main
 
 import (
+	"graduate/data"
 	"log"
 	"net/http"
 
@@ -24,6 +25,7 @@ func main() {
 	r.HandleFunc("/my_profile/about", logging(freelancerProfileAbout))
 	r.HandleFunc("/my_profile/works", logging(freelancerProfileWorks))
 	r.HandleFunc("/my_profile/contacts", logging(freelancerProfileContacts))
+	r.HandleFunc("/my_profile/setting", logging(freelancerProfileSetting))
 
 	fs := http.FileServer(http.Dir("static"))
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
@@ -38,6 +40,13 @@ func main() {
 }
 
 func home(w http.ResponseWriter, r *http.Request) {
-	data := &Data{"Home", nil}
-	generateHTML(w, data, "base", "header", "footer", "home_page")
+	err := data.SessionChek(r, &session)
+	if err != nil {
+		data := &Data{"Home", nil}
+		generateHTML(w, data, nil, "base", "header", "footer", "home_page")
+	} else {
+		freelancer, _ := data.GetFreelancerByUserID(session.UserID)
+		data := &Data{"Home", &freelancer}
+		generateHTML(w, data, nil, "base", "header", "footer", "home_page")
+	}
 }
