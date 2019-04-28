@@ -76,18 +76,17 @@ func loginAccount(w http.ResponseWriter, r *http.Request) {
 
 	user, err := data.GetUserByEmail(r.PostFormValue("email"))
 	if err != nil {
-		fmt.Println(err)
 		http.Redirect(w, r, "/login", 302)
 	}
 
 	if user.Password == data.Encrypt(r.PostFormValue("password")) {
-		group := r.Form.Get("group")
-		if group == "volunteer" {
+		// group := r.Form.Get("group")
+		if user.RoleID == data.UserRoleFreelancer {
 			if ok, _ := data.CheckFreelancer(user.ID); !ok {
 				http.Redirect(w, r, "/login", 302)
 				return
 			}
-		} else if group == "customer" {
+		} else if user.RoleID == data.UserRoleCustomer {
 			if ok, _ := data.CheckCustomer(user.ID); !ok {
 				http.Redirect(w, r, "/login", 302)
 				return
@@ -96,9 +95,8 @@ func loginAccount(w http.ResponseWriter, r *http.Request) {
 			http.Redirect(w, r, "/login", 302)
 			return
 		}
-		session, err := user.CreateSession()
+		session, err = user.CreateSession()
 		if err != nil {
-			fmt.Println(err)
 			return
 		}
 		cookie := http.Cookie{
@@ -118,14 +116,14 @@ func loginAccount(w http.ResponseWriter, r *http.Request) {
 func logout(w http.ResponseWriter, r *http.Request) {
 	cookie, err := r.Cookie("_cookie")
 	if err != http.ErrNoCookie {
-		log.Println(err, " Failed to get cookie")
-		session := data.Session{UUID: cookie.Value}
-		log.Println(session)
+		session = data.Session{UUID: cookie.Value}
 		session.DeleteByUUID()
 		c := http.Cookie{
 			Name:   "_cookie",
 			MaxAge: -1}
 		http.SetCookie(w, &c)
+	} else {
+		log.Println(err, " Failed to get cookie")
 	}
 	http.Redirect(w, r, "/", 302)
 }

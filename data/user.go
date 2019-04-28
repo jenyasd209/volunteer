@@ -145,9 +145,9 @@ func GetAllUsers() (users []User, r error) {
 //GetUserByEmail return rows with required email
 func GetUserByEmail(email string) (user User, err error) {
 	err = Db.QueryRow(`SELECT id, first_name, last_name, email, password, phone,
-		 								 facebook, skype, about, rait, created_at FROM users
+		 								 facebook, skype, about, rait, role_id, created_at FROM users
 										 WHERE email = $1`, email).Scan(&user.ID, &user.FirstName, &user.LastName, &user.Email,
-		&user.Password, &user.Phone, &user.Facebook, &user.Skype, &user.About, &user.Rait, &user.CreatedAt)
+		&user.Password, &user.Phone, &user.Facebook, &user.Skype, &user.About, &user.Rait, &user.RoleID, &user.CreatedAt)
 
 	return
 }
@@ -155,9 +155,9 @@ func GetUserByEmail(email string) (user User, err error) {
 //GetUserByID return rows with required ID
 func GetUserByID(id int) (user User, err error) {
 	err = Db.QueryRow(`SELECT id, first_name, last_name, email, password, phone,
-		 								 facebook, skype, about, rait, created_at FROM users
+		 								 facebook, skype, about, rait, role_id, created_at FROM users
 										 WHERE id = $1`, id).Scan(&user.ID, &user.FirstName, &user.LastName, &user.Email,
-		&user.Password, &user.Phone, &user.Facebook, &user.Skype, &user.About, &user.Rait, &user.CreatedAt)
+		&user.Password, &user.Phone, &user.Facebook, &user.Skype, &user.About, &user.Rait, &user.RoleID, &user.CreatedAt)
 	return
 }
 

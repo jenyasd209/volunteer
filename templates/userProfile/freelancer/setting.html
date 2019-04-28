@@ -1,0 +1,17 @@
+{{define "extention_setting"}}
+<div class="row">
+  <div class="col s12">
+    <select multiple id="specialization" name="specialization[]">
+      <option value="" disabled>Choose your specialization</option>
+      {{range .Content.Specialization}}
+        {{ if containsSpecialization .ID}}
+          <option selected value="{{.ID}}">{{.Name}}</option>
+        {{ else }}
+          <option value="{{.ID}}">{{.Name}}</option>
+        {{end}}
+      {{end}}
+    </select>
+    <label for="specialization">Specialization*</label>
+  </div>
+</div>
+{{end}}

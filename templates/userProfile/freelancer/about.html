@@ -1,0 +1,10 @@
+{{define "extention_about"}}
+<div class="row">
+  <div class="col s12">
+    <span class="center">Specialization: </span>
+    {{range .Content.Specialization }}
+    <span>{{ getNameSpecialization . }} |</span>
+    {{end}}
+  </div>
+</div>
+{{end}}

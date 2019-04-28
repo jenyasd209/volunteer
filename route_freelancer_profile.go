@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"graduate/data"
 	"html/template"
-	"log"
 	"net/http"
 )
 
@@ -12,7 +11,7 @@ import (
 var session data.Session
 
 func freelancerProfile(w http.ResponseWriter, r *http.Request) {
-	http.Redirect(w, r, "/my_profile/about", 302)
+	http.Redirect(w, r, "/user/about", 302)
 }
 
 func freelancerProfileAbout(w http.ResponseWriter, r *http.Request) {
@@ -28,7 +27,7 @@ func freelancerProfileAbout(w http.ResponseWriter, r *http.Request) {
 			"getNameSpecialization": data.GetSpecializationName,
 		}
 		data := &Data{"About", &freelancer}
-		generateHTML(w, data, funcMap, "base", "header", "footer", "userProfile/worker_personal_profile", "userProfile/about")
+		generateHTML(w, data, funcMap, "base", "header", "footer", "userProfile/profile", "userProfile/about_base", "userProfile/freelancer/about")
 	}
 }
 
@@ -39,7 +38,7 @@ func freelancerProfileWorks(w http.ResponseWriter, r *http.Request) {
 	} else {
 		freelancer, _ := data.GetFreelancerByUserID(session.UserID)
 		data := &Data{"My works", &freelancer}
-		generateHTML(w, data, nil, "base", "header", "footer", "userProfile/worker_personal_profile", "userProfile/my_works")
+		generateHTML(w, data, nil, "base", "header", "footer", "userProfile/profile", "userProfile/freelancer/my_works")
 	}
 }
 
@@ -50,7 +49,7 @@ func freelancerProfileContacts(w http.ResponseWriter, r *http.Request) {
 	} else {
 		freelancer, _ := data.GetFreelancerByUserID(session.UserID)
 		data := &Data{"Contacts", &freelancer}
-		generateHTML(w, data, nil, "base", "header", "footer", "userProfile/worker_personal_profile", "userProfile/contacts")
+		generateHTML(w, data, nil, "base", "header", "footer", "userProfile/profile", "userProfile/contacts")
 	}
 }
 
@@ -60,8 +59,8 @@ func freelancerProfileSetting(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/login", 302)
 	} else {
 		freelancer, _ := data.GetFreelancerByUserID(session.UserID)
+		specs, _ := data.GetAllSpecialization()
 		if r.Method == http.MethodPost {
-			log.Println(r.Method)
 			err := r.ParseForm()
 			if err != nil {
 				panic(err)
@@ -72,17 +71,23 @@ func freelancerProfileSetting(w http.ResponseWriter, r *http.Request) {
 			freelancer.User.Phone = r.PostFormValue("phone")
 			freelancer.User.Facebook = r.PostFormValue("facebook")
 			freelancer.User.Skype = r.PostFormValue("skype")
+			freelancer.Specialization = arrayStringToArrayInt(r.Form["specialization[]"])
 			err = freelancer.Update()
 			if err != nil {
 				fmt.Println(err)
 			}
-			http.Redirect(w, r, "/my_profile/about", 302)
+			http.Redirect(w, r, "/user/about", 302)
 		} else {
 			type Content struct {
-				User data.Freelancer
+				User           data.Freelancer
+				Specialization []data.Specialization
 			}
-			data := &Data{"Setting", &Content{freelancer}}
-			generateHTML(w, data, nil, "base", "header", "footer", "userProfile/worker_personal_profile", "userProfile/setting")
+			funcMap := template.FuncMap{
+				"getNameSpecialization":  data.GetSpecializationName,
+				"containsSpecialization": freelancer.ContainsSpecialization,
+			}
+			data := &Data{"Setting", &Content{freelancer, specs}}
+			generateHTML(w, data, funcMap, "base", "header", "footer", "userProfile/profile", "userProfile/setting_base", "userProfile/freelancer/setting")
 		}
 	}
 }

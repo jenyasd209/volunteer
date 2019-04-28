@@ -21,11 +21,18 @@ func main() {
 	r.HandleFunc("/logout", logging(logout))
 
 	// route_user_profile
-	r.HandleFunc("/my_profile", logging(freelancerProfile))
-	r.HandleFunc("/my_profile/about", logging(freelancerProfileAbout))
-	r.HandleFunc("/my_profile/works", logging(freelancerProfileWorks))
-	r.HandleFunc("/my_profile/contacts", logging(freelancerProfileContacts))
-	r.HandleFunc("/my_profile/setting", logging(freelancerProfileSetting))
+	subUserProfile := r.PathPrefix("/user").Subrouter()
+	subUserProfile.HandleFunc("", logging(freelancerProfile))
+	subUserProfile.HandleFunc("/", logging(freelancerProfile))
+	subUserProfile.HandleFunc("/about", logging(freelancerProfileAbout))
+	subUserProfile.HandleFunc("/works", logging(freelancerProfileWorks))
+	subUserProfile.HandleFunc("/contacts", logging(freelancerProfileContacts))
+	subUserProfile.HandleFunc("/setting", logging(freelancerProfileSetting))
+	// r.HandleFunc("/my_profile", logging(freelancerProfile))
+	// r.HandleFunc("/my_profile/about", logging(freelancerProfileAbout))
+	// r.HandleFunc("/my_profile/works", logging(freelancerProfileWorks))
+	// r.HandleFunc("/my_profile/contacts", logging(freelancerProfileContacts))
+	// r.HandleFunc("/my_profile/setting", logging(freelancerProfileSetting))
 
 	fs := http.FileServer(http.Dir("static"))
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
