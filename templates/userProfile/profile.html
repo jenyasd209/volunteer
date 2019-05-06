@@ -1,43 +1,194 @@
 {{define "content"}}
 <script src="/static/js/profile.js"></script>
+
+
+{{/*  <div class="wrap">*/}}
+{{/*    <div class="row">*/}}
+{{/*      <div class="col s3">*/}}
+{{/*        <div class="section" >*/}}
+{{/*          <img class="responsive-img materialboxed" src="../static/image/profile.jpg" alt="" style="max-height: 300px; margin: auto">*/}}
+{{/*        </div>*/}}
+{{/*        <div class="vertical-menu">*/}}
+{{/*          <a class='hide-on-med-and-up dropdown-trigger btn' href='#' data-target='drop-menu-user' style="width: 100%">Menu<i class="material-icons right">menu</i></a>*/}}
+{{/*          <ul class="hide-on-med-and-down">*/}}
+{{/*            <li><a class="collection-item" href="/user/about" onclick="setSelected(this)">About</a></li>*/}}
+{{/*            <li><a class="collection-item" href="/user/works" onclick="setSelected(this)">Works</a></li>*/}}
+{{/*            <li><a class="collection-item" href="/user/contacts" onclick="setSelected(this)">Contacts</a></li>*/}}
+{{/*            <hr>*/}}
+{{/*            <li><a class="collection-item" href="/user/setting" onclick="setSelected(this)">Setting</a></li>*/}}
+{{/*            <li><a class="collection-item" href="/logout">Logout</a></li>*/}}
+{{/*          </ul>*/}}
+{{/*        </div>*/}}
+{{/*      </div>*/}}
+{{/*                <div class="col s12 m12 l8 xl9">*/}}
+{{/*                  <div class="section">*/}}
+{{/*                    <div class="base-info">*/}}
+{{/*                      <div class="name">{{ .User.FirstName }} {{ .User.LastName }}</div>*/}}
+{{/*                      <div class="rating">*/}}
+{{/*                        <span class="fa fa-star checked"></span>*/}}
+{{/*                        <span class="fa fa-star checked"></span>*/}}
+{{/*                        <span class="fa fa-star checked"></span>*/}}
+{{/*                        <span class="fa fa-star-half-empty checked"></span>*/}}
+{{/*                        <span class="fa fa-star"></span>*/}}
+{{/*                        <span>({{ .User.Rait }})</span>*/}}
+{{/*                      </div>*/}}
+{{/*                    </div>*/}}
+{{/*                  </div>*/}}
+{{/*                  {{ template "profile_content" .}}*/}}
+{{/*                </div>*/}}
+
+{{/*    </div>*/}}
+{{/*  </div>*/}}
+
+{{/*<div class="wrap">*/}}
+{{/*    <!-- <div class="container"> -->*/}}
+{{/*      <div class="profile-wrap">*/}}
+{{/*        <div class="row center-align" style="margin-bottom: 0px">*/}}
+{{/*          <div class="col s12 m12 l4 xl3">*/}}
+{{/*            <div class="section">*/}}
+{{/*              <div class="section" >*/}}
+{{/*                <img class="responsive-img materialboxed" src="../static/image/profile.jpg" alt="" style="max-width: 250px; margin: auto">*/}}
+{{/*              </div>*/}}
+{{/*              <div class="vertical-menu">*/}}
+{{/*                <ul class="hide-on-med-and-down">*/}}
+{{/*                  <li><a class="collection-item" href="/user/about" onclick="setSelected(this)">About</a></li>*/}}
+{{/*                  <li><a class="collection-item" href="/user/works" onclick="setSelected(this)">Works</a></li>*/}}
+{{/*                  <li><a class="collection-item" href="/user/contacts" onclick="setSelected(this)">Contacts</a></li>*/}}
+{{/*                  <hr>*/}}
+{{/*                  <li><a class="collection-item" href="/user/setting" onclick="setSelected(this)">Setting</a></li>*/}}
+{{/*                  <li><a class="collection-item" href="/logout">Logout</a></li>*/}}
+{{/*                </ul>*/}}
+
+{{/*                <ul id='drop-menu-user' class='dropdown-content'>*/}}
+{{/*                  <li><a href="/user/about" onclick="setSelected(this)">About</a></li>*/}}
+{{/*                  <li><a href="/user/works" onclick="setSelected(this)">Works</a></li>*/}}
+{{/*                  <li><a href="/user/contacts" onclick="setSelected(this)">Contacts</a></li>*/}}
+{{/*                  <li class="divider" tabindex="-1"></li>*/}}
+{{/*                  <li><a href="/user/setting" onclick="setSelected(this)">Setting</a></li>*/}}
+{{/*                  <li><a href="/logout">Logout</a></li>*/}}
+{{/*                </ul>*/}}
+{{/*              </div>*/}}
+{{/*            </div>*/}}
+
+{{/*          </div>*/}}
+{{/*          <div class="col s12 m12 l8 xl9">*/}}
+{{/*            <div class="section">*/}}
+{{/*              <div class="base-info">*/}}
+{{/*                <div class="name">{{ .User.FirstName }} {{ .User.LastName }}</div>*/}}
+{{/*                <div class="rating">*/}}
+{{/*                  <span class="fa fa-star checked"></span>*/}}
+{{/*                  <span class="fa fa-star checked"></span>*/}}
+{{/*                  <span class="fa fa-star checked"></span>*/}}
+{{/*                  <span class="fa fa-star-half-empty checked"></span>*/}}
+{{/*                  <span class="fa fa-star"></span>*/}}
+{{/*                  <span>({{ .User.Rait }})</span>*/}}
+{{/*                </div>*/}}
+{{/*              </div>*/}}
+{{/*              {{ template "profile_content" .}}*/}}
+{{/*            </div>*/}}
+
+{{/*          </div>*/}}
+{{/*        </div>*/}}
+{{/*    </div>*/}}
+{{/*  <!-- </div> -->*/}}
+{{/*</div>*/}}
+
 <div class="wrap">
-    <!-- <div class="container"> -->
-      <div class="profile-wrap">
-        <div class="row center-align">
-          <div class="col s12 m12 l4 xl3 profile-navigation">
-            <div class="container__img">
-              <img src="../static/image/profile-icon.png" alt="">
+  <div class="container">
+    <div class="section">
+      <div class="row white z-depth-2">
+        <div class="col s12 m12 l4">
+          <div class="section">
+            <div class="row">
+              <div class="col s12">
+                <img class="responsive-img materialboxed" src="../static/image/profile.jpg" alt="" style="width: 100%;max-width: 250px; margin: auto">
+              </div>
+              <div class="col s12 center-align">
+                <a class="btn" href="/user/setting" style="width: 100%; max-width: 250px;">Edit photo</a>
+              </div>
             </div>
-            <div class="vertical-menu">
-              <a id="icon-user-mobile" href="javascript:void(0);" onclick="showMobileMenu()">Menu<i class="material-icons right">menu</i></a>
-              <ul id="user-menu" class="collection">
-                <li><a class="collection-item" href="/user/about" onclick="setSelected(this)">About</a></li>
-                <li><a class="collection-item" href="/user/works" onclick="setSelected(this)">Works</a></li>
-                <li><a class="collection-item" href="/user/contacts" onclick="setSelected(this)">Contacts</a></li>
-                <hr>
-                <li><a class="collection-item" href="/user/setting" onclick="setSelected(this)">Setting</a></li>
-                <li><a class="collection-item" href="/logout">Logout</a></li>
-              </ul>
-            </div>
-          </div>
-          <div class="col s12 m12 l8 xl9">
-            <div class="section">
-              <div class="base-info">
-                <div class="name">{{ .Content.User.FirstName }} {{ .Content.User.LastName }}</div>
+            <div class="row">
+              <div class="col s12 center-align">
                 <div class="rating">
                   <span class="fa fa-star checked"></span>
                   <span class="fa fa-star checked"></span>
                   <span class="fa fa-star checked"></span>
                   <span class="fa fa-star-half-empty checked"></span>
                   <span class="fa fa-star"></span>
-                  <span>({{ .Content.User.Rait }})</span>
+                  <span>({{ .User.Rait }})</span>
                 </div>
               </div>
             </div>
+{{/*            <div class="row">*/}}
+{{/*              <div class="col s12 center-align">*/}}
+{{/*                <div class="collection">*/}}
+{{/*                  <a class="collection-item" href="/user/setting">Me</a>*/}}
+{{/*                  <a class="collection-item" href="/user/setting">Setting</a>*/}}
+{{/*                </div>*/}}
+{{/*              </div>*/}}
+{{/*            </div>*/}}
+          </div>
+        </div>
+        <div class="col s12 m12 l8">
+          <div class="section">
+            <div class="row">
+              <div class="col s12">
+                <p class="flow-text center-align">{{ .User.FirstName }} {{ .User.LastName }}</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col s12 m3">
+                <p class="bold">Specializations:</p>
+              </div>
+              <div class="col s12 m9">
+                {{range .User.Specialization }}
+                  <span>{{ getNameSpecialization . }} |</span>
+                {{end}}
+              </div>
+            </div>
+            <div class="row">
+              <div class="col s3">
+                <p class="bold">Facebook:</p>
+              </div>
+              <div class="col s9">
+                <p>{{ .User.Facebook }}</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col s3">
+                <p class="bold">Skype:</p>
+              </div>
+              <div class="col s9">
+                <p>{{ .User.Skype }}</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col s3">
+                <p class="bold">Phone:</p>
+              </div>
+              <div class="col s9">
+                <p>{{ .User.Phone }}</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col s3">
+                <p class="bold">About:</p>
+              </div>
+              <div class="col s9">
+                <p>{{ .User.About }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row white z-depth-2">
+        <div class="col s12">
+          <div class="section">
             {{ template "profile_content" .}}
           </div>
         </div>
+      </div>
     </div>
-  <!-- </div> -->
+  </div>
 </div>
 {{ end }}

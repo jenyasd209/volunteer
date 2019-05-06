@@ -26,15 +26,19 @@ function checkPassword(){
 }
 
 function selectGroupCheck(){
-  var group = document.getElementsByName('group');
-  var freelancer = document.getElementById('freelancer-block');
-  var customer = document.getElementById('customer-block');
+  let group = document.getElementsByName('group');
+  let freelancer = document.getElementById('freelancer-block');
+  let customer = document.getElementById('customer-block');
   if (group[0].checked) {
     freelancer.classList.remove("hide");
     customer.classList.add("hide");
+    document.getElementById("specializations").required = true;
+    document.getElementById("organization-name").required = false;
   }if (group[1].checked){
     freelancer.classList.add("hide");
     customer.classList.remove("hide");
+    document.getElementById("organization-name").required = true;
+    document.getElementById("specializations").required = false;
   }
   // elem1.classList.add('selected-group');
   // elem2.classList.remove('selected-group');

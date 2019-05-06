@@ -11,8 +11,15 @@ html{
 body{
   background-color: #f4f6f9;
 }
+
+html{
+  /*min-height: 100vh;*/
+  /*min-width: 250px;*/
+}
+
 html, body{
-  height: 100%;
+  min-height: 100vh;
+  /*height: 100%;*/
   min-width: 250px;
 }
 
@@ -30,19 +37,53 @@ nav img{
 }
 
 footer {
-  flex:  0 auto;
+  flex: 0 auto;
+}
+
+.horizontal-ul li{
+  display: inline;
+  margin-right: 5px;
+}
+
+.dropdown:hover .drop-content {
+  display: block;
+}
+
+.drop-content{
+  display: none;
+  position: absolute;
+  min-width: 200px;
+  /*width: %;*/
+  /*line-height: 60px;*/
+}
+
+#mobile-menu a{
+  width: 100%;
+}
+
+#mobile-menu{
+  text-align: center;
+}
+
+.page{
+  padding: 20px 0;
 }
 
 .page, .wrap {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  padding: 20px 0;
+  height: 100%;
+  /*padding: 20px 0;*/
 }
 
 .small-nav {
     height: 35px;
     line-height: 35px;
+}
+
+.section-wrap{
+  margin: 3% 3% 0 3%;
 }
 
 .small-nav ul li i{
@@ -180,27 +221,50 @@ footer {
 @media screen and (max-width: 580px) {
   .form{
     max-width: 90%;
+    width: 90%;
   }
 }
 
 /* -----------------base profile ----------------- */
 
 .profile-wrap{
-  width: 80%;
-  max-width: 90%;
+  height: 100%;
+  width: 90%;
+  /*max-width: 90%;*/
   min-width: 300px;
-  min-height: 100%;
+  /*min-height: 100%;*/
   /* background-color: white; */
   background-color: #fafafa;
-  margin: auto;
+  margin: 20px auto;
   padding: 30px 20px;
-  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+  /*box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);*/
 }
 
 
 /* -----------------profile freelancer ----------------- */
 
+#user-menu{
+  border: 2px solid #e0e0e0;
+  border-bottom: 0px;
+  display: flex;
+  justify-content: space-around;
+}
+
+#user-menu a{
+  color: black;
+}
+
+#user-menu a:hover{
+  color: black;
+}
+
+#drop-menu-user a{
+  text-align: center;
+  width: 100%;
+}
+
 .container__img img{
+  width: auto;
   max-width: 100%;
   max-height: 300px;
 }
@@ -319,17 +383,17 @@ footer {
   }
 }
 
-@media screen and (max-width: 600px) {
-  #icon-user-mobile{
-    display: block;
-    background-color: #0277bd;
-    color: white;
-  }
-  #icon-user-mobile:hover{
-    background-color: white;
-    color: black;
-  }
-  .vertical-menu ul{
-    display: none;
-  }
+@media screen and (max-width: 992px) {
+  /*#icon-user-mobile{*/
+  /*  display: block;*/
+  /*  background-color: #0277bd;*/
+  /*  color: white;*/
+  /*}*/
+  /*#icon-user-mobile:hover{*/
+  /*  background-color: white;*/
+  /*  color: black;*/
+  /*}*/
+  /*.vertical-menu ul{*/
+  /*  display: none;*/
+  /*}*/
 }

@@ -2,6 +2,7 @@
 <div class="page">
   <div class="form">
     <form name="form-reg" id="form-reg" role="form" action="/registration_account" method="post">
+      <h3 class="center-align">Registration</h3>
       <div class="row">
         <div class="col s12">
           <p class="center">Fields with * are required</p>
@@ -67,11 +68,11 @@
       <div id="freelancer-block">
         <div class="row">
           <div class="input-field col s12">
-            <select multiple id="specialization" name="specialization[]">
+            <select multiple id="specializations" name="specialization[]" required>
               <option value="" disabled>Choose your specialization</option>
-              <option value="1">Web</option>
-              <option value="2">Mobile</option>
-              <option value="3">Desctop</option>
+              {{range .Content.Specialization}}
+                  <option value="{{.ID}}">{{.Name}}</option>
+              {{end}}
             </select>
             <label for="specialization">Specialization*</label>
           </div>

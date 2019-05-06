@@ -8,6 +8,8 @@ var main = function(){
   // $('.parallax').parallax();
   // $('.sidenav').sidenav();
   $(".dropdown-trigger").dropdown();
+  $('.materialboxed').materialbox();
+  // $('.tabs').tabs();
 }
 
 $(document).ready(main);

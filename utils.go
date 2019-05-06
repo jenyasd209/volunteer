@@ -2,16 +2,29 @@ package main
 
 import (
 	"fmt"
+	"graduate/data"
 	"html/template"
 	"log"
 	"net/http"
 	"strconv"
 )
 
-type Data struct {
-	PageTitle string
-	Content   interface{}
+type PageData struct {
+	Title string
+	User data.HelperUser
+	Content interface{}
+	Error string
 }
+
+//type PageData struct {
+//	PageTitle string
+//	Content struct{
+//		Data interface{}
+//		User data.HelperUser
+//	}
+//}
+
+//var pageData PageData
 
 func generateHTML(w http.ResponseWriter, data interface{}, funcMap template.FuncMap, filenames ...string) {
 	var files []string
@@ -27,7 +40,7 @@ func generateHTML(w http.ResponseWriter, data interface{}, funcMap template.Func
 	templates.ExecuteTemplate(w, "base", data)
 }
 
-//arrayStringToArrayInt conver []string to []int
+//arrayStringToArrayInt convert []string to []int
 func arrayStringToArrayInt(strArray []string) (intArry []int) {
 	for _, i := range strArray {
 		j, err := strconv.Atoi(i)

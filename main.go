@@ -21,12 +21,12 @@ func main() {
 	r.HandleFunc("/logout", logging(logout))
 
 	// route_user_profile
-	subUserProfile := r.PathPrefix("/user").Subrouter()
+	subUserProfile := r.PathPrefix("/my_profile").Subrouter()
 	subUserProfile.HandleFunc("", logging(freelancerProfile))
 	subUserProfile.HandleFunc("/", logging(freelancerProfile))
-	subUserProfile.HandleFunc("/about", logging(freelancerProfileAbout))
-	subUserProfile.HandleFunc("/works", logging(freelancerProfileWorks))
-	subUserProfile.HandleFunc("/contacts", logging(freelancerProfileContacts))
+	//subUserProfile.HandleFunc("/about", logging(freelancerProfileAbout))
+	//subUserProfile.HandleFunc("/works", logging(freelancerProfileWorks))
+	//subUserProfile.HandleFunc("/contacts", logging(freelancerProfileContacts))
 	subUserProfile.HandleFunc("/setting", logging(freelancerProfileSetting))
 	// r.HandleFunc("/my_profile", logging(freelancerProfile))
 	// r.HandleFunc("/my_profile/about", logging(freelancerProfileAbout))
@@ -48,12 +48,14 @@ func main() {
 
 func home(w http.ResponseWriter, r *http.Request) {
 	err := data.SessionChek(r, &session)
+	pageData := &PageData{
+		Title : "Home",
+	}
 	if err != nil {
-		data := &Data{"Home", nil}
-		generateHTML(w, data, nil, "base", "header", "footer", "home_page")
+		generateHTML(w, pageData, nil, "base", "header", "footer", "home_page")
 	} else {
 		freelancer, _ := data.GetFreelancerByUserID(session.UserID)
-		data := &Data{"Home", &freelancer}
-		generateHTML(w, data, nil, "base", "header", "footer", "home_page")
+		pageData.User = &freelancer
+		generateHTML(w, pageData, nil, "base", "header", "footer", "home_page")
 	}
 }

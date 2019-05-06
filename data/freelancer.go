@@ -85,7 +85,7 @@ func GetFreelancerByUserID(id int) (freelancer Freelancer, err error) {
 	// 							WHERE F.user_id = U.id and F.user_id = $1`, id).Scan(&freelancer.User.ID,
 	// 	&freelancer.Specialization, &freelancer.Email, &freelancer.Password,
 	// 	&freelancer.Phone, &freelancer.Facebook, &freelancer.Skype, &freelancer.About,
-	// 	&freelancer.Rait, &freelancer.CreatedAt)
+	// 	&freelancer.Rating, &freelancer.CreatedAt)
 	return
 }
 

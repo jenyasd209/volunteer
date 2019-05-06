@@ -2,17 +2,18 @@
 <div class="content">
   <div class="row">
     <div class="col s12">
-      <h5 class="center">About me</h5>
+      <h4 class="center">About me</h4>
       <!-- <h5 class="center">Specialization</h5> -->
       {{template "extention_about" .}}
     </div>
     <div class="col s12">
       <div class="row">
         <div class="col s12">
-          {{ .Content.About }}
+          <span class="flow-text">
+            {{ .User.About }}
+          </span>
         </div>
       </div>
-    </div>
     </div>
   </div>
 </div>

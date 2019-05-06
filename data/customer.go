@@ -75,7 +75,7 @@ func GetCustomerUserID(id int) (customer Customer, err error) {
 	// 							WHERE F.user_id = U.id and F.user_id = $1`, id).Scan(&customer.User.ID,
 	// 	&customer.Organization, &customer.Email, &customer.Password,
 	// 	&customer.Phone, &customer.Facebook, &customer.Skype, &customer.About,
-	// 	&customer.Rait, &customer.CreatedAt)
+	// 	&customer.Rating, &customer.CreatedAt)
 	return
 }
 

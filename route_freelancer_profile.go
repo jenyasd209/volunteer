@@ -7,14 +7,9 @@ import (
 	"net/http"
 )
 
-// var session data.SessionHelper = &data.Session{}
 var session data.Session
 
 func freelancerProfile(w http.ResponseWriter, r *http.Request) {
-	http.Redirect(w, r, "/user/about", 302)
-}
-
-func freelancerProfileAbout(w http.ResponseWriter, r *http.Request) {
 	err := data.SessionChek(r, &session)
 	if err != nil {
 		http.Redirect(w, r, "/login", 302)
@@ -26,32 +21,61 @@ func freelancerProfileAbout(w http.ResponseWriter, r *http.Request) {
 		funcMap := template.FuncMap{
 			"getNameSpecialization": data.GetSpecializationName,
 		}
-		data := &Data{"About", &freelancer}
-		generateHTML(w, data, funcMap, "base", "header", "footer", "userProfile/profile", "userProfile/about_base", "userProfile/freelancer/about")
+		pageData := &PageData{
+			Title : "My About",
+			User : &freelancer,
+		}
+		generateHTML(w, &pageData, funcMap, "base", "header", "footer", "userProfile/profile", "userProfile/freelancer/my_works")
 	}
 }
 
-func freelancerProfileWorks(w http.ResponseWriter, r *http.Request) {
-	err := data.SessionChek(r, &session)
-	if err != nil {
-		http.Redirect(w, r, "/login", 302)
-	} else {
-		freelancer, _ := data.GetFreelancerByUserID(session.UserID)
-		data := &Data{"My works", &freelancer}
-		generateHTML(w, data, nil, "base", "header", "footer", "userProfile/profile", "userProfile/freelancer/my_works")
-	}
-}
+//func freelancerProfileAbout(w http.ResponseWriter, r *http.Request) {
+//	err := data.SessionChek(r, &session)
+//	if err != nil {
+//		http.Redirect(w, r, "/login", 302)
+//	} else {
+//		freelancer, err := data.GetFreelancerByUserID(session.UserID)
+//		if err != nil {
+//			fmt.Println(err)
+//		}
+//		funcMap := template.FuncMap{
+//			"getNameSpecialization": data.GetSpecializationName,
+//		}
+//		pageData := &PageData{
+//			Title : "My About",
+//			User : &freelancer,
+//		}
+//		generateHTML(w, &pageData, funcMap, "base", "header", "footer", "userProfile/profile", "userProfile/freelancer/my_works")
+//	}
+//}
 
-func freelancerProfileContacts(w http.ResponseWriter, r *http.Request) {
-	err := data.SessionChek(r, &session)
-	if err != nil {
-		http.Redirect(w, r, "/login", 302)
-	} else {
-		freelancer, _ := data.GetFreelancerByUserID(session.UserID)
-		data := &Data{"Contacts", &freelancer}
-		generateHTML(w, data, nil, "base", "header", "footer", "userProfile/profile", "userProfile/contacts")
-	}
-}
+//func freelancerProfileWorks(w http.ResponseWriter, r *http.Request) {
+//	err := data.SessionChek(r, &session)
+//	if err != nil {
+//		http.Redirect(w, r, "/login", 302)
+//	} else {
+//		freelancer, _ := data.GetFreelancerByUserID(session.UserID)
+//		pageData := &PageData{
+//			Title : "My works",
+//			User : &freelancer,
+//		}
+//		generateHTML(w, &pageData, nil, "base", "header", "footer", "userProfile/profile", "userProfile/freelancer/my_works")
+//	}
+//}
+
+//func freelancerProfileContacts(w http.ResponseWriter, r *http.Request) {
+//	err := data.SessionChek(r, &session)
+//	if err != nil {
+//		http.Redirect(w, r, "/login", 302)
+//	} else {
+//		freelancer, _ := data.GetFreelancerByUserID(session.UserID)
+//		pageData := &PageData{
+//			Title : "Contacts",
+//			User : &freelancer,
+//		}
+//		generateHTML(w, &pageData, nil, "base", "header", "footer", "userProfile/profile", "userProfile/contacts")
+//	}
+//}
 
 func freelancerProfileSetting(w http.ResponseWriter, r *http.Request) {
 	err := data.SessionChek(r, &session)
@@ -76,18 +100,21 @@ func freelancerProfileSetting(w http.ResponseWriter, r *http.Request) {
 			if err != nil {
 				fmt.Println(err)
 			}
-			http.Redirect(w, r, "/user/about", 302)
+			http.Redirect(w, r, "/my_profile", 302)
 		} else {
-			type Content struct {
-				User           data.Freelancer
-				Specialization []data.Specialization
-			}
 			funcMap := template.FuncMap{
 				"getNameSpecialization":  data.GetSpecializationName,
 				"containsSpecialization": freelancer.ContainsSpecialization,
 			}
-			data := &Data{"Setting", &Content{freelancer, specs}}
-			generateHTML(w, data, funcMap, "base", "header", "footer", "userProfile/profile", "userProfile/setting_base", "userProfile/freelancer/setting")
+
+			pageData := &PageData{
+				Title : "Setting",
+				User : &freelancer,
+				Content : struct{
+					Specialization []data.Specialization
+				}{specs},
+			}
+			generateHTML(w, pageData, funcMap, "base", "header", "footer", "userProfile/profile", "userProfile/setting_base", "userProfile/freelancer/setting")
 		}
 	}
 }

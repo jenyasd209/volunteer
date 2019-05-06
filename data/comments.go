@@ -5,7 +5,7 @@ import "time"
 //Comment struct for "comments" table
 type Comment struct {
 	ID       int
-	Rait     float32
+	Rating   float32
 	Text     string
 	UserID   int
 	CreateAt time.Time
@@ -20,7 +20,7 @@ func (user *User) CreateComment(comment Comment) (err error) {
 		return
 	}
 	defer stmt.Close()
-	err = stmt.QueryRow(comment.Text, comment.Rait, user.ID, time.Now()).Scan()
+	err = stmt.QueryRow(comment.Text, comment.Rating, user.ID, time.Now()).Scan()
 	return
 }
 

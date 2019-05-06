@@ -11,6 +11,14 @@ const (
 	UserRoleModerator  = 3
 )
 
+type HelperUser interface {
+	Create() (err error)
+	UpdateInformation() (err error)
+	UpdateLoginData() (err error)
+	Delete() (err error)
+	CreateSession() (session Session, err error)
+}
+
 //User struct for "users" table
 type User struct {
 	ID        int
@@ -117,6 +125,27 @@ func (user *User) CreateSession() (session Session, err error) {
 	if err != nil {
 		fmt.Println(err)
 		return
+	}
+	return
+}
+
+func (user *User) IsFreelancer()(result bool)  {
+	if user.RoleID == UserRoleFreelancer {
+		result = true
+	}
+	return
+}
+
+func (user *User) IsCustomer()(result bool)  {
+	if user.RoleID == UserRoleCustomer {
+		result = true
+	}
+	return
+}
+
+func (user *User) IsModerator()(result bool)  {
+	if user.RoleID == UserRoleModerator {
+		result = true
 	}
 	return
 }
