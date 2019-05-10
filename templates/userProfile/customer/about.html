@@ -1,8 +1,13 @@
-{{define "extention_about"}}
-    <div class="row">
-        <div class="col s12">
-            <span class="center">Organization: </span>
-            {{.User.Organization}}
+{{define "profile_extends"}}
+    {{if .User.Organization}}
+        <div class="row">
+            <div class="col s12 m3">
+                <p class="bold">Organization:</p>
+            </div>
+            <div class="col s12 m9">
+                <p>{{.User.Organization}}</p>
+            </div>
         </div>
-    </div>
+    {{end}}
 {{end}}
+

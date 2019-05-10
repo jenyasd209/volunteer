@@ -32,7 +32,7 @@ create table users(
   facebook varchar(255) DEFAULT '',
   skype varchar(255) DEFAULT '',
   role_id integer references roles(id) on delete cascade on update cascade,
-  photo_url varchar(255) DEFAULT '',
+  photo_url varchar(255) DEFAULT '/static/image/profile.jpg',
   created_at timestamp not null
 );
 
@@ -68,7 +68,7 @@ create table orders (
   id serial primary key,
   title varchar(255) not null,
   content text not null,
-  customer_id integer references customers(user_id),
+  customer_id integer references customers(user_id) on delete cascade on update cascade,
   status_id integer references order_status(id) on delete cascade on update cascade DEFAULT 1,
   created_at timestamp not null
 );

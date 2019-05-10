@@ -1,10 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
-</body>
-</html>
+{{define "extention_setting"}}
+    <div class="row">
+        <div class="input-field col s12">
+            <input name="organization" id="organization" type="text" class="validate" value="{{.User.Organization }}">
+            <label for="organization">Organization</label>
+        </div>
+    </div>
+{{end}}

@@ -8,13 +8,18 @@ import (
 )
 
 func login(w http.ResponseWriter, r *http.Request) {
-	if _, err := r.Cookie("_cookie"); err == nil {
+	//if _, err := r.Cookie("_cookie"); err == nil {
+	//	http.Redirect(w, r, "/my_profile", 302)
+	_, err := session(w, r);
+	if err == nil {
 		http.Redirect(w, r, "/my_profile", 302)
 	} else {
-		pageData := &PageData{
-			Title:"Login",
+		pageData := PageData{
+			Title :"Login",
 		}
+		//pageData.Title = "Login"
 		generateHTML(w, &pageData, nil, "base", "header", "footer", "login")
+		log.Println(pageData)
 	}
 }
 
@@ -23,9 +28,8 @@ func registration(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/my_profile", 302)
 	} else {
 		specialization, _ := data.GetAllSpecialization()
-
-		pageData := &PageData{
-			Title:"Registration",
+		pageData := PageData{
+			Title :"Registration",
 			Content : struct{
 				Specialization []data.Specialization
 			}{specialization},
@@ -58,8 +62,6 @@ func registrationAccount(w http.ResponseWriter, r *http.Request) {
 		}
 		if err := freelancer.Create(); err != nil {
 			fmt.Println(err)
-		}else{
-			http.Redirect(w, r, "/registration", 302)
 		}
 	}
 	if group == "customer" {
@@ -70,8 +72,6 @@ func registrationAccount(w http.ResponseWriter, r *http.Request) {
 		}
 		if err := customer.Create(); err != nil {
 			fmt.Println(err)
-		}else {
-			http.Redirect(w, r, "/registration", 302)
 		}
 	}
 
@@ -85,26 +85,26 @@ func loginAccount(w http.ResponseWriter, r *http.Request) {
 		panic(err)
 	}
 
+	pageData := PageData{
+		Title :"Registration",
+	}
+
 	user, err := data.GetUserByEmail(r.PostFormValue("email"))
 	if err != nil {
-		//pageData := &PageData{
-		//	Content : struct{Error string}{"User is not found"},
-		//}
-		//generateHTML(w, &pageData, nil, "base", "header", "footer", "login")
-
-		http.Redirect(w, r, "/login", 302)
+		pageData.Errors = []string{"User is not found"}
+		//http.Redirect(w, r, "/login", 302)
+		generateHTML(w, &pageData, nil, "base", "header", "footer", "login")
 		return
 	}
 
 	if user.Password == data.Encrypt(r.PostFormValue("password")) {
-		// group := r.Form.Get("group")
 		if user.IsFreelancer(){
-			if ok, _ := data.CheckFreelancer(user.ID); !ok {
+			if ok := data.CheckFreelancer(user.ID); !ok {
 				http.Redirect(w, r, "/login", 302)
 				return
 			}
 		} else if user.IsCustomer(){
-			if ok, _ := data.CheckCustomer(user.ID); !ok {
+			if ok := data.CheckCustomer(user.ID); !ok {
 				http.Redirect(w, r, "/login", 302)
 				return
 			}
@@ -112,24 +112,22 @@ func loginAccount(w http.ResponseWriter, r *http.Request) {
 			http.Redirect(w, r, "/login", 302)
 			return
 		}
-		session, err = user.CreateSession()
+		sess, err := user.CreateSession()
 		if err != nil {
 			return
 		}
 		cookie := http.Cookie{
 			Name: "_cookie",
-			Value:    session.UUID,
+			Value:    sess.UUID,
 			HttpOnly: true,
 		}
 		http.SetCookie(w, &cookie)
 
 		http.Redirect(w, r, "/my_profile", 302)
 	} else {
-		//pageData := &PageData{
-		//	Content : struct{Error string}{"Password is wrong"},
-		//}
-		//generateHTML(w, &pageData, nil, "base", "header", "footer", "login")
-		http.Redirect(w, r, "/login", 302)
+		pageData.Errors = []string{"Password is wrong"}
+		//http.Redirect(w, r, "/login", 302)
+		generateHTML(w, &pageData, nil, "base", "header", "footer", "login")
 		return
 	}
 }
@@ -137,8 +135,8 @@ func loginAccount(w http.ResponseWriter, r *http.Request) {
 func logout(w http.ResponseWriter, r *http.Request) {
 	cookie, err := r.Cookie("_cookie")
 	if err != http.ErrNoCookie {
-		session = data.Session{UUID: cookie.Value}
-		err = session.DeleteByUUID()
+		sess := data.Session{UUID: cookie.Value}
+		err = sess.DeleteByUUID()
 		if err != nil{
 			log.Println(err)
 		}else {

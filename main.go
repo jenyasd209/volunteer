@@ -22,17 +22,11 @@ func main() {
 
 	// route_user_profile
 	subUserProfile := r.PathPrefix("/my_profile").Subrouter()
-	subUserProfile.HandleFunc("", logging(freelancerProfile))
-	subUserProfile.HandleFunc("/", logging(freelancerProfile))
-	//subUserProfile.HandleFunc("/about", logging(freelancerProfileAbout))
-	//subUserProfile.HandleFunc("/works", logging(freelancerProfileWorks))
-	//subUserProfile.HandleFunc("/contacts", logging(freelancerProfileContacts))
-	subUserProfile.HandleFunc("/setting", logging(freelancerProfileSetting))
-	// r.HandleFunc("/my_profile", logging(freelancerProfile))
-	// r.HandleFunc("/my_profile/about", logging(freelancerProfileAbout))
-	// r.HandleFunc("/my_profile/works", logging(freelancerProfileWorks))
-	// r.HandleFunc("/my_profile/contacts", logging(freelancerProfileContacts))
-	// r.HandleFunc("/my_profile/setting", logging(freelancerProfileSetting))
+	subUserProfile.HandleFunc("", logging(profile))
+	subUserProfile.HandleFunc("/", logging(profile))
+	subUserProfile.HandleFunc("/new_order", logging(newOrder))
+	subUserProfile.HandleFunc("/setting", logging(profileSetting))
+	subUserProfile.HandleFunc("/upload_photo", logging(uploadPhoto))
 
 	fs := http.FileServer(http.Dir("static"))
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
@@ -47,14 +41,14 @@ func main() {
 }
 
 func home(w http.ResponseWriter, r *http.Request) {
-	err := data.SessionChek(r, &session)
 	pageData := &PageData{
 		Title : "Home",
 	}
+	sess, err := session(w, r)
 	if err != nil {
 		generateHTML(w, pageData, nil, "base", "header", "footer", "home_page")
 	} else {
-		freelancer, _ := data.GetFreelancerByUserID(session.UserID)
+		freelancer, _ := data.GetFreelancerByUserID(sess.UserID)
 		pageData.User = &freelancer
 		generateHTML(w, pageData, nil, "base", "header", "footer", "home_page")
 	}

@@ -4,8 +4,10 @@
     <div class="form">
       <form name="form-login" id="form-login" class="col s12" role="form" action="/login_account" method="post">
         <h3 class="center-align">Login</h3>
-        {{if .Error}}
-          <p class="center-align">{{.Error}}</p>
+        {{if .Errors}}
+          {{range .Errors}}
+            <p class="center-align red-text">{{.}}</p>
+          {{end}}
         {{end}}
         <div class="row">
           <div class="input-field col s12">

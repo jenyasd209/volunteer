@@ -2,6 +2,7 @@ package data
 
 import (
 	"fmt"
+	"log"
 	"time"
 )
 
@@ -15,6 +16,7 @@ type HelperUser interface {
 	Create() (err error)
 	UpdateInformation() (err error)
 	UpdateLoginData() (err error)
+	UpdatePhoto() (err error)
 	Delete() (err error)
 	CreateSession() (session Session, err error)
 }
@@ -30,6 +32,7 @@ type User struct {
 	Facebook  string
 	Skype     string
 	About     string
+	Photo     string
 	Rait      float32
 	RoleID    int
 	CreatedAt time.Time
@@ -86,6 +89,22 @@ func (user *User) UpdateLoginData() (err error) {
 
 	defer stmt.Close()
 	err = stmt.QueryRow(user.Email, Encrypt(user.Password), user.ID).Scan(&user.ID)
+	if err != nil {
+		fmt.Println(err)
+	}
+	return
+}
+
+// UpdatePhoto column photo_url in "freelancer" table
+func (user *User) UpdatePhoto() (err error) {
+	statement := `UPDATE users SET photo_url = $1 WHERE id = $2 returning id`
+	stmt, err := Db.Prepare(statement)
+	if err != nil {
+		panic(err)
+	}
+
+	defer stmt.Close()
+	err = stmt.QueryRow(user.Photo, user.ID).Scan(&user.ID)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -152,8 +171,8 @@ func (user *User) IsModerator()(result bool)  {
 
 //GetAllUsers return all rows from table "freelancer"
 func GetAllUsers() (users []User, r error) {
-	rows, err := Db.Query(`SELECT id, first_name, last_name, email, password,
-															phone, facebook, skype, about, rait, created_at FROM users`)
+	rows, err := Db.Query(`SELECT id, first_name, last_name, email, password, phone, facebook,
+       						photo_url, skype, about, rait, created_at FROM users`)
 	if err != nil {
 		return
 	}
@@ -162,9 +181,11 @@ func GetAllUsers() (users []User, r error) {
 		user := User{}
 
 		if err = rows.Scan(&user.ID, &user.FirstName, &user.LastName, &user.Email, &user.Password, &user.Phone,
-			&user.Facebook, &user.Skype, &user.About, &user.Rait, &user.CreatedAt); err != nil {
-			users = append(users, user)
+			&user.Facebook, &user.Skype, &user.About, &user.Rait, &user.Photo, &user.CreatedAt); err != nil {
+			log.Println(err)
+			return
 		}
+		users = append(users, user)
 	}
 
 	rows.Close()
@@ -174,9 +195,9 @@ func GetAllUsers() (users []User, r error) {
 //GetUserByEmail return rows with required email
 func GetUserByEmail(email string) (user User, err error) {
 	err = Db.QueryRow(`SELECT id, first_name, last_name, email, password, phone,
-		 								 facebook, skype, about, rait, role_id, created_at FROM users
+		 								 facebook, skype, about, rait, role_id, photo_url, created_at FROM users
 										 WHERE email = $1`, email).Scan(&user.ID, &user.FirstName, &user.LastName, &user.Email,
-		&user.Password, &user.Phone, &user.Facebook, &user.Skype, &user.About, &user.Rait, &user.RoleID, &user.CreatedAt)
+		&user.Password, &user.Phone, &user.Facebook, &user.Skype, &user.About, &user.Rait, &user.RoleID, &user.Photo, &user.CreatedAt)
 
 	return
 }
@@ -184,9 +205,9 @@ func GetUserByEmail(email string) (user User, err error) {
 //GetUserByID return rows with required ID
 func GetUserByID(id int) (user User, err error) {
 	err = Db.QueryRow(`SELECT id, first_name, last_name, email, password, phone,
-		 								 facebook, skype, about, rait, role_id, created_at FROM users
+		 								 facebook, skype, about, rait, role_id, photo_url, created_at FROM users
 										 WHERE id = $1`, id).Scan(&user.ID, &user.FirstName, &user.LastName, &user.Email,
-		&user.Password, &user.Phone, &user.Facebook, &user.Skype, &user.About, &user.Rait, &user.RoleID, &user.CreatedAt)
+		&user.Password, &user.Phone, &user.Facebook, &user.Skype, &user.About, &user.Rait, &user.RoleID, &user.Photo, &user.CreatedAt)
 	return
 }
 

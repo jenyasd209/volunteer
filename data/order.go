@@ -2,6 +2,7 @@ package data
 
 import (
 	"errors"
+	"fmt"
 	"log"
 	"time"
 )
@@ -18,7 +19,7 @@ type Order struct {
 	ID      int
 	Title   string
 	Content string
-	Customer
+	CustomerID int
 	Status
 	CreatedAt time.Time
 }
@@ -56,14 +57,18 @@ func (customer *Customer) CreateOrder(title string, content string) (order Order
 	}
 
 	defer stmt.Close()
-	err = stmt.QueryRow(title, content, customer.ID, time.Now()).Scan(&order.ID, order.Title,
-		order.Content, order.Customer, order.CreatedAt)
+	err = stmt.QueryRow(title, content, customer.User.ID, time.Now()).Scan(&order.ID, &order.Title,
+		&order.Content, &order.CustomerID, &order.CreatedAt)
+	if err != nil {
+		log.Println(customer.ID)
+		log.Println(err)
+	}
 	return
 }
 
 //UpdateOrder row in "order" table
 func (customer *Customer) UpdateOrder(order *Order) (err error) {
-	if order.Customer.ID == customer.ID {
+	if order.CustomerID == customer.ID {
 		if order.IsAvailable() {
 			statement := `UPDATE orders SET title = $1, content = $2 WHERE id = $3
 			returning id`
@@ -85,7 +90,7 @@ func (customer *Customer) UpdateOrder(order *Order) (err error) {
 
 // DeleteOrder row from "order" table
 func (customer *Customer) DeleteOrder(order Order) (err error) {
-	if order.Customer.ID == customer.ID {
+	if order.CustomerID == customer.ID {
 		if order.IsAvailable() {
 			statement := "DELETE FROM orders WHERE id = $1"
 			stmt, err := Db.Prepare(statement)
@@ -119,7 +124,7 @@ func (customer *Customer) deletePerformedOrder(orderID int) {
 
 //MakeOrderPerformed row in "order" table
 func (customer *Customer) MakeOrderPerformed(performedOrder *PerformedOrder) (err error) {
-	if performedOrder.Customer.ID == customer.ID {
+	if performedOrder.CustomerID == customer.ID {
 		statement := `INSERT INTO performed_orders (order_id, freelancer_id) values ($1, $2)`
 		stmt, err := Db.Prepare(statement)
 		if err != nil {
@@ -140,7 +145,7 @@ func (customer *Customer) MakeOrderPerformed(performedOrder *PerformedOrder) (er
 
 //MakeOrderDone row in "order" table
 func (customer *Customer) MakeOrderDone(completeOrder *CompleteOrder) (err error) {
-	if completeOrder.Customer.ID == customer.ID {
+	if completeOrder.CustomerID == customer.ID {
 		statement := `INSERT INTO complete_orders (order_id, freelancer_id)
 									values ($1, $2)`
 		stmt, err := Db.Prepare(statement)
@@ -165,7 +170,7 @@ func (customer *Customer) MakeOrderDone(completeOrder *CompleteOrder) (err error
 
 //IsAvailable - check order status, if "available" return true
 func (order *Order) IsAvailable() (available bool) {
-	if order.Status.Name == "Available" {
+	if order.Status.ID == OrderStatusAvailable{
 		available = true
 	}
 	return
@@ -186,5 +191,34 @@ func (order *Order) changeStatus(status int) {
 func OrderDeleteAll() (err error) {
 	statement := "delete from orders"
 	_, err = Db.Exec(statement)
+	return
+}
+
+func (customer *Customer) Orders() (orders []Order) {
+	rows, err := Db.Query(`SELECT id, title, content, customer_id, status_id, created_at FROM orders 
+									WHERE customer_id = $1`, customer.User.ID)
+	if err != nil {
+		return
+	}
+	for rows.Next() {
+		order := Order{}
+		err = rows.Scan(&order.ID, &order.Title, &order.Content, &order.CustomerID, &order.Status.ID, &order.CreatedAt)
+		if err != nil {
+			log.Println(err)
+			return
+		}
+		order.Status = GetStatusByID(order.Status.ID)
+		orders = append(orders, order)
+	}
+	rows.Close()
+	return
+}
+
+func GetStatusByID(id int) (status Status) {
+	err := Db.QueryRow(`SELECT id, name FROM order_status WHERE id = $1`, id).Scan(&status.ID, &status.Name)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
 	return
 }

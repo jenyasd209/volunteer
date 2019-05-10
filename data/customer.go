@@ -3,8 +3,6 @@ package data
 import (
 	"log"
 	"time"
-
-	"github.com/lib/pq"
 )
 
 //Customer struct for "customers" table
@@ -37,14 +35,14 @@ func (customer *Customer) Update() (err error) {
 	if err = customer.User.UpdateInformation(); err != nil {
 		panic(err)
 	}
-	statement := `UPDATE customer SET organization WHERE id = $1`
+	statement := `UPDATE customers SET organization = $1 WHERE id = $2`
 	stmt, err := Db.Prepare(statement)
 	if err != nil {
 		panic(err)
 	}
 
 	defer stmt.Close()
-	err = stmt.QueryRow(customer.Organization).Scan(&customer.ID)
+	err = stmt.QueryRow(customer.Organization, customer.ID).Scan(&customer.ID)
 	return
 }
 
@@ -61,15 +59,14 @@ func (customer *Customer) Delete() (err error) {
 	return
 }
 
-//GetCustomerUserID - return customer by user ID
-func GetCustomerUserID(id int) (customer Customer, err error) {
+//GetCustomerByUserID - return customer by user ID
+func GetCustomerByUserID(id int) (customer Customer, err error) {
 	customer.User, err = GetUserByID(id)
 	if err != nil {
 		return
 	}
 	err = Db.QueryRow(`SELECT id, user_id, organization FROM customers
-								WHERE user_id = $1`, id).Scan(&customer.ID, &customer.User.ID,
-		pq.Array(&customer.Organization))
+								WHERE user_id = $1`, id).Scan(&customer.ID, &customer.User.ID, &customer.Organization)
 	// err = Db.QueryRow(`SELECT C.user_id, C.organization, U.email, U.password,
 	// 							U.phone, U.facebook, U.skype, U.about, U.rait, U.created_at FROM customers C, users U
 	// 							WHERE F.user_id = U.id and F.user_id = $1`, id).Scan(&customer.User.ID,
@@ -80,8 +77,8 @@ func GetCustomerUserID(id int) (customer Customer, err error) {
 }
 
 //CheckCustomer - check exist user in table "customers"
-func CheckCustomer(userID int) (exist bool, err error) {
-	err = Db.QueryRow(`SELECT EXISTS(SELECT id FROM customers WHERE user_id = $1)`, userID).Scan(&exist)
+func CheckCustomer(userID int) (exist bool) {
+	err := Db.QueryRow(`SELECT EXISTS(SELECT id FROM customers WHERE user_id = $1)`, userID).Scan(&exist)
 	if err != nil {
 		log.Println(err)
 		exist = false

@@ -1,10 +1,12 @@
-{{define "extention_about"}}
-<div class="row">
-  <div class="col s12">
-    <span class="center flow-text">Specialization: </span>
-    {{range .User.Specialization }}
-    <span class="flow-text">{{ getNameSpecialization . }} |</span>
-    {{end}}
+{{define "profile_extends"}}
+  <div class="row">
+    <div class="col s12 m3">
+        <p class="bold">Specializations:</p>
+    </div>
+    <div class="col s12 m9">
+      {{range .User.Specialization }}
+        <span>{{ getNameSpecialization . }} |</span>
+      {{end}}
+    </div>
   </div>
-</div>
 {{end}}

@@ -30,14 +30,6 @@
                     <a href="/logout">Logout</a>
                 </div>
             </div>
-{{/*            <a href='#'><i class="material-icons white-text left"> account_circle</i>My profile</a>*/}}
-
-{{/*            <ul id='dropdown-nav-menu' class='blue'>*/}}
-{{/*                <li><a href="/user"><i class="material-icons white-text left"> account_circle</i>My profile</a></li>*/}}
-{{/*                <li><a href="/user/setting"><i class="material-icons white-text left"> account_circle</i>Setting</a></li>*/}}
-{{/*                <li class="divider" tabindex="-1"></li>*/}}
-{{/*                <li><a href="/logout"><i class="material-icons white-text left"> exit_to_app</i>Logout</a></li>*/}}
-{{/*            </ul>*/}}
 {{/*          <li><a href="/user"><i class="material-icons white-text left"> account_circle</i>My profile</a></li>*/}}
 {{/*          <li><a href="/logout"><i class="material-icons white-text left"> exit_to_app</i>Logout</a></li>*/}}
         {{else}}
@@ -53,8 +45,8 @@
     <li><a href="/my_profile"><i class="material-icons white-text left"> account_circle</i>My profile</a></li>
     <li><a class="collection-item" href="/my_profile/setting" onclick="setSelected(this)"><i class="material-icons white-text left">settings</i>Setting</a></li>
     <li><a href="/logout"><i class="material-icons white-text left"> exit_to_app</i>Logout</a></li>
+    <hr>
     {{if (eq .User.RoleID 1)}}
-        <hr>
         <li><a href="/jobs"><i class="material-icons white-text left">work</i>Jobs</a></li>
     {{else if (eq .User.RoleID 2)}}
         <li><a href="/freelancers"><i class="material-icons white-text left">person</i>Freelancers</a></li>

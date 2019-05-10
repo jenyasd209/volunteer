@@ -1,0 +1,32 @@
+{{ define "profile_content" }}
+    <div class="content">
+        <div class="section">
+            <span class="flow-text">My orders</span>
+            <a class="btn right" href="/my_profile/new_order">New Order</a>
+        </div>
+        <div class="row">
+            <div class="col s12">
+                {{if .Content.Orders}}
+                    {{range .Content.Orders}}
+                        <div class="card order">
+                            <div class="card-content">
+                                <span class="card-title">{{.Title}}</span>
+                                <span>{{.Content}}</span>
+                            </div>
+                            <div class="card-action">
+                                <p class="green-text">{{.Status.Name}}</p>
+                                <span>{{.CreatedAt.Format "01 02, 2006 15:04:05"}}</span>
+                                <div class="action-block right">
+                                    <a href="#"><i class="material-icons  light-blue-text darken-1 right">delete</i></a>
+                                    <a href="#"><i class="material-icons  light-blue-text darken-1 right">edit</i></a>
+                                </div>
+                            </div>
+                        </div>
+                    {{end}}
+                {{else}}
+                    <p class="center-align flow-text">No orders</p>
+                {{end}}
+            </div>
+        </div>
+    </div>
+{{ end }}
