@@ -39,13 +39,14 @@ func (freelancer *Freelancer) Create() (err error) {
 
 //Update row in "freelancer" table
 func (freelancer *Freelancer) Update() (err error) {
+	log.Println(freelancer)
 	if err = freelancer.User.UpdateInformation(); err != nil {
-		panic(err)
+		log.Println(err)
 	}
 	statement := `UPDATE freelancers SET specialization = $1 WHERE id = $2`
 	stmt, err := Db.Prepare(statement)
 	if err != nil {
-		panic(err)
+		log.Println(err)
 	}
 
 	defer stmt.Close()

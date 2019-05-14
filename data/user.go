@@ -33,7 +33,7 @@ type User struct {
 	Skype     string
 	About     string
 	Photo     string
-	Rait      float32
+	Rait      float64
 	RoleID    int
 	CreatedAt time.Time
 }
@@ -68,7 +68,7 @@ func (user *User) UpdateInformation() (err error) {
 	 							facebook = $4, skype = $5, about = $6 WHERE id = $7 returning id`
 	stmt, err := Db.Prepare(statement)
 	if err != nil {
-		panic(err)
+		log.Println(err)
 	}
 
 	defer stmt.Close()

@@ -32,13 +32,14 @@ func (customer *Customer) Create() (err error) {
 
 //Update row in "customer" table
 func (customer *Customer) Update() (err error) {
+	log.Println(customer)
 	if err = customer.User.UpdateInformation(); err != nil {
-		panic(err)
+		log.Println(err)
 	}
 	statement := `UPDATE customers SET organization = $1 WHERE id = $2`
 	stmt, err := Db.Prepare(statement)
 	if err != nil {
-		panic(err)
+		log.Println(err)
 	}
 
 	defer stmt.Close()

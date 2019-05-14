@@ -307,7 +307,7 @@ footer {
 
 .content p{
   /*text-align: center;*/
-  font-size: 125%;
+  /*font-size: 125%;*/
 }
 
 .content{
@@ -402,7 +402,7 @@ footer {
   }
 }
 
-@media screen and (max-width: 990px) and (min-width: 600px) {
+@media screen and (max-width: 990px) and (min-width: 599px) {
   .vertical-menu ul{
     flex-direction: row;
     justify-content: center;
@@ -413,10 +413,4 @@ footer {
   .action-block {
     display: inline;
   }
-}
-
-@media screen and (max-width: 992px) {
-  /*.card-action{*/
-  /*  text-align: center;*/
-  /*}*/
 }

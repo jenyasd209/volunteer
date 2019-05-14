@@ -68,7 +68,7 @@ func (customer *Customer) CreateOrder(title string, content string) (order Order
 
 //UpdateOrder row in "order" table
 func (customer *Customer) UpdateOrder(order *Order) (err error) {
-	if order.CustomerID == customer.ID {
+	if order.CustomerID == customer.User.ID {
 		if order.IsAvailable() {
 			statement := `UPDATE orders SET title = $1, content = $2 WHERE id = $3
 			returning id`
@@ -196,7 +196,7 @@ func OrderDeleteAll() (err error) {
 
 func (customer *Customer) Orders() (orders []Order) {
 	rows, err := Db.Query(`SELECT id, title, content, customer_id, status_id, created_at FROM orders 
-									WHERE customer_id = $1`, customer.User.ID)
+									WHERE customer_id = $1 ORDER BY created_at ASC `, customer.User.ID)
 	if err != nil {
 		return
 	}
@@ -220,5 +220,36 @@ func GetStatusByID(id int) (status Status) {
 		fmt.Println(err)
 		return
 	}
+	return
+}
+
+func GetOrderByID(id int) (order Order) {
+	err := Db.QueryRow(`SELECT id, title, content, customer_id, status_id, created_at FROM orders
+						WHERE id = $1`, id).Scan(&order.ID, &order.Title, &order.Content, &order.CustomerID, &order.Status.ID, &order.CreatedAt)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	order.Status = GetStatusByID(order.Status.ID)
+	return
+}
+
+func (customer *Customer) GetOrdersByStatus(status int) (orders *[]Order) {
+	rows, err := Db.Query(`SELECT id, title, content, customer_id, status_id, created_at FROM orders 
+									WHERE customer_id = $1 AND status_id = $2`, customer.User.ID, status)
+	if err != nil {
+		return
+	}
+	for rows.Next() {
+		order := Order{}
+		err = rows.Scan(&order.ID, &order.Title, &order.Content, &order.CustomerID, &order.Status.ID, &order.CreatedAt)
+		if err != nil {
+			log.Println(err)
+			return
+		}
+		order.Status = GetStatusByID(order.Status.ID)
+		*orders = append(*orders, order)
+	}
+	rows.Close()
 	return
 }

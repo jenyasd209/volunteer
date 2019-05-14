@@ -20,8 +20,9 @@
       </div>
       <div class="row">
         <div class="input-field col s12">
-          <textarea name="about" id="about" class="materialize-textarea">{{.User.About}}</textarea>
-          <label for="about">About</label>
+          <textarea name="about" id="about" class="materialize-textarea" maxlength="1000">{{.User.About}}</textarea>
+          <label for="about">About (max length 1000 symbols)</label>
+{{/*          <p>Max length 1000 symbols</p>*/}}
         </div>
       </div>
       <div class="row">

@@ -24,9 +24,12 @@ func main() {
 	subUserProfile := r.PathPrefix("/my_profile").Subrouter()
 	subUserProfile.HandleFunc("", logging(profile))
 	subUserProfile.HandleFunc("/", logging(profile))
-	subUserProfile.HandleFunc("/new_order", logging(newOrder))
 	subUserProfile.HandleFunc("/setting", logging(profileSetting))
 	subUserProfile.HandleFunc("/upload_photo", logging(uploadPhoto))
+
+	//route customer profile
+	subUserProfile.HandleFunc("/new_order", logging(newOrder))
+	subUserProfile.HandleFunc("/edit_order/id{id:[0-9]+}", logging(editOrder))
 
 	fs := http.FileServer(http.Dir("static"))
 	http.Handle("/static/", http.StripPrefix("/static/", fs))

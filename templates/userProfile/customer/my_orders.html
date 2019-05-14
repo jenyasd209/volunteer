@@ -15,10 +15,10 @@
                             </div>
                             <div class="card-action">
                                 <p class="green-text">{{.Status.Name}}</p>
-                                <span>{{.CreatedAt.Format "01 02, 2006 15:04:05"}}</span>
+                                <span>{{.CreatedAt.Format "02 Jan 2006 15:04:05"}}</span>
                                 <div class="action-block right">
-                                    <a href="#"><i class="material-icons  light-blue-text darken-1 right">delete</i></a>
-                                    <a href="#"><i class="material-icons  light-blue-text darken-1 right">edit</i></a>
+                                    <a href="/my_profile/delete_order/id{{.ID}}"><i class="material-icons  light-blue-text darken-1 right">delete</i></a>
+                                    <a href="/my_profile/edit_order/id{{.ID}}"><i class="material-icons  light-blue-text darken-1 right">edit</i></a>
                                 </div>
                             </div>
                         </div>

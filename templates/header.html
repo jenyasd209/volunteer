@@ -6,9 +6,9 @@
       <a href="#" data-target="mobile-menu" class="sidenav-trigger"><i class="material-icons">menu</i></a>
 
       <ul class="left hide-on-med-and-down 5">
-        <li><a href="/#home"><i class="material-icons left"> <img src="../static/image/home.png" alt="Home"></i>Home </a></li>
-        <li><a href="/#about"><i class="material-icons left"> <img src="../static/image/information-outline.png" alt="About"></i>About</a></li>
-        <li><a href="/#contacts"><i class="material-icons left"> <img src="../static/image/contacts.png" alt="Contacts"></i>Contacts</a></li>
+        <li><a href="/#home"><i class="material-icons left"> home</i>Home </a></li>
+        <li><a href="/#about"><i class="material-icons left">info</i>About</a></li>
+        <li><a href="/#contacts"><i class="material-icons left"> contact_support</i>Contacts</a></li>
         {{if .User}}
             {{if (eq .User.RoleID 1)}}
                 <li><a href="/jobs"><i class="material-icons white-text left">work</i>Jobs</a></li>
@@ -25,6 +25,9 @@
             </ul>
                 <div class="drop-content light-blue darken-3">
                     <a href="/my_profile">My profile</a>
+                    <a href="/my_profile">Messages
+                        <span class="red white-text" style="border-radius: 2px; padding: 5px;font-size: 0.8rem;">4 new</span>
+                    </a>
                     <a href="/my_profile/setting">Setting</a>
                     <div class="divider" tabindex="-1"></div>
                     <a href="/logout">Logout</a>
@@ -43,6 +46,10 @@
 <ul class="sidenav light-blue darken-3" id="mobile-menu">
   {{if .User}}
     <li><a href="/my_profile"><i class="material-icons white-text left"> account_circle</i>My profile</a></li>
+    <li><a href="/my_profile" class="center-align"><i class="material-icons white-text left"> message</i>Messages
+            <span class="red white-text" style="border-radius: 2px; padding: 5px;font-size: 0.8rem;">4 new</span>
+        </a>
+    </li>
     <li><a class="collection-item" href="/my_profile/setting" onclick="setSelected(this)"><i class="material-icons white-text left">settings</i>Setting</a></li>
     <li><a href="/logout"><i class="material-icons white-text left"> exit_to_app</i>Logout</a></li>
     <hr>

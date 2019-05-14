@@ -10,7 +10,7 @@ import (
 func login(w http.ResponseWriter, r *http.Request) {
 	//if _, err := r.Cookie("_cookie"); err == nil {
 	//	http.Redirect(w, r, "/my_profile", 302)
-	_, err := session(w, r);
+	_, err := session(w, r)
 	if err == nil {
 		http.Redirect(w, r, "/my_profile", 302)
 	} else {
@@ -19,7 +19,6 @@ func login(w http.ResponseWriter, r *http.Request) {
 		}
 		//pageData.Title = "Login"
 		generateHTML(w, &pageData, nil, "base", "header", "footer", "login")
-		log.Println(pageData)
 	}
 }
 
@@ -120,6 +119,7 @@ func loginAccount(w http.ResponseWriter, r *http.Request) {
 			Name: "_cookie",
 			Value:    sess.UUID,
 			HttpOnly: true,
+			//MaxAge: 60,
 		}
 		http.SetCookie(w, &cookie)
 
