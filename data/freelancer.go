@@ -81,12 +81,6 @@ func GetFreelancerByUserID(id int) (freelancer Freelancer, err error) {
 		x := j.Int64
 		freelancer.Specialization = append(freelancer.Specialization, int(x))
 	}
-	// err = Db.QueryRow(`SELECT F.user_id, F.specialization, U.email, U.password,
-	// 							U.phone, U.facebook, U.skype, U.about, U.rait, U.created_at FROM freelancers F, users U
-	// 							WHERE F.user_id = U.id and F.user_id = $1`, id).Scan(&freelancer.User.ID,
-	// 	&freelancer.Specialization, &freelancer.Email, &freelancer.Password,
-	// 	&freelancer.Phone, &freelancer.Facebook, &freelancer.Skype, &freelancer.About,
-	// 	&freelancer.Rating, &freelancer.CreatedAt)
 	return
 }
 
@@ -98,6 +92,60 @@ func CheckFreelancer(userID int) (exist bool) {
 		exist = false
 		return
 	}
+	return
+}
+
+func GetAllFreelancers() (freelancers []Freelancer, err error) {
+	var tmp []sql.NullInt64
+	rows, err := Db.Query(`SELECT id, user_id, specialization FROM freelancers`)
+	if err != nil {
+		return
+	}
+	for rows.Next() {
+		freelancer := Freelancer{}
+		if err != nil {
+			return
+		}
+		err = rows.Scan(&freelancer.ID, &freelancer.User.ID, pq.Array(&tmp))
+		if err != nil {
+			log.Println(err)
+			return
+		}
+		freelancer.User, err = GetUserByID(freelancer.User.ID)
+		for _, j := range tmp {
+			x := j.Int64
+			freelancer.Specialization = append(freelancer.Specialization, int(x))
+		}
+		freelancers = append(freelancers, freelancer)
+	}
+	rows.Close()
+	return
+}
+
+func GetFreelancersWhere(query string, args ...interface{}) (freelancers []Freelancer, err error) {
+	var tmp []sql.NullInt64
+	rows, err := Db.Query(`SELECT id, user_id, specialization FROM freelancers ` + query, args...)
+	if err != nil {
+		return
+	}
+	for rows.Next() {
+		freelancer := Freelancer{}
+		if err != nil {
+			return
+		}
+		err = rows.Scan(&freelancer.ID, &freelancer.User.ID, pq.Array(&tmp))
+		if err != nil {
+			log.Println(err)
+			return
+		}
+		freelancer.User, err = GetUserByID(freelancer.User.ID)
+		for _, j := range tmp {
+			x := j.Int64
+			freelancer.Specialization = append(freelancer.Specialization, int(x))
+		}
+		freelancers = append(freelancers, freelancer)
+	}
+	rows.Close()
 	return
 }
 

@@ -1,11 +1,14 @@
 package data
 
-import "time"
+import (
+	"log"
+	"time"
+)
 
 //Comment struct for "comments" table
 type Comment struct {
 	ID       int
-	Rating   float32
+	Rait     float32
 	Text     string
 	UserID   int
 	CreateAt time.Time
@@ -20,7 +23,17 @@ func (user *User) CreateComment(comment Comment) (err error) {
 		return
 	}
 	defer stmt.Close()
-	err = stmt.QueryRow(comment.Text, comment.Rating, user.ID, time.Now()).Scan()
+	err = stmt.QueryRow(comment.Text, comment.Rait, user.ID, time.Now()).Scan()
+	return
+}
+
+func GetCommentByID(commentID int) (comment Comment) {
+	err := Db.QueryRow(`SELECT id, rait,comment_text, user_id, created_at  FROM comments WHERE id = $1`,
+						commentID).Scan(&comment.ID, &comment.Rait, &comment.Text, &comment.UserID, &comment.CreateAt)
+	if err != nil {
+		log.Println(err)
+		return
+	}
 	return
 }
 

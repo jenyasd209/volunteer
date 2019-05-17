@@ -6,12 +6,6 @@ import (
 	"time"
 )
 
-const (
-	UserRoleFreelancer = 1
-	UserRoleCustomer   = 2
-	UserRoleModerator  = 3
-)
-
 type HelperUser interface {
 	Create() (err error)
 	UpdateInformation() (err error)
@@ -139,7 +133,7 @@ func (user *User) CreateSession() (session Session, err error) {
 
 	defer stmt.Close()
 	err = stmt.QueryRow(CreateUUID(), user.Email, user.ID, time.Now()).Scan(&session.ID,
-		&session.UUID, &session.Email, &session.UserID, &session.CreatrdAt)
+		&session.UUID, &session.Email, &session.UserID, &session.CreatedAt)
 
 	if err != nil {
 		fmt.Println(err)

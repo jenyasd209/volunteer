@@ -7,21 +7,16 @@ import (
 	"time"
 )
 
-//Constant status for table "Status"
-const (
-	OrderStatusAvailable = 1
-	OrderStatusPerformed = 2
-	OrderStatusDone      = 3
-)
-
 //Order struct for "orders" table
 type Order struct {
 	ID      int
 	Title   string
 	Content string
-	CustomerID int
+	//CustomerID int
+	Customer
 	Status
 	CreatedAt time.Time
+	FreelancerRequest *[]FreelancerRequest
 }
 
 //PerformedOrder struct for "performed_order" table
@@ -58,7 +53,7 @@ func (customer *Customer) CreateOrder(title string, content string) (order Order
 
 	defer stmt.Close()
 	err = stmt.QueryRow(title, content, customer.User.ID, time.Now()).Scan(&order.ID, &order.Title,
-		&order.Content, &order.CustomerID, &order.CreatedAt)
+		&order.Content, &order.Customer.User.ID, &order.CreatedAt)
 	if err != nil {
 		log.Println(customer.ID)
 		log.Println(err)
@@ -68,7 +63,7 @@ func (customer *Customer) CreateOrder(title string, content string) (order Order
 
 //UpdateOrder row in "order" table
 func (customer *Customer) UpdateOrder(order *Order) (err error) {
-	if order.CustomerID == customer.User.ID {
+	if order.Customer.User.ID == customer.User.ID {
 		if order.IsAvailable() {
 			statement := `UPDATE orders SET title = $1, content = $2 WHERE id = $3
 			returning id`
@@ -90,7 +85,7 @@ func (customer *Customer) UpdateOrder(order *Order) (err error) {
 
 // DeleteOrder row from "order" table
 func (customer *Customer) DeleteOrder(order Order) (err error) {
-	if order.CustomerID == customer.ID {
+	if order.Customer.User.ID == customer.User.ID {
 		if order.IsAvailable() {
 			statement := "DELETE FROM orders WHERE id = $1"
 			stmt, err := Db.Prepare(statement)
@@ -113,7 +108,7 @@ func (customer *Customer) DeleteOrder(order Order) (err error) {
 }
 
 func (customer *Customer) deletePerformedOrder(orderID int) {
-	statement := `DELETE FROM performed_order WHERE order_id = $1`
+	statement := `DELETE FROM performed_orders WHERE order_id = $1`
 	stmt, err := Db.Prepare(statement)
 	if err != nil {
 		log.Println(err)
@@ -124,7 +119,7 @@ func (customer *Customer) deletePerformedOrder(orderID int) {
 
 //MakeOrderPerformed row in "order" table
 func (customer *Customer) MakeOrderPerformed(performedOrder *PerformedOrder) (err error) {
-	if performedOrder.CustomerID == customer.ID {
+	if performedOrder.Customer.User.ID == customer.ID {
 		statement := `INSERT INTO performed_orders (order_id, freelancer_id) values ($1, $2)`
 		stmt, err := Db.Prepare(statement)
 		if err != nil {
@@ -145,7 +140,7 @@ func (customer *Customer) MakeOrderPerformed(performedOrder *PerformedOrder) (er
 
 //MakeOrderDone row in "order" table
 func (customer *Customer) MakeOrderDone(completeOrder *CompleteOrder) (err error) {
-	if completeOrder.CustomerID == customer.ID {
+	if completeOrder.Customer.User.ID == customer.ID {
 		statement := `INSERT INTO complete_orders (order_id, freelancer_id)
 									values ($1, $2)`
 		stmt, err := Db.Prepare(statement)
@@ -202,7 +197,71 @@ func (customer *Customer) Orders() (orders []Order) {
 	}
 	for rows.Next() {
 		order := Order{}
-		err = rows.Scan(&order.ID, &order.Title, &order.Content, &order.CustomerID, &order.Status.ID, &order.CreatedAt)
+		err = rows.Scan(&order.ID, &order.Title, &order.Content, &order.Customer.User.ID, &order.Status.ID, &order.CreatedAt)
+		if err != nil {
+			log.Println(err)
+			return
+		}
+		order.Status = GetStatusByID(order.Status.ID)
+		orders = append(orders, order)
+	}
+	rows.Close()
+	return
+}
+
+func (freelancer *Freelancer) CompleteOrders() (completeOrders []CompleteOrder) {
+	rows, err := Db.Query(`SELECT id, order_id, freelancer_id, freelancer_comment_id, customer_comment_id,
+       								date_complete FROM complete_orders 
+									WHERE freelancer_id = $1 ORDER BY date_complete ASC `, freelancer.User.ID)
+	if err != nil {
+		return
+	}
+	for rows.Next() {
+		completeOrder := CompleteOrder{}
+		err = rows.Scan(&completeOrder.ID, &completeOrder.Order.ID, &completeOrder.FreelancerID,
+						&completeOrder.FreelancerComment.ID, &completeOrder.CustomerComment.ID, &completeOrder.DateComplete)
+		if err != nil {
+			log.Println(err)
+			return
+		}
+		completeOrder.CustomerComment = GetCommentByID(completeOrder.CustomerComment.ID)
+		completeOrder.Order = GetOrderByID(completeOrder.Order.ID)
+		completeOrders = append(completeOrders, completeOrder)
+	}
+	rows.Close()
+	return
+}
+
+func GetAllOrders() (orders []Order, err error) {
+	rows, err := Db.Query(`SELECT id, title, content, customer_id, status_id, created_at FROM orders 
+									ORDER BY created_at ASC `)
+	if err != nil {
+		return
+	}
+	for rows.Next() {
+		order := Order{}
+		err = rows.Scan(&order.ID, &order.Title, &order.Content, &order.Customer.User.ID, &order.Status.ID, &order.CreatedAt)
+		if err != nil {
+			log.Println(err)
+			return
+		}
+		order.Status = GetStatusByID(order.Status.ID)
+		orders = append(orders, order)
+	}
+	rows.Close()
+	return
+}
+
+func GetOrdersWhere(query string, args ...interface{}) (orders []Order, err error) {
+	rows, err := Db.Query(`SELECT id, title, content, customer_id, status_id, created_at FROM orders WHERE ` +
+							query + ` ORDER BY created_at ASC`, args...)
+	if err != nil {
+		log.Println(err)
+		return
+	}
+	for rows.Next() {
+		order := Order{}
+		err = rows.Scan(&order.ID, &order.Title, &order.Content, &order.Customer.User.ID, &order.Status.ID, &order.CreatedAt)
 		if err != nil {
 			log.Println(err)
 			return
@@ -225,12 +284,13 @@ func GetStatusByID(id int) (status Status) {
 
 func GetOrderByID(id int) (order Order) {
 	err := Db.QueryRow(`SELECT id, title, content, customer_id, status_id, created_at FROM orders
-						WHERE id = $1`, id).Scan(&order.ID, &order.Title, &order.Content, &order.CustomerID, &order.Status.ID, &order.CreatedAt)
+						WHERE id = $1`, id).Scan(&order.ID, &order.Title, &order.Content, &order.Customer.User.ID, &order.Status.ID, &order.CreatedAt)
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
 	order.Status = GetStatusByID(order.Status.ID)
+	order.Customer, _ = GetCustomerByUserID(order.Customer.User.ID)
 	return
 }
 
@@ -242,7 +302,7 @@ func (customer *Customer) GetOrdersByStatus(status int) (orders *[]Order) {
 	}
 	for rows.Next() {
 		order := Order{}
-		err = rows.Scan(&order.ID, &order.Title, &order.Content, &order.CustomerID, &order.Status.ID, &order.CreatedAt)
+		err = rows.Scan(&order.ID, &order.Title, &order.Content, &order.Customer.User.ID, &order.Status.ID, &order.CreatedAt)
 		if err != nil {
 			log.Println(err)
 			return

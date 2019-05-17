@@ -3,11 +3,18 @@ package main
 import (
 	"fmt"
 	"graduate/data"
-	"html/template"
 	"log"
 	"net/http"
 	"os"
 )
+
+type PageData struct {
+	Title string
+	User data.HelperUser
+	Content interface{}
+	Errors []string
+}
+
 
 func profile(w http.ResponseWriter, r *http.Request) {
 	sess, err := session(w, r)
@@ -25,7 +32,7 @@ func profile(w http.ResponseWriter, r *http.Request) {
 			generateHTML(w, &pageData, funcMap, "base", "header", "footer", "userProfile/profile",
 				"userProfile/freelancer/my_works", "userProfile/freelancer/about")
 		}else if data.CheckCustomer(sess.UserID){
-			funcMap, err := customerProfile(sess, &pageData)
+			funcMap, err := customerProfile(sess, &pageData, r)
 			if err != nil{
 				log.Println(err)
 			}
@@ -33,19 +40,6 @@ func profile(w http.ResponseWriter, r *http.Request) {
 				"userProfile/customer/my_orders", "userProfile/customer/about")
 		}
 	}
-}
-
-func freelancerProfile(sess data.Session, pageData *PageData) (funcMap template.FuncMap, err error) {
-	user, err := data.GetFreelancerByUserID(sess.UserID)
-	pageData.User = &user
-	if err != nil {
-		log.Println(err)
-	}
-	funcMap = template.FuncMap{
-		"getNameSpecialization": data.GetSpecializationName,
-		"setStars": setRaiting,
-	}
-	return
 }
 
 
@@ -75,37 +69,6 @@ func profileSetting(w http.ResponseWriter, r *http.Request) {
 		}else if data.CheckCustomer(sess.UserID){
 			settingCustomer(w, r, sess, &pageData, &user)
 		}
-	}
-}
-
-func settingFreelancer(w http.ResponseWriter, r *http.Request, sess data.Session, pageData *PageData, user *data.User){
-	freelancer, err := data.GetFreelancerByUserID(sess.UserID)
-	if err != nil {
-		log.Println(err)
-	}
-	specs, _ := data.GetAllSpecialization()
-	if r.Method == http.MethodPost {
-		user.ID = freelancer.User.ID
-		freelancer.User = *user
-		freelancer.Specialization = arrayStringToArrayInt(r.Form["specialization[]"])
-		err = freelancer.Update()
-		if err != nil {
-			fmt.Println(err)
-		}
-		http.Redirect(w, r, "/my_profile", 302)
-	} else if r.Method == http.MethodGet{
-		funcMap := template.FuncMap{
-			"getNameSpecialization":  data.GetSpecializationName,
-			"containsSpecialization": freelancer.ContainsSpecialization,
-			"setStars": setRaiting,
-		}
-
-		pageData.User = &freelancer
-		pageData.Content = struct{
-			Specialization []data.Specialization
-		}{specs}
-		generateHTML(w, &pageData, funcMap, "base", "header", "footer", "userProfile/profile",
-			"userProfile/freelancer/about", "userProfile/setting_base", "userProfile/freelancer/setting",)
 	}
 }
 

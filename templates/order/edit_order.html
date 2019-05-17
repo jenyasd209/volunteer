@@ -1,0 +1,31 @@
+{{ define "profile_content"}}
+    <div class="content">
+        <div class="row">
+            <form class="col s12" name="form-setting" id="form-setting" role="form" method="post">
+                <h5 class="center">Order "{{.Content.Order.Title}}"</h5>
+                <div class="row">
+                    <div class="col s12">
+                        <p class="left">Fields with * are required</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input name="title" id="title" type="text" class="validate" value="{{.Content.Order.Title}}" required>
+                        <label for="title">Title</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <textarea name="description" id="description" class="materialize-textarea" required>{{.Content.Order.Content}}</textarea>
+                        <label for="description">Description</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12 center">
+                        <button class="light-blue waves-effect waves-light btn" type="submit" name="save-inform" id="save-inform">Save</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+{{ end }}

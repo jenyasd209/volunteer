@@ -64,16 +64,11 @@ func (customer *Customer) Delete() (err error) {
 func GetCustomerByUserID(id int) (customer Customer, err error) {
 	customer.User, err = GetUserByID(id)
 	if err != nil {
+		log.Println(err)
 		return
 	}
 	err = Db.QueryRow(`SELECT id, user_id, organization FROM customers
 								WHERE user_id = $1`, id).Scan(&customer.ID, &customer.User.ID, &customer.Organization)
-	// err = Db.QueryRow(`SELECT C.user_id, C.organization, U.email, U.password,
-	// 							U.phone, U.facebook, U.skype, U.about, U.rait, U.created_at FROM customers C, users U
-	// 							WHERE F.user_id = U.id and F.user_id = $1`, id).Scan(&customer.User.ID,
-	// 	&customer.Organization, &customer.Email, &customer.Password,
-	// 	&customer.Phone, &customer.Facebook, &customer.Skype, &customer.About,
-	// 	&customer.Rating, &customer.CreatedAt)
 	return
 }
 

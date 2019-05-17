@@ -11,7 +11,7 @@
         <li><a href="/#contacts"><i class="material-icons left"> contact_support</i>Contacts</a></li>
         {{if .User}}
             {{if (eq .User.RoleID 1)}}
-                <li><a href="/jobs"><i class="material-icons white-text left">work</i>Jobs</a></li>
+                <li><a href="/orders"><i class="material-icons white-text left">work</i>Jobs</a></li>
             {{else if (eq .User.RoleID 2)}}
                 <li><a href="/freelancers"><i class="material-icons white-text left">person</i>Freelancers</a></li>
             {{end}}
@@ -54,7 +54,7 @@
     <li><a href="/logout"><i class="material-icons white-text left"> exit_to_app</i>Logout</a></li>
     <hr>
     {{if (eq .User.RoleID 1)}}
-        <li><a href="/jobs"><i class="material-icons white-text left">work</i>Jobs</a></li>
+        <li><a href="/orders"><i class="material-icons white-text left">work</i>Jobs</a></li>
     {{else if (eq .User.RoleID 2)}}
         <li><a href="/freelancers"><i class="material-icons white-text left">person</i>Freelancers</a></li>
     {{end}}

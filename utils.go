@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
 	"graduate/data"
@@ -11,17 +12,32 @@ import (
 	"net/http"
 	"os"
 	"strconv"
+	"time"
 )
 
-type PageData struct {
-	Title string
-	User data.HelperUser
-	Content interface{}
-	Errors []string
+type Configuration struct {
+	Address      string
+	ReadTimeout  int64
+	WriteTimeout int64
+	Static       string
 }
 
-//var pageData PageData
+var config Configuration
+var logger *log.Logger
 
+func init() {
+	loadConfig()
+	file, err := os.OpenFile("vol.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
+	if err != nil {
+		log.Fatalln("Failed to open log file", err)
+	}
+	logger = log.New(file, "INFO ", log.Ldate|log.Ltime|log.Lshortfile)
+	logger.Println("-------------------------------------------------------------------")
+	logger.Println("Server START ", time.Now().Format("Mon Jan _2 15:04:05 2006"))
+	logger.Println("-------------------------------------------------------------------")
+}
+
+//generateHTML generate template with passed data and func
 func generateHTML(w http.ResponseWriter, data interface{}, funcMap template.FuncMap, filenames ...string) {
 	var files []string
 	var templates *template.Template
@@ -32,8 +48,19 @@ func generateHTML(w http.ResponseWriter, data interface{}, funcMap template.Func
 
 	templates, _ = template.New("").Funcs(funcMap).ParseFiles(files...)
 	templates.ExecuteTemplate(w, "base", data)
-	//pageData.Content = nil
-	//pageData.Errors = nil
+}
+
+func loadConfig() {
+	file, err := os.Open("config.json")
+	if err != nil {
+		log.Fatalln("Cannot open config file", err)
+	}
+	decoder := json.NewDecoder(file)
+	config = Configuration{}
+	err = decoder.Decode(&config)
+	if err != nil {
+		log.Fatalln("Cannot get configuration from file", err)
+	}
 }
 
 //arrayStringToArrayInt convert []string to []int
@@ -62,6 +89,7 @@ func session(w http.ResponseWriter, r *http.Request) (sess data.Session, err err
 func logging(f http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		log.Println(r.RemoteAddr + " method: " + r.Method + " - " + r.URL.Path)
+		logger.Println(r.RemoteAddr + " method: " + r.Method + " - " + r.URL.Path)
 		f(w, r)
 	}
 }
@@ -82,15 +110,15 @@ func uploadFile(path string, file multipart.File, handler *multipart.FileHeader)
 	return
 }
 
-func setRaiting (rait float64) (result template.HTML) {
-	for i := 1.0; i <= 5.0; i++ {
-		if rait >= i {
-			result += `<span class="fa fa-star checked"></span>`
-		}else if rait < i && rait > i - 1.0 {
-			result += `<span class="fa fa-star-half-empty checked"></span>`
-		}else if rait < i {
-			result += `<span class="fa fa-star"></span>`
-		}
-	}
-	return
-}
+//func setRating(rait float64) (result template.HTML) {
+//	for i := 1.0; i <= 5.0; i++ {
+//		if rait >= i {
+//			result += `<span class="fa fa-star checked"></span>`
+//		}else if rait < i && rait > i - 1.0 {
+//			result += `<span class="fa fa-star-half-empty checked"></span>`
+//		}else if rait < i {
+//			result += `<span class="fa fa-star"></span>`
+//		}
+//	}
+//	return
+//}

@@ -1,0 +1,54 @@
+{{define "content"}}
+    <div class="page">
+        <div class="container">
+            <div class="row white z-depth-2">
+                <div class="col s12">
+                    <form action="/orders">
+                        <div class="input-field">
+                            <i class="material-icons prefix">search</i>
+                            <input type="text" id="search" name="search" class="autocomplete">
+                            <label for="search">Time to search</label>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="row white z-depth-2" style="min-height: 70vh;">
+                <div class="col s12 m12 l4">
+                    <ul class="collapsible">
+                        <li class="active">
+                            <div class="collapsible-header" style="justify-content: center;">Specializations<i class="material-icons">expand_more</i></div>
+                            <div class="collapsible-body" id="list-specs">
+                                <ul class="collection">
+                                    {{range .Content.Specialization}}
+                                        <a href="/orders/specs_id{{.ID}}"><li class="collection-item center-align">{{.Name}}</li></a>
+                                    {{end}}
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col s12 m12 l8">
+                    {{if .Content.Orders}}
+                    {{range .Content.Orders}}
+                        <div class="card order">
+                            <div class="card-content">
+                                <span class="card-title"> <a href="/orders/id{{.ID}}">{{.Title}}</a></span>
+                                <p class="bold">Requests 0</p>
+                                <span>{{.Content}}</span>
+                            </div>
+                            <div class="card-action">
+                                <p class="green-text">{{.Status.Name}}</p>
+                                <span>Posted: {{.CreatedAt.Format "02 Jan 2006 15:04:05"}}</span>
+                            </div>
+                        </div>
+                    {{end}}
+                    {{else}}
+                        <div class="section">
+                            <p class="center-align flow-text">No orders</p>
+                        </div>
+                    {{end}}
+                </div>
+            </div>
+        </div>
+    </div>
+{{ end }}

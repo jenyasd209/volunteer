@@ -23,4 +23,4 @@ function renderStars() {
   return result + `<span>(${rating})</span>`
 }
 
-document.getElementById("rating").innerHTML = renderStars(4);
+document.getElementById("rating").innerHTML = renderStars();

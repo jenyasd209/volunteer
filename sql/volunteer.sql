@@ -77,6 +77,7 @@ create table requests (
   id serial primary key,
   freelancer_id integer references freelancers(user_id) on delete cascade on update cascade,
   order_id integer references orders(id) on delete cascade on update cascade,
+  comment text,
   created_at timestamp not null
 );
 

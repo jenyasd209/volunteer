@@ -1,6 +1,8 @@
 document.addEventListener('DOMContentLoaded', function() {
   var elems = document.querySelectorAll('select');
   var instances = M.FormSelect.init(elems, {});
+    var elems = document.querySelectorAll('.collapsible');
+    var instances = M.Collapsible.init(elems, {});
 });
 
 var main = function(){
@@ -9,6 +11,7 @@ var main = function(){
   // $('.sidenav').sidenav();
   $(".dropdown-trigger").dropdown();
   $('.materialboxed').materialbox();
+  // $('.collapsible').collapsible();
   // $('.tabs').tabs();
 }
 

@@ -119,7 +119,7 @@ func loginAccount(w http.ResponseWriter, r *http.Request) {
 			Name: "_cookie",
 			Value:    sess.UUID,
 			HttpOnly: true,
-			//MaxAge: 60,
+			MaxAge: 60 * 60 * 24 * 30,
 		}
 		http.SetCookie(w, &cookie)
 

@@ -10,7 +10,7 @@ type Session struct {
 	UUID      string
 	Email     string
 	UserID    int
-	CreatrdAt time.Time
+	CreatedAt time.Time
 }
 
 // type SessionHelper interface {
@@ -26,7 +26,7 @@ type Session struct {
 func (session *Session) Check() (valid bool, err error) {
 	err = Db.QueryRow(`SELECT id, uuid, email, user_id, created_at FROM session
 	                WHERE uuid = $1`, session.UUID).Scan(&session.ID, &session.UUID, &session.Email,
-		&session.UserID, &session.CreatrdAt)
+		&session.UserID, &session.CreatedAt)
 	if err != nil {
 		return
 	}
@@ -75,7 +75,7 @@ func GetSessionByUUID(uuid string) (session Session) {
 
 	defer stmt.Close()
 	err = stmt.QueryRow(uuid).Scan(&session.ID, &session.UUID, &session.Email,
-		&session.UserID, &session.CreatrdAt)
+		&session.UserID, &session.CreatedAt)
 
 	if err != nil {
 		fmt.Println(err)

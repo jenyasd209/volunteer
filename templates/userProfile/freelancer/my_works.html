@@ -20,6 +20,25 @@
       </div>
     </div>
   </div>
+  {{if .Content.FreelancerCompleteOrders}}
+    {{range .Content.FreelancerCompleteOrders}}
+      <div class="content__works">
+        <div class="card order">
+          <div class="card-content">
+            <span class="card-title"> <a href="/orders/id{{.Order.ID}}">{{.Title}}</a></span>
+            <div class="rating" id="{{.Order.ID}}">
+              <script>renderStarsComment({{.Order.ID}}, {{.CustomerComment.Rait }})</script>
+            </div>
+            <span>{{.CustomerComment.Text}}</span>
+          </div>
+          <div class="card-action card-inform">
+            <span>{{.CreatedAt.Format "02 Jan 2006 15:04:05"}}</span>
+            <span> <a href="#">{{.Order.Customer.FirstName}} {{.Order.Customer.LastName}}</a></span>
+          </div>
+        </div>
+      </div>
+    {{end}}
+  {{end}}
   <div class="swap-page">
     <ul class="pagination">
       <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
