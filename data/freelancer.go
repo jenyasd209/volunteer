@@ -89,7 +89,6 @@ func CheckFreelancer(userID int) (exist bool) {
 	err := Db.QueryRow(`SELECT EXISTS(SELECT id FROM freelancers WHERE user_id = $1)`, userID).Scan(&exist)
 	if err != nil {
 		log.Println(err)
-		exist = false
 		return
 	}
 	return
@@ -124,7 +123,11 @@ func GetAllFreelancers() (freelancers []Freelancer, err error) {
 
 func GetFreelancersWhere(query string, args ...interface{}) (freelancers []Freelancer, err error) {
 	var tmp []sql.NullInt64
-	rows, err := Db.Query(`SELECT id, user_id, specialization FROM freelancers ` + query, args...)
+	rows, err := Db.Query(`SELECT id, user_id, specialization, first_name, last_name, phone,
+		 				   facebook, skype, about, rait, role_id, photo_url
+						   FROM freelancers 
+						   JOIN users USING (id)
+						   WHERE ` + query, args...)
 	if err != nil {
 		return
 	}
@@ -133,7 +136,9 @@ func GetFreelancersWhere(query string, args ...interface{}) (freelancers []Freel
 		if err != nil {
 			return
 		}
-		err = rows.Scan(&freelancer.ID, &freelancer.User.ID, pq.Array(&tmp))
+		err = rows.Scan(&freelancer.ID, &freelancer.User.ID, pq.Array(&tmp), &freelancer.FirstName, &freelancer.LastName,
+						&freelancer.Phone, &freelancer.Facebook, &freelancer.Skype, &freelancer.About, &freelancer.Rait,
+						&freelancer.RoleID, &freelancer.Photo)
 		if err != nil {
 			log.Println(err)
 			return

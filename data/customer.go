@@ -77,7 +77,6 @@ func CheckCustomer(userID int) (exist bool) {
 	err := Db.QueryRow(`SELECT EXISTS(SELECT id FROM customers WHERE user_id = $1)`, userID).Scan(&exist)
 	if err != nil {
 		log.Println(err)
-		exist = false
 		return
 	}
 	return

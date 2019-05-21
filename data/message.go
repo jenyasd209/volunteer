@@ -5,27 +5,36 @@ import (
 	"time"
 )
 
+type Dialog struct {
+	ID          int 		`json:"id"`
+	UserCurrent User 		`json:"user_current"`
+	UserTwo     User 		`json:"user_two"`
+	CreatedAt   time.Time	`json:"created_At"`
+	Messages    []*Message 	`json:"messages"`
+}
+
 //Message struct for "messages" table
 type Message struct {
-	ID         int
-	SenderID   int
-	ReceiverID int
-	Text       string
-	Read       bool
-	DateSend   time.Time
+	ID         int 			`json:"id"`
+	SenderID   int 			`json:"sender_id"`
+	ReceiverID int 			`json:"receiver_id"`
+	DialogID   int 			`json:"dialog_id"`
+	Text       string 		`json:"text"`
+	Read       bool 		`json:"read"`
+	DateSend   time.Time 	`json:"date_send"`
 }
 
 //SendMessage - create new message
-func (user *User) SendMessage(message Message) (err error) {
-	statement := `INSERT INTO messages (sender_id, receiver_id, text_message, date_send)
-								values ($1, $2, $3, $4)`
+func (user *User) SendMessage(receiverID int, text string) (err error) {
+	statement := `INSERT INTO messages (sender_id, receiver_id, dialog_id, text_message, date_send)
+								values ($1, $2, $3, $4, $5)`
 	stmt, err := Db.Prepare(statement)
 	if err != nil {
 		log.Println(err)
 		return
 	}
 	defer stmt.Close()
-	err = stmt.QueryRow(message.SenderID, message.ReceiverID, message.Text, message.DateSend).Scan()
+	err = stmt.QueryRow(user.ID, receiverID, getDialog(user.ID, receiverID), text, time.Now()).Scan()
 	if err != nil {
 		log.Println(err)
 		return
@@ -34,18 +43,127 @@ func (user *User) SendMessage(message Message) (err error) {
 }
 
 //ReadMessage - make message read "True"
-func (user *User) ReadMessage(messageID int) (err error) {
-	statement := `UPDATE messages SET read = true WHERE id = $1 receiver_id = $2`
+func (user *User) ReadMessage(dialogID int) (err error) {
+	statement := `UPDATE messages SET read = true WHERE dialog_id = $1 and receiver_id = $2`
 	stmt, err := Db.Prepare(statement)
 	if err != nil {
 		log.Println(err)
 		return
 	}
 	defer stmt.Close()
-	err = stmt.QueryRow(messageID, user.ID).Scan()
+	err = stmt.QueryRow(dialogID, user.ID).Scan()
 	if err != nil {
 		log.Println(err)
 		return
+	}
+	return
+}
+
+func getDialog(userOneID, userTwoID int) (dialogID int) {
+	//err := Db.QueryRow(`SELECT EXISTS(SELECT id FROM dialogs WHERE (user1_id = $1 and user2_id = $2)
+    //							or (user1_id = $2 and user2_id = $1))`, userOneID, userTwoID).Scan(&exist)
+	err := Db.QueryRow(`SELECT id FROM dialogs WHERE (user1_id = $1 and user2_id = $2)
+    							or (user1_id = $2 and user2_id = $1)`, userOneID, userTwoID).Scan(&dialogID)
+	if err != nil {
+		log.Println(err)
+		return
+	}
+	if dialogID == 0{
+		dialogID = createDialog(userOneID, userTwoID)
+	}
+	return
+}
+
+func createDialog(userOneID, userTwoID int) (dialogID int) {
+	statement := `INSERT INTO dialogs (user1_id, user2_id, date_created)
+								values ($1, $2, $3)`
+	stmt, err := Db.Prepare(statement)
+	if err != nil {
+		log.Println(err)
+		return
+	}
+	defer stmt.Close()
+	err = stmt.QueryRow(userOneID, userTwoID, time.Now()).Scan()
+	if err != nil {
+		log.Println(err)
+		return
+	}
+	return
+}
+
+func (user *User) Dialogs() (dialogs []*Dialog) {
+	var userOne, userTwo int
+	rows, err := Db.Query(`SELECT id, user1_id, user2_id, date_created
+                         FROM dialogs WHERE user2_id = $1 or user1_id = $1`, user.ID)
+	if err != nil {
+		log.Println(err)
+		return
+	}
+
+	defer rows.Close()
+	for rows.Next() {
+		dialog := Dialog{}
+		err = rows.Scan(&dialog.ID, &userOne, &userTwo, &dialog.CreatedAt)
+		if user.ID == userOne{
+			dialog.UserCurrent, _ = GetUserByID(userOne)
+			dialog.UserTwo, _ = GetUserByID(userTwo)
+		}else {
+			dialog.UserCurrent, _ = GetUserByID(userTwo)
+			dialog.UserTwo, _ = GetUserByID(userOne)
+		}
+
+		if err == nil {
+			dialog.Messages = dialog.GetMessages()
+			dialogs = append(dialogs, &dialog)
+		}else if err != nil {
+			log.Println(err)
+		}
+	}
+	return
+}
+
+func (user *User) DialogByID(dialogID int) (dialog Dialog) {
+	var userOne, userTwo int
+	err := Db.QueryRow(`SELECT id, user1_id, user2_id, date_created
+                         FROM dialogs WHERE user2_id = $1 or user1_id = $1 and id = $2`, user.ID,
+                         dialogID).Scan(&dialog.ID, &userOne, &userTwo, &dialog.CreatedAt)
+	if err != nil {
+		log.Println(err)
+		return
+	}
+	if user.ID == userOne{
+		dialog.UserCurrent, _ = GetUserByID(userOne)
+		dialog.UserTwo, _ = GetUserByID(userTwo)
+	}else {
+		dialog.UserCurrent, _ = GetUserByID(userTwo)
+		dialog.UserTwo, _ = GetUserByID(userOne)
+	}
+
+	if err == nil {
+		dialog.Messages = dialog.GetMessages()
+	}else if err != nil {
+		log.Println(err)
+	}
+	return
+}
+
+func (dialog *Dialog) GetMessages() (messages []*Message) {
+	rows, err := Db.Query(`SELECT id, sender_id, receiver_id, dialog_id, text_message, read, date_send
+                         FROM messages WHERE dialog_id = $1`, dialog.ID)
+	if err != nil {
+		log.Println(err)
+		return
+	}
+
+	defer rows.Close()
+	for rows.Next() {
+		message := Message{}
+
+		err = rows.Scan(&message.ID, &message.SenderID, &message.ReceiverID, &message.DialogID, &message.Text,
+			&message.Read, &message.DateSend)
+		if err == nil {
+			messages = append(messages, &message)
+		}
 	}
 	return
 }
@@ -63,7 +181,7 @@ func GetAllMessageBySenderID(senderID int) (messages []Message, err error) {
 		message := Message{}
 
 		if err = rows.Scan(&message.ID, &message.SenderID, &message.ReceiverID, &message.Text,
-			&message.Read, &message.DateSend); err != nil {
+			&message.Read, &message.DateSend); err == nil {
 			messages = append(messages, message)
 		}
 	}
@@ -83,7 +201,7 @@ func GetAllMessageByReceiverID(receiverID int) (messages []Message, err error) {
 		message := Message{}
 
 		if err = rows.Scan(&message.ID, &message.SenderID, &message.ReceiverID, &message.Text,
-			&message.Read, &message.DateSend); err != nil {
+			&message.Read, &message.DateSend); err == nil {
 			messages = append(messages, message)
 		}
 	}

@@ -11,6 +11,26 @@
                                     <img class="responsive-img materialboxed" src="{{.Content.Freelancer.Photo}}" style="width: 100%;max-width: 250px; margin: auto">
                                 </div>
                             </div>
+                            {{if .User}}
+                                {{if ne .User.ID .Content.Freelancer.User.ID}}
+                            <div class="row">
+                                <div class="col s12 center-align">
+                                    <a class="waves-effect waves-light btn modal-trigger" style="width: 100%;max-width: 250px;" href="#modal-send-message">Send message</a>
+                                </div>
+                                <div id="modal-send-message" class="modal">
+                                    <div class="modal-content">
+                                        <form class="row" method="post" action="id{{.Content.Freelancer.User.ID}}/send_message">
+                                            <div class="col s12 input-field">
+                                                <textarea style="height: 10rem;" name="message" id="message" class="materialize-textarea" maxlength="5000" required></textarea>
+                                                <label for="message">Message:</label>
+                                                <button class="right modal-close waves-effect waves-green btn-flat">Send</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                                 {{end}}
+                            {{end}}
                             <div class="row">
                                 <div class="col s12 center-align">
                                     <div class="rating" id="{{.Content.Freelancer.User.ID}}">
@@ -90,7 +110,9 @@
                                             </div>
                                             <div class="card-action card-inform">
                                                 <span>{{.CreatedAt.Format "02 Jan 2006 15:04:05"}}</span>
-                                                <span> <a href="#">{{.Order.Customer.FirstName}} {{.Order.Customer.LastName}}</a></span>
+                                                <span>
+                                                    <a href="#">{{.Order.Customer.FirstName}} {{.Order.Customer.LastName}}</a>
+                                                </span>
                                             </div>
                                         </div>
                                     </div>
@@ -102,5 +124,4 @@
             </div>
         </div>
     </div>
-    <script src="/static/js/profile.js"></script>
 {{ end }}

@@ -186,22 +186,37 @@ func GetAllUsers() (users []User, r error) {
 	return
 }
 
+func (user *User) CheckLoginData() (exist bool) {
+	err := Db.QueryRow(`SELECT EXISTS(SELECT id FROM users WHERE email = $1 and password = $2)`,
+						user.Email, user.Password).Scan(&exist)
+	if err != nil {
+		log.Println(err)
+		return
+	}
+	if exist{
+		err = Db.QueryRow(`SELECT id FROM users WHERE email = $1 and password = $2`,
+			user.Email, user.Password).Scan(&user.ID)
+		fmt.Println(user)
+	}
+	return
+}
+
 //GetUserByEmail return rows with required email
 func GetUserByEmail(email string) (user User, err error) {
-	err = Db.QueryRow(`SELECT id, first_name, last_name, email, password, phone,
+	err = Db.QueryRow(`SELECT id, first_name, last_name, email, phone,
 		 								 facebook, skype, about, rait, role_id, photo_url, created_at FROM users
 										 WHERE email = $1`, email).Scan(&user.ID, &user.FirstName, &user.LastName, &user.Email,
-		&user.Password, &user.Phone, &user.Facebook, &user.Skype, &user.About, &user.Rait, &user.RoleID, &user.Photo, &user.CreatedAt)
+		&user.Phone, &user.Facebook, &user.Skype, &user.About, &user.Rait, &user.RoleID, &user.Photo, &user.CreatedAt)
 
 	return
 }
 
 //GetUserByID return rows with required ID
 func GetUserByID(id int) (user User, err error) {
-	err = Db.QueryRow(`SELECT id, first_name, last_name, email, password, phone,
+	err = Db.QueryRow(`SELECT id, first_name, last_name, email, phone,
 		 								 facebook, skype, about, rait, role_id, photo_url, created_at FROM users
 										 WHERE id = $1`, id).Scan(&user.ID, &user.FirstName, &user.LastName, &user.Email,
-		&user.Password, &user.Phone, &user.Facebook, &user.Skype, &user.About, &user.Rait, &user.RoleID, &user.Photo, &user.CreatedAt)
+		&user.Phone, &user.Facebook, &user.Skype, &user.About, &user.Rait, &user.RoleID, &user.Photo, &user.CreatedAt)
 	return
 }
 

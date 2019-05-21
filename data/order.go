@@ -232,6 +232,16 @@ func (freelancer *Freelancer) CompleteOrders() (completeOrders []CompleteOrder) 
 	return
 }
 
+func ExistOffer (freelancerID, orderID int) (exist bool){
+	err := Db.QueryRow(`SELECT EXISTS(SELECT id FROM requests WHERE freelancer_id = $1 and order_id = $2)`,
+								freelancerID, orderID).Scan(&exist)
+	if err != nil {
+		log.Println(err)
+		return
+	}
+	return
+}
+
 func GetAllOrders() (orders []Order, err error) {
 	rows, err := Db.Query(`SELECT id, title, content, customer_id, status_id, created_at FROM orders 
 									ORDER BY created_at ASC `)

@@ -19,6 +19,7 @@
                             <div class="collapsible-header" style="justify-content: center;">Specializations<i class="material-icons">expand_more</i></div>
                             <div class="collapsible-body" id="list-specs">
                                 <ul class="collection">
+                                    <a href="/orders"><li class="collection-item center-align">All</li></a>
                                     {{range .Content.Specialization}}
                                         <a href="/orders/specs_id{{.ID}}"><li class="collection-item center-align">{{.Name}}</li></a>
                                     {{end}}

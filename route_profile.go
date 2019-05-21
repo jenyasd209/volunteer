@@ -1,11 +1,15 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
+	"github.com/gorilla/mux"
 	"graduate/data"
+	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
+	"strconv"
 )
 
 type PageData struct {
@@ -42,6 +46,81 @@ func profile(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+func renderDialogsPage(w http.ResponseWriter, r *http.Request){
+	pageData := PageData{
+		Title :"Dialogs",
+	}
+	sess, err := session(w, r)
+	if err != nil {
+		http.Redirect(w, r, "/login", 302)
+	} else {
+		user, _ := data.GetUserByID(sess.UserID)
+		pageData.User = &user
+		if r.Method == http.MethodPost{
+			err := r.ParseForm()
+			if err != nil {
+				panic(err)
+			}
+		}
+		generateHTML(w, &pageData, nil, "base", "header", "footer", "userProfile/messages")
+	}
+}
+
+func profileDialogs(w http.ResponseWriter, r *http.Request)  {
+	sess, err := session(w, r)
+	if err != nil {
+		http.Redirect(w, r, "/login", 302)
+	} else {
+		user, _ := data.GetUserByID(sess.UserID)
+		dialog, _ := json.Marshal(user.Dialogs())
+
+		w.Header().Set("Content-Type", "application/json")
+		w.Write(dialog)
+	}
+}
+
+func profileDialog(w http.ResponseWriter, r *http.Request)  {
+	sess, err := session(w, r)
+	if err != nil {
+		http.Redirect(w, r, "/login", 302)
+	} else {
+		vars := mux.Vars(r)
+		id, _ := strconv.ParseInt(vars["id"], 10, 8)
+		user, _ := data.GetUserByID(sess.UserID)
+		dialog, _ := json.Marshal(user.DialogByID(int(id)))
+
+		w.Header().Set("Content-Type", "application/json")
+		w.Write(dialog)
+	}
+}
+
+func sendMessage(w http.ResponseWriter, r *http.Request)  {
+	sess, err := session(w, r)
+	if err != nil {
+		log.Println(err)
+	}
+	if r.Method == http.MethodPost{
+		//vars := mux.Vars(r)
+		//id, _ := strconv.ParseInt(vars["id"], 10, 8)
+		body, readErr := ioutil.ReadAll(r.Body)
+		if readErr != nil {
+			log.Fatal(readErr)
+		}
+
+		message := &data.Message{}
+		jsonErr := json.Unmarshal(body, message)
+		if jsonErr != nil {
+			log.Fatal(jsonErr)
+		}
+		log.Println(message)
+		user, _ := data.GetUserByID(sess.UserID)
+		err = user.SendMessage(message.ReceiverID, message.Text)
+		//messageText := r.PostFormValue("message")
+		//if err = user.SendMessage(int(id), messageText); err != nil{
+		//	log.Println(err)
+		//}
+	}
+}
 
 func profileSetting(w http.ResponseWriter, r *http.Request) {
 	pageData := PageData{

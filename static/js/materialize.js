@@ -8774,7 +8774,7 @@ $jscomp.polyfill = function (e, r, p, m) {
     // Render days of the calendar grid that fall in the next or previous month
     showDaysInNextAndPreviousMonths: false,
 
-    // Specify a DOM element to render the calendar in
+    // Specify a DOM element to addInnerHTML the calendar in
     container: null,
 
     // Show clear button
@@ -9060,7 +9060,7 @@ $jscomp.polyfill = function (e, r, p, m) {
         this.adjustCalendars();
       }
     }, {
-      key: "render",
+      key: "addInnerHTML",
       value: function render(year, month, randId) {
         var opts = this.options,
             now = new Date(),
@@ -9299,7 +9299,7 @@ $jscomp.polyfill = function (e, r, p, m) {
 
         for (var c = 0; c < 1; c++) {
           this._renderDateDisplay();
-          html += this.renderTitle(this, c, this.calendars[c].year, this.calendars[c].month, this.calendars[0].year, randId) + this.render(this.calendars[c].year, this.calendars[c].month, randId);
+          html += this.renderTitle(this, c, this.calendars[c].year, this.calendars[c].month, this.calendars[0].year, randId) + this.addInnerHTML(this.calendars[c].year, this.calendars[c].month, randId);
         }
 
         this.destroySelects();

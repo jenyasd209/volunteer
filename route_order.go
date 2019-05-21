@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/gorilla/mux"
 	"graduate/data"
+	"html/template"
 	"log"
 	"net/http"
 	"strconv"
@@ -88,6 +89,7 @@ func viewOrder(w http.ResponseWriter, r *http.Request)  {
 	}
 	order.FreelancerRequest = order.GetRequests()
 	customer, _ := data.GetCustomerByUserID(order.Customer.User.ID)
+	funcMap := new(template.FuncMap)
 	pageData := PageData{
 		Title :order.Title,
 		Content: struct {
@@ -100,7 +102,10 @@ func viewOrder(w http.ResponseWriter, r *http.Request)  {
 		user, _ := data.GetUserByID(sess.UserID)
 		pageData.User = &user
 	}
-	generateHTML(w, &pageData, nil, "base", "header", "footer", "order/order_view")
+	funcMap = &template.FuncMap{
+		"existFreelanserOrders":  data.ExistOffer,
+	}
+	generateHTML(w, &pageData, *funcMap, "base", "header", "footer", "order/order_view")
 }
 
 func editOrder(w http.ResponseWriter, r *http.Request)  {
@@ -182,4 +187,8 @@ func newRequest(w http.ResponseWriter, r *http.Request)  {
 		}
 	}
 	http.Redirect(w, r, "/orders/id" + vars["id"], 302)
+}
+
+func existFreelanserOrders(freelancerID int) (result bool) {
+	return
 }

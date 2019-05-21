@@ -1,43 +1,31 @@
 {{define "header"}}
-<!DOCTYPE html>
 <div class="navbar" id="div-nav">
   <nav class="light-blue darken-3" id="nav">
     <div class="nav-wrapper container">
       <a href="#" data-target="mobile-menu" class="sidenav-trigger"><i class="material-icons">menu</i></a>
 
-      <ul class="left hide-on-med-and-down 5">
+      <ul class="left hide-on-med-and-down">
         <li><a href="/#home"><i class="material-icons left"> home</i>Home </a></li>
-        <li><a href="/#about"><i class="material-icons left">info</i>About</a></li>
-        <li><a href="/#contacts"><i class="material-icons left"> contact_support</i>Contacts</a></li>
-        {{if .User}}
-            {{if (eq .User.RoleID 1)}}
-                <li><a href="/orders"><i class="material-icons white-text left">work</i>Jobs</a></li>
-            {{else if (eq .User.RoleID 2)}}
-                <li><a href="/freelancers"><i class="material-icons white-text left">person</i>Freelancers</a></li>
-            {{end}}
-        {{end}}
+          <li><a href="/orders"><i class="material-icons white-text left">work</i>Jobs</a></li>
+          <li><a href="/freelancers"><i class="material-icons white-text left">person</i>Freelancers</a></li>
       </ul>
       <ul class="right hide-on-med-and-down">
         {{if .User}}
             <div class="dropdown">
-            <ul class='blue'>
-                <li><a class="dropbtn" href="/user"><i class="material-icons white-text left"> account_circle</i>My profile</a></li>
-            </ul>
+                <a class="dropbtn" href="/my_profile"><i class="material-icons white-text left"> account_circle</i>My profile</a>
                 <div class="drop-content light-blue darken-3">
-                    <a href="/my_profile">My profile</a>
-                    <a href="/my_profile">Messages
+                    <a href="/my_profile">Me</a>
+                    <a href="/my_profile/dialogs">Messages
                         <span class="red white-text" style="border-radius: 2px; padding: 5px;font-size: 0.8rem;">4 new</span>
                     </a>
                     <a href="/my_profile/setting">Setting</a>
-                    <div class="divider" tabindex="-1"></div>
+                    <div class="divider"></div>
                     <a href="/logout">Logout</a>
                 </div>
             </div>
-{{/*          <li><a href="/user"><i class="material-icons white-text left"> account_circle</i>My profile</a></li>*/}}
-{{/*          <li><a href="/logout"><i class="material-icons white-text left"> exit_to_app</i>Logout</a></li>*/}}
         {{else}}
-          <li><a href="/login"><i class="material-icons left"> <img src="../static/image/login.png" alt=""></i>Login</a></li>
-          <li><a href="/registration"><i class="material-icons left"> <img src="../static/image/account-plus-outline.png" alt=""></i>Registration</a></li>
+          <li><a href="/login"><i class="material-icons left"><img src="../static/image/login.png"></i>Login</a></li>
+          <li><a href="/registration"><i class="material-icons left"> person_add</i>Registration</a></li>
         {{end}}
       </ul>
     </div>
@@ -46,18 +34,17 @@
 <ul class="sidenav light-blue darken-3" id="mobile-menu">
   {{if .User}}
     <li><a href="/my_profile"><i class="material-icons white-text left"> account_circle</i>My profile</a></li>
-    <li><a href="/my_profile" class="center-align"><i class="material-icons white-text left"> message</i>Messages
+    <li><a href="/my_profile/dialogs" class="center-align"><i class="material-icons white-text left"> message</i>Messages
             <span class="red white-text" style="border-radius: 2px; padding: 5px;font-size: 0.8rem;">4 new</span>
         </a>
     </li>
     <li><a class="collection-item" href="/my_profile/setting" onclick="setSelected(this)"><i class="material-icons white-text left">settings</i>Setting</a></li>
     <li><a href="/logout"><i class="material-icons white-text left"> exit_to_app</i>Logout</a></li>
-    <hr>
-    {{if (eq .User.RoleID 1)}}
-        <li><a href="/orders"><i class="material-icons white-text left">work</i>Jobs</a></li>
-    {{else if (eq .User.RoleID 2)}}
-        <li><a href="/freelancers"><i class="material-icons white-text left">person</i>Freelancers</a></li>
-    {{end}}
+{{/*    {{if (eq .User.RoleID 1)}}*/}}
+{{/*        <li><a href="/orders"><i class="material-icons white-text left">work</i>Jobs</a></li>*/}}
+{{/*    {{else if (eq .User.RoleID 2)}}*/}}
+{{/*        <li><a href="/freelancers"><i class="material-icons white-text left">person</i>Freelancers</a></li>*/}}
+{{/*    {{end}}*/}}
   {{else}}
     <li><a href="/login"><i class="material-icons left"> <img src="../static/image/login.png" alt=""></i>Login</a></li>
     <li><a href="/registration"><i class="material-icons left"> <img src="../static/image/account-plus-outline.png" alt=""></i>Registration</a></li>
@@ -66,5 +53,7 @@
   <li><a href="/#home"><i class="material-icons left white-text">home</i>Home</a></li>
   <li><a href="/#about"><i class="material-icons left white-text">info</i>About</a></li>
   <li><a href="/#contacts"><i class="material-icons left white-text">contact_support</i>Contacts</a></li>
+  <li><a href="/orders"><i class="material-icons white-text left">work</i>Jobs</a></li>
+  <li><a href="/freelancers"><i class="material-icons white-text left">person</i>Freelancers</a></li>
 </ul>
 {{end}}

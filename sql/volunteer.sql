@@ -113,6 +113,23 @@ create table messages(
   date_send timestamp not null
 );
 
+create table dialogs(
+                        id serial primary key,
+                        user1_id integer references users(id) on delete cascade on update cascade,
+                        user2_id integer references users(id) on delete cascade on update cascade,
+                        date_created timestamp not null
+);
+
+create table messages(
+                         id serial primary key,
+                         sender_id integer references users(id) on delete cascade on update cascade,
+                         receiver_id integer references users(id) on delete cascade on update cascade,
+                         dialog_id integer unique references dialogs(id) on delete cascade on update cascade,
+                         text_message text not null,
+--                          read boolean DEFAULT FALSE,
+                         date_send timestamp not null
+);
+
 create table session(
   id serial primary key,
   uuid varchar(64) not null unique,

@@ -88,29 +88,12 @@ func loginAccount(w http.ResponseWriter, r *http.Request) {
 		Title :"Registration",
 	}
 
-	user, err := data.GetUserByEmail(r.PostFormValue("email"))
-	if err != nil {
-		pageData.Errors = []string{"User is not found"}
-		//http.Redirect(w, r, "/login", 302)
-		generateHTML(w, &pageData, nil, "base", "header", "footer", "login")
-		return
+	user := data.User{
+		Email: r.PostFormValue("email"),
+		Password: data.Encrypt(r.PostFormValue("password")),
 	}
 
-	if user.Password == data.Encrypt(r.PostFormValue("password")) {
-		if user.IsFreelancer(){
-			if ok := data.CheckFreelancer(user.ID); !ok {
-				http.Redirect(w, r, "/login", 302)
-				return
-			}
-		} else if user.IsCustomer(){
-			if ok := data.CheckCustomer(user.ID); !ok {
-				http.Redirect(w, r, "/login", 302)
-				return
-			}
-		} else {
-			http.Redirect(w, r, "/login", 302)
-			return
-		}
+	if user.CheckLoginData(){
 		sess, err := user.CreateSession()
 		if err != nil {
 			return
@@ -124,12 +107,52 @@ func loginAccount(w http.ResponseWriter, r *http.Request) {
 		http.SetCookie(w, &cookie)
 
 		http.Redirect(w, r, "/my_profile", 302)
-	} else {
-		pageData.Errors = []string{"Password is wrong"}
-		//http.Redirect(w, r, "/login", 302)
+	}else {
+		pageData.Errors = []string{"User is not found"}
 		generateHTML(w, &pageData, nil, "base", "header", "footer", "login")
 		return
 	}
+	//user, err := data.GetUserByEmail(r.PostFormValue("email"))
+	//if err != nil {
+	//	pageData.Errors = []string{"User is not found"}
+	//	generateHTML(w, &pageData, nil, "base", "header", "footer", "login")
+	//	return
+	//}
+
+	//if user.Password == data.Encrypt(r.PostFormValue("password")) {
+	//	if user.IsFreelancer(){
+	//		if ok := data.CheckFreelancer(user.ID); !ok {
+	//			http.Redirect(w, r, "/login", 302)
+	//			return
+	//		}
+	//	} else if user.IsCustomer(){
+	//		if ok := data.CheckCustomer(user.ID); !ok {
+	//			http.Redirect(w, r, "/login", 302)
+	//			return
+	//		}
+	//	} else {
+	//		http.Redirect(w, r, "/login", 302)
+	//		return
+	//	}
+	//	sess, err := user.CreateSession()
+	//	if err != nil {
+	//		return
+	//	}
+	//	cookie := http.Cookie{
+	//		Name: "_cookie",
+	//		Value:    sess.UUID,
+	//		HttpOnly: true,
+	//		MaxAge: 60 * 60 * 24 * 30,
+	//	}
+	//	http.SetCookie(w, &cookie)
+	//
+	//	http.Redirect(w, r, "/my_profile", 302)
+	//} else {
+	//	pageData.Errors = []string{"Password is wrong"}
+	//	//http.Redirect(w, r, "/login", 302)
+	//	generateHTML(w, &pageData, nil, "base", "header", "footer", "login")
+	//	return
+	//}
 }
 
 func logout(w http.ResponseWriter, r *http.Request) {

@@ -19,7 +19,7 @@ type Session struct {
 // 	GetUserID() int
 // 	User() (User, error)
 // 	Delete() error
-// 	Check() (bool, error)
+// 	CheckLoginData() (bool, error)
 // 	DeleteByUUID() error
 // }
 

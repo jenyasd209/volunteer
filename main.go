@@ -20,12 +20,16 @@ func main() {
 	r.HandleFunc("/registration", logging(registration))
 	r.HandleFunc("/registration_account", logging(registrationAccount))
 	r.HandleFunc("/login_account", logging(loginAccount))
+	r.HandleFunc("/send_message/user_id{id:[0-9]+}", logging(sendMessage))
 	r.HandleFunc("/logout", logging(logout))
 
 	// route_user_profile
 	subUserProfile := r.PathPrefix("/my_profile").Subrouter()
 	subUserProfile.HandleFunc("", logging(profile))
 	subUserProfile.HandleFunc("/", logging(profile))
+	subUserProfile.HandleFunc("/dialogs", logging(renderDialogsPage))
+	subUserProfile.HandleFunc("/user_dialogs", logging(profileDialogs))
+	subUserProfile.HandleFunc("/dialog/id{id:[0-9]+}", logging(profileDialog))
 	subUserProfile.HandleFunc("/setting", logging(profileSetting))
 	subUserProfile.HandleFunc("/upload_photo", logging(uploadPhoto))
 
@@ -42,6 +46,7 @@ func main() {
 	subFreelancers.HandleFunc("", logging(allFreelancers))
 	subFreelancers.HandleFunc("/", logging(allFreelancers))
 	subFreelancers.HandleFunc("/id{id:[0-9]+}", logging(viewFreelancer))
+	subFreelancers.HandleFunc("/id{id:[0-9]+}/send_message", logging(newMessage))
 
 	//route orders
 	subOrder := r.PathPrefix("/orders").Subrouter()
