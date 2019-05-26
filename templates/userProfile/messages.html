@@ -1,106 +1,27 @@
 {{define "content"}}
-{{/*    <div class="container">*/}}
-{{/*        <h3 class="center-align">Messaging</h3>*/}}
-        <div class="messaging">
-            <div class="inbox_msg">
-                <div class="inbox_people">
-                    <div class="headind_srch">
-                        <form>
-                            <div class="input-field">
-                                <input id="search" type="search" required>
-                                <label for="search">Search</label>
-                                <i class="material-icons">close</i>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="inbox_chat" id="inbox_chat">
-{{/*                        <div class="chat_list active_chat">*/}}
-{{/*                            <span class="red-dot left"></span>*/}}
-{{/*                            <div class="chat_people">*/}}
-{{/*                                <div class="chat_img"> <img class="circle" src="{{.User.Photo}}" alt="sunil"> </div>*/}}
-{{/*                                <div class="chat_ib">*/}}
-{{/*                                    <h5>{{.User.FirstName}} {{.User.LastName}} <span class="chat_date">Dec 25</span></h5>*/}}
-{{/*                                    <p>Test, which is a new approach to have all solutions*/}}
-{{/*                                        astrology under one roof.</p>*/}}
-{{/*                                </div>*/}}
-{{/*                            </div>*/}}
-{{/*                        </div>*/}}
-{{/*                        {{range .Content.Dialogs}}*/}}
-{{/*                        <div class="chat_list" onclick="viewDialog({{.ID}}, this)">*/}}
-{{/*                            <div class="chat_people">*/}}
-{{/*                                <div class="chat_img"> <img class="circle" src="{{.UserTwo.Photo}}" alt="sunil"> </div>*/}}
-{{/*                                <div class="chat_ib">*/}}
-{{/*                                    <h5>{{.UserTwo.FirstName}} {{.UserTwo.LastName}} <span class="chat_date">Dec 25</span></h5>*/}}
-{{/*                                    <p>Text</p>*/}}
-{{/*                                </div>*/}}
-{{/*                            </div>*/}}
-{{/*                        </div>*/}}
-{{/*                        {{end}}*/}}
-{{/*                        <div class="chat_list">*/}}
-{{/*                            <div class="chat_people">*/}}
-{{/*                                <div class="chat_img"> <img class="circle" src="{{.User.Photo}}" alt="sunil"> </div>*/}}
-{{/*                                <div class="chat_ib">*/}}
-{{/*                                    <h5>{{.User.FirstName}} {{.User.LastName}} <span class="chat_date">Dec 25</span></h5>*/}}
-{{/*                                    <p>Test, which is a new approach to have all solutions*/}}
-{{/*                                        astrology under one roof.</p>*/}}
-{{/*                                </div>*/}}
-{{/*                            </div>*/}}
-{{/*                        </div>*/}}
-                    </div>
-                </div>
-                <div class="mesgs" id="mesgs">
-                    <div class="msg_history" id="msg_history">
-                        <div class="valign-wrapper" style="height: 100%; justify-content: center">
-                            <h5>Select dialog</h5>
+    <div class="messaging">
+        <div class="inbox_msg">
+            <div class="inbox_people">
+                <div class="headind_srch">
+                    <form>
+                        <div class="input-field">
+                            <input id="search" type="search" required>
+                            <label for="search">Search</label>
+                            <i class="material-icons">close</i>
                         </div>
-{{/*                        <div class="incoming_msg">*/}}
-{{/*                            <div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>*/}}
-{{/*                            <div class="received_msg">*/}}
-{{/*                                <div class="received_withd_msg">*/}}
-{{/*                                    <p>Test which is a new approach to have all*/}}
-{{/*                                        solutions</p>*/}}
-{{/*                                    <span class="time_date"> 11:01 AM    |    June 9</span></div>*/}}
-{{/*                            </div>*/}}
-{{/*                        </div>*/}}
-{{/*                        <div class="outgoing_msg">*/}}
-{{/*                            <div class="sent_msg">*/}}
-{{/*                                <p>Test which is a new approach to have all*/}}
-{{/*                                    solutions</p>*/}}
-{{/*                                <span class="time_date"> 11:01 AM    |    June 9</span> </div>*/}}
-{{/*                        </div>*/}}
-{{/*                        <div class="incoming_msg">*/}}
-{{/*                            <div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>*/}}
-{{/*                            <div class="received_msg">*/}}
-{{/*                                <div class="received_withd_msg">*/}}
-{{/*                                    <p>Test, which is a new approach to have</p>*/}}
-{{/*                                    <span class="time_date"> 11:01 AM    |    Yesterday</span></div>*/}}
-{{/*                            </div>*/}}
-{{/*                        </div>*/}}
-{{/*                        <div class="outgoing_msg">*/}}
-{{/*                            <div class="sent_msg">*/}}
-{{/*                                <p>Apollo University, Delhi, India Test</p>*/}}
-{{/*                                <span class="time_date"> 11:01 AM    |    Today</span> </div>*/}}
-{{/*                        </div>*/}}
-{{/*                        <div class="incoming_msg">*/}}
-{{/*                            <div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>*/}}
-{{/*                            <div class="received_msg">*/}}
-{{/*                                <div class="received_withd_msg">*/}}
-{{/*                                    <p>We work directly with our designers and suppliers,*/}}
-{{/*                                        and sell direct to you, which means quality, exclusive*/}}
-{{/*                                        products, at a price anyone can afford.</p>*/}}
-{{/*                                    <span class="time_date"> 11:01 AM    |    Today</span></div>*/}}
-{{/*                            </div>*/}}
-{{/*                        </div>*/}}
+                    </form>
+                </div>
+                <div class="inbox_chat" id="inbox_chat">
+                </div>
+            </div>
+            <div class="mesgs" id="mesgs">
+                <div class="msg_history" id="msg_history">
+                    <div class="valign-wrapper" style="height: 100%; justify-content: center">
+                        <h5>Select dialog</h5>
                     </div>
-{{/*                    <div class="type_msg">*/}}
-{{/*                        <div class="input_msg_write">*/}}
-{{/*                            <input type="text" class="write_msg" placeholder="Type a message" />*/}}
-{{/*                            <button class="msg_send_btn" type="button"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>*/}}
-{{/*                        </div>*/}}
-{{/*                    </div>*/}}
                 </div>
             </div>
         </div>
-{{/*    </div>*/}}
+    </div>
     <script src="/static/js/dialogs.js"></script>
 {{ end }}

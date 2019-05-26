@@ -1,8 +1,8 @@
 document.addEventListener('DOMContentLoaded', function() {
     var elems = document.querySelectorAll('select');
     var instances = M.FormSelect.init(elems, {});
-    var elems = document.querySelectorAll('.collapsible');
-    var instances = M.Collapsible.init(elems, {});
+    // var elems = document.querySelectorAll('.collapsible');
+    // var instances = M.Collapsible.init(elems, {});
     var mainBanner = document.querySelectorAll('.parallax');
     var instances = M.Parallax.init(mainBanner, {});
     var sidebar = document.querySelectorAll('.sidenav');
@@ -16,7 +16,7 @@ var main = function(){
   $(".dropdown-trigger").dropdown();
   $('.materialboxed').materialbox();
   $('.modal').modal();
-  // $('.collapsible').collapsible();
+  $('.collapsible').collapsible();
   // $('.tabs').tabs();
 }
 

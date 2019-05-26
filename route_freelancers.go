@@ -59,7 +59,7 @@ func viewFreelancer(w http.ResponseWriter, r *http.Request)  {
 	//if (data.Freelancer{}) == freelancer{
 	//	http.Redirect(w, r, "/not_found", 302)
 	//}
-	freelancerOrders := freelancer.CompleteOrders()
+	freelancerOrders := freelancer.Works()
 	pageData := PageData{
 		Title :freelancer.FirstName + " " + freelancer.LastName,
 		Content: struct {
@@ -78,23 +78,23 @@ func viewFreelancer(w http.ResponseWriter, r *http.Request)  {
 	generateHTML(w, &pageData, funcMap, "base", "header", "footer", "freelancer/freelancer_view")
 }
 
-func newMessage(w http.ResponseWriter, r *http.Request)  {
-	sess, err := session(w, r)
-	if err != nil {
-		log.Println(err)
-	}
-	vars := mux.Vars(r)
-	if r.Method == http.MethodPost{
-		id, _ := strconv.ParseInt(vars["id"], 10, 8)
-		user, _ := data.GetUserByID(sess.UserID)
-		//message := &data.Message{
-		//	ReceiverID:int(id),
-		//	Text:r.PostFormValue("message"),
-		//}
-		messageText := r.PostFormValue("message")
-		if err = user.SendMessage(int(id), messageText); err != nil{
-			log.Println(err)
-		}
-	}
-	http.Redirect(w, r, "/freelancers/id" + vars["id"], 302)
-}
+//func newMessage(w http.ResponseWriter, r *http.Request)  {
+//	sess, err := session(w, r)
+//	if err != nil {
+//		log.Println(err)
+//	}
+//	vars := mux.Vars(r)
+//	if r.Method == http.MethodPost{
+//		id, _ := strconv.ParseInt(vars["id"], 10, 8)
+//		user, _ := data.GetUserByID(sess.UserID)
+//		//message := &data.Message{
+//		//	ReceiverID:int(id),
+//		//	Text:r.PostFormValue("message"),
+//		//}
+//		messageText := r.PostFormValue("message")
+//		if err = user.SendMessage(int(id), messageText); err != nil{
+//			log.Println(err)
+//		}
+//	}
+//	http.Redirect(w, r, "/freelancers/id" + vars["id"], 302)
+//}

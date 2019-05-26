@@ -34,7 +34,7 @@ func main() {
 	subUserProfile.HandleFunc("/upload_photo", logging(uploadPhoto))
 
 	//route customer profile
-	//subUserProfile.HandleFunc("/sort_by", logging(sortOrder))
+	subUserProfile.HandleFunc("/sort_orders_by_{status}", logging(sortOrders))
 	subUserProfile.HandleFunc("/new_order", logging(newOrder))
 	subUserProfile.HandleFunc("/edit_order/id{id:[0-9]+}", logging(editOrder))
 	subUserProfile.HandleFunc("/delete_order/id{id:[0-9]+}", logging(deleteOrder))
@@ -46,14 +46,17 @@ func main() {
 	subFreelancers.HandleFunc("", logging(allFreelancers))
 	subFreelancers.HandleFunc("/", logging(allFreelancers))
 	subFreelancers.HandleFunc("/id{id:[0-9]+}", logging(viewFreelancer))
-	subFreelancers.HandleFunc("/id{id:[0-9]+}/send_message", logging(newMessage))
+	//subFreelancers.HandleFunc("/id{id:[0-9]+}/send_message", logging(newMessage))
 
 	//route orders
 	subOrder := r.PathPrefix("/orders").Subrouter()
 	subOrder.HandleFunc("", logging(allOrders))
 	subOrder.HandleFunc("/", logging(allOrders))
+	subOrder.HandleFunc("/spec_id{id:[0-9]+}", logging(categoryOrders))
 	subOrder.HandleFunc("/id{id:[0-9]+}", logging(viewOrder))
 	subOrder.HandleFunc("/id{id:[0-9]+}/new_request", logging(newRequest))
+	subOrder.HandleFunc("/id{id:[0-9]+}/make_done", logging(orderDone))
+	subOrder.HandleFunc("/id{id:[0-9]+}/select_freelancer_id{freelancer_id:[0-9]+}", logging(selectRequest))
 	subOrder.HandleFunc("/search", logging(allOrders))
 
 

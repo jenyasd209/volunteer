@@ -40,7 +40,7 @@
                 <p class="flow-text center-align">
                   {{ .User.FirstName }} {{ .User.LastName }}
                   <a title="Logout" class="right hide-on-med-and-down" href="/logout"><i class="material-icons left"> exit_to_app</i></a>
-                  <a title="Setting" class="right hide-on-med-and-down" href="/my_profile/setting"><i class="material-icons left">settings</i></a>
+                  <a title="Setting" class="right hide-on-med-and-down" href="/my_profile/setting#setting"><i class="material-icons left">settings</i></a>
                   <a title="Messages" class="right hide-on-med-and-down center-align" href="/my_profile/dialogs">
                     <i class="material-icons left">message<span class="red white-text left" style="border-radius: 7px; padding: 2px 4px;font-size: 0.7rem;">4</span>
                     </i>
@@ -49,14 +49,6 @@
               </div>
             </div>
               {{ template "profile_extends" .}}
-            <div class="row">
-              <div class="col s4 m3">
-                <p class="bold center-align">Facebook:</p>
-              </div>
-              <div class="col s8 m9">
-                <p class="center-align">{{ .User.Facebook }}</p>
-              </div>
-            </div>
             <div class="row">
               <div class="col s4 m3">
                 <p class="bold center-align">Skype:</p>

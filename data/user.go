@@ -27,7 +27,7 @@ type User struct {
 	Skype     string
 	About     string
 	Photo     string
-	Rait      float64
+	Rait      float32
 	RoleID    int
 	CreatedAt time.Time
 }

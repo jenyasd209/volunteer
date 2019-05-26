@@ -1,6 +1,7 @@
 {{ define "profile_content" }}
+  {{$countWorks := len .Content.FreelancerCompleteOrders}}
 <div class="content">
-  <h5 class="center">My works</h5>
+  <h5 class="center">My works ({{$countWorks}})</h5>
   {{if .Content.FreelancerCompleteOrders}}
     {{range .Content.FreelancerCompleteOrders}}
       <div class="content__works">
@@ -8,13 +9,13 @@
           <div class="card-content">
             <span class="card-title"> <a href="/orders/id{{.Order.ID}}">{{.Title}}</a></span>
             <div class="rating" id="{{.Order.ID}}">
-              <script>renderStarsComment({{.Order.ID}}, {{.CustomerComment.Rait }})</script>
+              <script>renderStars({{.Order.ID}}, {{.CustomerComment.Rait }})</script>
             </div>
             <span>{{.CustomerComment.Text}}</span>
           </div>
           <div class="card-action card-inform">
             <span>{{.CreatedAt.Format "02 Jan 2006 15:04:05"}}</span>
-            <span> <a href="#">{{.Order.Customer.FirstName}} {{.Order.Customer.LastName}}</a></span>
+            <span><a class="center" href="#">{{.Order.Customer.FirstName}} {{.Order.Customer.LastName}}</a></span>
           </div>
         </div>
       </div>

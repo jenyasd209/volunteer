@@ -21,7 +21,7 @@
                                 <ul class="collection">
                                     <a href="/orders"><li class="collection-item center-align">All</li></a>
                                     {{range .Content.Specialization}}
-                                        <a href="/orders/specs_id{{.ID}}"><li class="collection-item center-align">{{.Name}}</li></a>
+                                        <a href="/orders/spec_id{{.ID}}"><li class="collection-item center-align">{{.Name}}</li></a>
                                     {{end}}
                                 </ul>
                             </div>
@@ -34,7 +34,11 @@
                         <div class="card order">
                             <div class="card-content">
                                 <span class="card-title"> <a href="/orders/id{{.ID}}">{{.Title}}</a></span>
-                                <p class="bold">Requests 0</p>
+                                {{if .FreelancerRequest}}
+                                    <p class="bold">Requests: {{len .FreelancerRequest}}</p>
+                                {{else}}
+                                    <p class="bold">Requests: 0</p>
+                                {{end}}
                                 <span>{{.Content}}</span>
                             </div>
                             <div class="card-action">

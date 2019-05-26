@@ -80,7 +80,7 @@ func session(w http.ResponseWriter, r *http.Request) (sess data.Session, err err
 	if err == nil {
 		sess = data.Session{UUID: cookie.Value}
 		if ok, _ := sess.Check(); !ok {
-			err = errors.New("Invalid session.")
+			err = errors.New("invalid session")
 		}
 	}
 	return

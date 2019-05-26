@@ -14,7 +14,7 @@ function renderInboxChat(dialogs) {
         let indexLastMsg = dialogs[i]['messages'].length - 1;
         html += `<div class="chat_list" onclick="viewDialog(${dialogs[i]['id']}, this)">
                      <div class="chat_people">
-                         <div class="chat_img"> <img class="circle" src="${dialogs[i]['user_two']['Photo']}" alt="sunil"> </div>
+                         <div class="chat_img"> <img class="avatar" src="${dialogs[i]['user_two']['Photo']}" alt="sunil"> </div>
                          <div class="chat_ib">
                              <h5>${dialogs[i]['user_two']['FirstName']} ${dialogs[i]['user_two']['LastName']}
                              <span class="chat_date">${formatDate(new Date(dialogs[i]['messages'][indexLastMsg]['date_send']))}</span></h5>
@@ -75,7 +75,7 @@ function renderMsgHistory(dialog){
                        </div>`;
         } else{
             msg_history.innerHTML += `<div class="incoming_msg">
-                            <div class="incoming_msg_img"> <img class="circle" src="${dialog['user_two']['Photo']}" alt="sunil"> </div>
+                            <div class="incoming_msg_img"> <img class="avatar" src="${dialog['user_two']['Photo']}" alt="sunil"> </div>
                             <div class="received_msg">
                                 <div class="received_withd_msg">
                                     ${msg_text}

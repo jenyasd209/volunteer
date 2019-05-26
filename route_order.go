@@ -28,7 +28,7 @@ func allOrders(w http.ResponseWriter, r *http.Request)  {
 	orders := new([]data.Order)
 	specialization, _ := data.GetAllSpecialization()
 	if search := r.FormValue("search"); search != ""{
-		*orders, err = data.GetOrdersWhere(`title ILIKE '%' || $1 || '%'`, search)
+		*orders, err = data.GetOrdersWhere(`title ILIKE '%' || $1 || '%' and status_id = 1`, search)
 		if err != nil{
 			log.Println(err)
 		}
@@ -36,7 +36,8 @@ func allOrders(w http.ResponseWriter, r *http.Request)  {
 			orders = nil
 		}
 	}else{
-		*orders, err = data.GetAllOrders()
+		//*orders, err = data.GetAllOrders()
+		*orders, err = data.GetOrdersWhere(`title ILIKE '%' || $1 || '%' and status_id = 1`, search)
 		if err != nil{
 			log.Println(err)
 		}
@@ -44,6 +45,7 @@ func allOrders(w http.ResponseWriter, r *http.Request)  {
 			orders = nil
 		}
 	}
+
 	pageData.Content = struct {
 		Orders *[]data.Order
 		Specialization *[]data.Specialization
@@ -65,17 +67,25 @@ func newOrder(w http.ResponseWriter, r *http.Request)  {
 		fmt.Println(err)
 		return
 	}
+	specs, _ := data.GetAllSpecialization()
 	pageData := PageData{
 		Title :"New order",
 		User : &customer,
+		Content: struct {
+			Specialization *[]data.Specialization
+		}{&specs},
 	}
 	if r.Method == http.MethodGet {
 		generateHTML(w, &pageData, nil, "base", "header", "footer", "userProfile/profile",
 			"userProfile/customer/about", "order/new_order")
 	} else if r.Method == http.MethodPost {
-		orderTitle := r.PostFormValue("title")
-		orderContent := r.PostFormValue("description")
-		customer.CreateOrder(orderTitle, orderContent)
+		specID, _ := strconv.ParseInt(r.PostFormValue("specialization"), 10, 8)
+		newOrder := &data.Order{
+			Title: r.PostFormValue("title"),
+			Content: r.PostFormValue("description"),
+			SpecializationID: int(specID),
+		}
+		customer.CreateOrder(newOrder)
 		http.Redirect(w, r,  "/my_profile", 302)
 	}
 }
@@ -124,12 +134,15 @@ func editOrder(w http.ResponseWriter, r *http.Request)  {
 		fmt.Println(err)
 		return
 	}
+	specs, _ := data.GetAllSpecialization()
+	specID, _ := strconv.ParseInt(r.PostFormValue("specialization"), 10, 8)
 	pageData := PageData{
 		Title :"Edit order \"" + order.Title + "\"",
 		User : &customer,
 		Content: struct {
 			data.Order
-		}{order},
+			Specialization *[]data.Specialization
+		}{order, &specs},
 	}
 	if r.Method == http.MethodGet {
 		generateHTML(w, &pageData, nil, "base", "header", "footer", "userProfile/profile",
@@ -137,6 +150,7 @@ func editOrder(w http.ResponseWriter, r *http.Request)  {
 	} else if r.Method == http.MethodPost {
 		order.Title = r.PostFormValue("title")
 		order.Content = r.PostFormValue("description")
+		order.SpecializationID = int(specID)
 		err := customer.UpdateOrder(&order)
 		if err != nil{
 			log.Println(err)
@@ -187,6 +201,55 @@ func newRequest(w http.ResponseWriter, r *http.Request)  {
 		}
 	}
 	http.Redirect(w, r, "/orders/id" + vars["id"], 302)
+}
+
+func categoryOrders(w http.ResponseWriter, r *http.Request)  {
+	pageData := PageData{
+		Title:"Jobs",
+	}
+	sess, err := session(w, r)
+	if err == nil {
+		user, _ := data.GetUserByID(sess.UserID)
+		if user.IsFreelancer(){
+			user, _ := data.GetFreelancerByUserID(user.ID)
+			pageData.User = &user
+		}else if user.IsCustomer(){
+			user, _ := data.GetCustomerByUserID(user.ID)
+			pageData.User = &user
+		}
+	}
+	vars := mux.Vars(r)
+	id, _ := strconv.ParseInt(vars["id"], 10, 8)
+	if err != nil {
+		http.Redirect(w, r, "/my_profile", 302)
+		fmt.Println(err)
+		return
+	}
+	orders := new([]data.Order)
+	specializations, _ := data.GetAllSpecialization()
+	if search := r.FormValue("search"); search != ""{
+		*orders, err = data.GetOrdersWhere(`title ILIKE '%' || $1 || '%' and status_id = 1`, search)
+		if err != nil{
+			log.Println(err)
+		}
+		if len(*orders) == 0{
+			orders = nil
+		}
+	}else{
+		*orders, err = data.GetOrdersWhere(" specialization_id = $1 and status_id = 1", id)
+		if err != nil{
+			log.Println(err)
+		}
+		if len(*orders) == 0{
+			orders = nil
+		}
+	}
+
+	pageData.Content = struct {
+		Orders *[]data.Order
+		Specialization *[]data.Specialization
+	}{orders, &specializations}
+	generateHTML(w, &pageData, nil, "base", "header", "footer", "order/orders")
 }
 
 func existFreelanserOrders(freelancerID int) (result bool) {

@@ -24,6 +24,8 @@ func profile(w http.ResponseWriter, r *http.Request) {
 	sess, err := session(w, r)
 	if err != nil {
 		http.Redirect(w, r, "/login", 302)
+		fmt.Println(err)
+		return
 	} else {
 		pageData := PageData{
 			Title :"About",
@@ -53,6 +55,8 @@ func renderDialogsPage(w http.ResponseWriter, r *http.Request){
 	sess, err := session(w, r)
 	if err != nil {
 		http.Redirect(w, r, "/login", 302)
+		fmt.Println(err)
+		return
 	} else {
 		user, _ := data.GetUserByID(sess.UserID)
 		pageData.User = &user
@@ -70,6 +74,8 @@ func profileDialogs(w http.ResponseWriter, r *http.Request)  {
 	sess, err := session(w, r)
 	if err != nil {
 		http.Redirect(w, r, "/login", 302)
+		fmt.Println(err)
+		return
 	} else {
 		user, _ := data.GetUserByID(sess.UserID)
 		dialog, _ := json.Marshal(user.Dialogs())
@@ -83,6 +89,8 @@ func profileDialog(w http.ResponseWriter, r *http.Request)  {
 	sess, err := session(w, r)
 	if err != nil {
 		http.Redirect(w, r, "/login", 302)
+		fmt.Println(err)
+		return
 	} else {
 		vars := mux.Vars(r)
 		id, _ := strconv.ParseInt(vars["id"], 10, 8)
@@ -97,7 +105,9 @@ func profileDialog(w http.ResponseWriter, r *http.Request)  {
 func sendMessage(w http.ResponseWriter, r *http.Request)  {
 	sess, err := session(w, r)
 	if err != nil {
-		log.Println(err)
+		http.Redirect(w, r, "/login", 302)
+		fmt.Println(err)
+		return
 	}
 	if r.Method == http.MethodPost{
 		//vars := mux.Vars(r)
@@ -112,9 +122,8 @@ func sendMessage(w http.ResponseWriter, r *http.Request)  {
 		if jsonErr != nil {
 			log.Fatal(jsonErr)
 		}
-		log.Println(message)
 		user, _ := data.GetUserByID(sess.UserID)
-		err = user.SendMessage(message.ReceiverID, message.Text)
+		err = user.SendMessage(*message)
 		//messageText := r.PostFormValue("message")
 		//if err = user.SendMessage(int(id), messageText); err != nil{
 		//	log.Println(err)
@@ -129,6 +138,8 @@ func profileSetting(w http.ResponseWriter, r *http.Request) {
 	sess, err := session(w, r)
 	if err != nil {
 		http.Redirect(w, r, "/login", 302)
+		fmt.Println(err)
+		return
 	} else {
 		user := data.User{}
 		if r.Method == http.MethodPost{

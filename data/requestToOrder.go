@@ -9,7 +9,7 @@ import (
 type FreelancerRequest struct {
 	ID      int
 	Comment string
-	//Order
+	//CardOrder
 	OrderID int
 	Freelancer
 }
@@ -31,7 +31,7 @@ func (freelancer *Freelancer) CreateRequest(orderID int, addText string) (err er
 	//	return
 	//}
 	//defer stmt.Close()
-	//err = stmt.QueryRow(request.Freelancer.ID, request.Order.ID, time.Now()).Scan()
+	//err = stmt.QueryRow(request.Freelancer.ID, request.CardOrder.ID, time.Now()).Scan()
 	//return
 }
 

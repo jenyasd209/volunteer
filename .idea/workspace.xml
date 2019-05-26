@@ -2,35 +2,40 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5ab03fa1-1ef1-4113-9a08-09050671e53f" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources/d9b4a6ef-f828-456b-8da1-25d98fe59c46.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/d9b4a6ef-f828-456b-8da1-25d98fe59c46.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources/d9b4a6ef-f828-456b-8da1-25d98fe59c46/storage_v2/_src_/database/volunteer.ivs5gQ/schema/public.abK9xQ.meta" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/d9b4a6ef-f828-456b-8da1-25d98fe59c46/storage_v2/_src_/database/volunteer.ivs5gQ/schema/public.abK9xQ.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/customer.go" beforeDir="false" afterPath="$PROJECT_DIR$/data/customer.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/freelancer.go" beforeDir="false" afterPath="$PROJECT_DIR$/data/freelancer.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/comments.go" beforeDir="false" afterPath="$PROJECT_DIR$/data/comments.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data/message.go" beforeDir="false" afterPath="$PROJECT_DIR$/data/message.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data/order.go" beforeDir="false" afterPath="$PROJECT_DIR$/data/order.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/session.go" beforeDir="false" afterPath="$PROJECT_DIR$/data/session.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/requestToOrder.go" beforeDir="false" afterPath="$PROJECT_DIR$/data/requestToOrder.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/data/user.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/route_auth.go" beforeDir="false" afterPath="$PROJECT_DIR$/route_auth.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/route_freelancer_profile.go" beforeDir="false" afterPath="$PROJECT_DIR$/route_profile_freelancer.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/route_freelancers.go" beforeDir="false" afterPath="$PROJECT_DIR$/route_freelancers.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/route_order.go" beforeDir="false" afterPath="$PROJECT_DIR$/route_order.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/route_profile.go" beforeDir="false" afterPath="$PROJECT_DIR$/route_profile.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/route_profile_customer.go" beforeDir="false" afterPath="$PROJECT_DIR$/route_profile_customer.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/route_profile_freelancer.go" beforeDir="false" afterPath="$PROJECT_DIR$/route_profile_freelancer.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sql/volunteer.sql" beforeDir="false" afterPath="$PROJECT_DIR$/sql/volunteer.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/static/css/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/main.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/js/dialogs.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/js/dialogs.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/static/js/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/js/main.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/js/materialize.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/js/materialize.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/js/materialize.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/js/materialize.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/js/rating.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/js/rating.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/freelancer/freelancer_view.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/freelancer/freelancer_view.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/freelancer/freelancers.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/freelancer/freelancers.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/header.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/header.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/order/edit_order.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/order/edit_order.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/order/new_order.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/order/new_order.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/order/order_view.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/order/order_view.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/order/orders.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/order/orders.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/userProfile/customer/about.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/userProfile/customer/about.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/userProfile/customer/my_orders.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/userProfile/customer/my_orders.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/userProfile/freelancer/about.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/userProfile/freelancer/about.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/userProfile/freelancer/my_works.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/userProfile/freelancer/my_works.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/userProfile/messages.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/userProfile/messages.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/userProfile/profile.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/userProfile/profile.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/userProfile/setting_base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/userProfile/setting_base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils.go" beforeDir="false" afterPath="$PROJECT_DIR$/utils.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/vol.log" beforeDir="false" afterPath="$PROJECT_DIR$/vol.log" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -90,16 +95,6 @@
         <item name="public: schema" type="983ebcf7:PgImplModel$Schema" />
         <item name="tables" type="d4e8921:DatabaseStructure$FamilyGroup" />
       </path>
-      <path>
-        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="volunteer@localhost" type="feb32156:DbDataSourceImpl" />
-        <item name="databases" type="d4e8921:DatabaseStructure$FamilyGroup" />
-        <item name="volunteer: database" type="162271b6:PgImplModel$Database" />
-        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
-        <item name="public: schema" type="983ebcf7:PgImplModel$Schema" />
-        <item name="tables" type="d4e8921:DatabaseStructure$FamilyGroup" />
-        <item name="messages: table" type="69fad909:PgImplModel$LocalTable" />
-      </path>
     </expand>
     <select />
   </component>
@@ -109,101 +104,86 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/static/css/main.css">
+        <entry file="file://$PROJECT_DIR$/route_order.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="9630">
-              <caret line="642" column="18" selection-start-line="642" selection-start-column="18" selection-end-line="642" selection-end-column="18" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/userProfile/messages.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret line="46" column="31" selection-start-line="46" selection-start-column="31" selection-end-line="46" selection-end-column="31" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/static/js/dialogs.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="183">
-              <caret line="15" column="71" selection-start-line="15" selection-start-column="71" selection-end-line="15" selection-end-column="71" />
+            <state relative-caret-position="45">
+              <caret line="95" column="25" lean-forward="true" selection-start-line="95" selection-start-column="25" selection-end-line="95" selection-end-column="25" />
               <folding>
-                <element signature="n#div#0;n#!!top" />
-                <element signature="n#!!block;n#viewDialog#0" />
-                <element signature="n#!!block;n#setActive#0" />
-                <element signature="n#!!block;n#renderMsgHistory#0" />
-                <element signature="n#div#0;n#!!top" />
-                <element signature="n#div#0;n#!!top" />
-                <element signature="n#div#0;n#!!top" />
-                <element signature="n#!!block;n#formatDate#0" />
-                <element signature="n#!!block;n#render#0" />
-                <element signature="n#!!block;n#sendMsg#0" />
-                <element signature="e#4645#4803#0" />
-                <element signature="n#div#0;n#!!top" />
-                <element signature="e#5354#5575#0" />
+                <element signature="e#14#121#0" expanded="true" />
+                <element signature="n#!!block;n#deleteOrder#0" />
+                <element signature="n#!!block;n#newRequest#0" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/userProfile/profile.html">
+        <entry file="file://$PROJECT_DIR$/route_profile_customer.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="202">
-              <caret line="43" column="111" selection-start-line="43" selection-start-column="111" selection-end-line="43" selection-end-column="111" />
+            <state relative-caret-position="315">
+              <caret line="153" column="31" selection-start-line="153" selection-start-column="31" selection-end-line="153" selection-end-column="31" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/main.go">
+        <entry file="file://$PROJECT_DIR$/templates/userProfile/customer/my_orders.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="125">
-              <caret line="22" column="61" selection-start-line="22" selection-start-column="61" selection-end-line="22" selection-end-column="61" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/route_freelancers.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="309">
-              <caret line="89" column="35" lean-forward="true" selection-start-line="89" selection-start-column="35" selection-end-line="92" selection-end-column="11" />
+            <state relative-caret-position="-165">
+              <caret line="1" column="40" selection-start-line="1" selection-start-column="40" selection-end-line="1" selection-end-column="40" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/route_profile.go">
+        <entry file="file://$PROJECT_DIR$/data/order.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="110">
-              <caret line="88" column="48" selection-start-line="88" selection-start-column="48" selection-end-line="88" selection-end-column="48" />
+            <state relative-caret-position="325">
+              <caret line="432" column="11" selection-start-line="432" selection-start-column="8" selection-end-line="432" selection-end-column="11" />
               <folding>
-                <element signature="n#!!block;n#profileSetting#0" />
-                <element signature="n#!!block;n#uploadPhoto#0" />
+                <element signature="n#!!block;n#CreateOrder#0" />
+                <element signature="n#!!block;n#UpdateOrder#0" />
+                <element signature="n#!!block;n#DeleteOrder#0" />
+                <element signature="n#!!block;n#deletePerformedOrder#0" />
+                <element signature="n#!!block;n#MakeOrderPerformed#0" />
+                <element signature="n#!!block;n#IsAvailable#0" />
+                <element signature="n#!!block;n#changeStatus#0" />
+                <element signature="n#!!block;n#OrderDeleteAll#0" />
+                <element signature="n#!!block;n#Orders#0" />
+                <element signature="n#!!block;n#Works#0" />
+                <element signature="n#!!block;n#CompleteOrders#0" />
+                <element signature="n#!!block;n#PerformedOrders#0" />
+                <element signature="n#!!block;n#PerformedOrders#1" />
+                <element signature="n#!!block;n#ExistOffer#0" />
+                <element signature="n#!!block;n#GetAllOrders#0" />
+                <element signature="n#!!block;n#GetOrdersWhere#0" />
+                <element signature="n#!!block;n#GetStatusByID#0" />
+                <element signature="n#!!block;n#GetOrdersByStatus#0" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/data/message.go">
+        <entry file="file://$PROJECT_DIR$/data/comments.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="115">
-              <caret line="124" column="18" selection-start-line="124" selection-start-column="18" selection-end-line="124" selection-end-column="18" />
+            <state relative-caret-position="215">
+              <caret line="26" column="90" selection-start-line="26" selection-start-column="90" selection-end-line="26" selection-end-column="90" />
+              <folding>
+                <element signature="e#14#39#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/data/freelancer.go">
+        <entry file="file://$PROJECT_DIR$/route_profile_freelancer.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1245">
-              <caret line="88" column="38" selection-start-line="88" selection-start-column="38" selection-end-line="88" selection-end-column="83" />
+            <state relative-caret-position="150">
+              <caret line="16" column="40" selection-start-line="16" selection-start-column="40" selection-end-line="16" selection-end-column="40" />
+              <folding>
+                <element signature="n#!!block;n#settingFreelancer#0" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -211,8 +191,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/sql/volunteer.sql">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1725">
-              <caret line="115" selection-start-line="115" selection-end-line="120" selection-end-column="2" />
+            <state relative-caret-position="120">
+              <caret line="74" lean-forward="true" selection-start-line="74" selection-end-line="74" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/data/user.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="258">
+              <caret line="29" column="21" selection-start-line="29" selection-start-column="21" selection-end-line="29" selection-end-column="21" />
             </state>
           </provider>
         </entry>
@@ -223,43 +212,43 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Go File" />
-        <option value="HTML File" />
         <option value="JavaScript File" />
+        <option value="HTML File" />
       </list>
     </option>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>action-block</find>
-      <find>_order</find>
-      <find>text</find>
-      <find>FreelancerRequest</find>
-      <find>append</find>
-      <find>Print</find>
-      <find>spec</find>
-      <find>jobs</find>
-      <find>IsF</find>
-      <find>Freelancers</find>
-      <find>Red</find>
-      <find>returnin</find>
-      <find>EXIST</find>
-      <find>funcMap</find>
-      <find>sea</find>
-      <find>No</find>
-      <find>cha</find>
-      <find>height</find>
-      <find>this</find>
-      <find>thi</find>
-      <find>recent_heading</find>
-      <find>stylish-input-group</find>
-      <find>inbox_chat</find>
-      <find>messa</find>
-      <find>chat_list</find>
-      <find>msg_his</find>
-      <find>console.log</find>
-      <find>sender_id</find>
       <find>ID</find>
       <find>mess</find>
+      <find>console.log</find>
+      <find>card.appendChild(this.createCardAction());</find>
+      <find>cir</find>
+      <find>circle</find>
+      <find>para</find>
+      <find>img</find>
+      <find>sort</find>
+      <find>Specialization</find>
+      <find>/id</find>
+      <find>spec</find>
+      <find>fmt.</find>
+      <find>specialization_id</find>
+      <find>sett</find>
+      <find>&lt;script&gt; const rating = 4&lt;/script&gt;</find>
+      <find>GetFreelancerByUserID(performedOrder.Freelancer.User.ID)</find>
+      <find>card-inform</find>
+      <find>classLis</find>
+      <find>card-in</find>
+      <find>sess</find>
+      <find>Make</find>
+      <find>performed</find>
+      <find>performedOrder</find>
+      <find>newO</find>
+      <find>let request_count = this.order.freelancer_request.length</find>
+      <find>Null</find>
+      <find>var freelancerCommentID sql.NullInt64</find>
+      <find>fmt</find>
+      <find>NoOrders</find>
     </findStrings>
   </component>
   <component name="GOROOT" path="/usr/local/go" />
@@ -276,12 +265,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/templates/userProfile/customer/setting.html" />
-        <option value="$PROJECT_DIR$/templates/login.html" />
-        <option value="$PROJECT_DIR$/data/utils.go" />
-        <option value="$PROJECT_DIR$/templates/userProfile/setting_base.html" />
-        <option value="$PROJECT_DIR$/templates/footer.html" />
-        <option value="$PROJECT_DIR$/static/js/profile_customer.html" />
         <option value="$PROJECT_DIR$/static/js/profile_customer.js" />
         <option value="$PROJECT_DIR$/data/session.go" />
         <option value="$PROJECT_DIR$/data/cons.go" />
@@ -292,41 +275,47 @@
         <option value="$PROJECT_DIR$/templates/userProfile/order/order_view.html" />
         <option value="$PROJECT_DIR$/templates/userProfile/order/orders.html" />
         <option value="$PROJECT_DIR$/data/requestToOrder.go" />
-        <option value="$PROJECT_DIR$/templates/base.html" />
         <option value="$PROJECT_DIR$/templates/userProfile/freelancer/freelancers.html" />
-        <option value="$PROJECT_DIR$/templates/home_page.html" />
         <option value="$PROJECT_DIR$/templates/not_found.html" />
-        <option value="$PROJECT_DIR$/templates/userProfile/customer/my_orders.html" />
         <option value="$PROJECT_DIR$/templates/freelancer/view_freelancer.html" />
-        <option value="$PROJECT_DIR$/data/comments.go" />
-        <option value="$PROJECT_DIR$/static/js/rating.js" />
-        <option value="$PROJECT_DIR$/route_profile_customer.go" />
-        <option value="$PROJECT_DIR$/templates/userProfile/freelancer/about.html" />
         <option value="$PROJECT_DIR$/route_freelancer_profile.go" />
-        <option value="$PROJECT_DIR$/templates/userProfile/freelancer/my_works.html" />
-        <option value="$PROJECT_DIR$/data/order.go" />
-        <option value="$PROJECT_DIR$/route_order.go" />
-        <option value="$PROJECT_DIR$/templates/order/order_view.html" />
-        <option value="$PROJECT_DIR$/templates/order/orders.html" />
-        <option value="$PROJECT_DIR$/static/js/main.js" />
-        <option value="$PROJECT_DIR$/templates/freelancer/freelancers.html" />
-        <option value="$PROJECT_DIR$/sql/volunteer.sql" />
         <option value="$PROJECT_DIR$/data/freelancer.go" />
         <option value="$PROJECT_DIR$/data/customer.go" />
-        <option value="$PROJECT_DIR$/templates/freelancer/freelancer_view.html" />
-        <option value="$PROJECT_DIR$/templates/userProfile/customer/about.html" />
-        <option value="$PROJECT_DIR$/templates/header.html" />
         <option value="$PROJECT_DIR$/route_auth.go" />
-        <option value="$PROJECT_DIR$/data/user.go" />
+        <option value="$PROJECT_DIR$/sql/volunteer.sql" />
         <option value="$PROJECT_DIR$/templates/userProfile/messages.html" />
-        <option value="$PROJECT_DIR$/static/css/main.css" />
-        <option value="$PROJECT_DIR$/main.go" />
-        <option value="$PROJECT_DIR$/utils.go" />
         <option value="$PROJECT_DIR$/data/message.go" />
         <option value="$PROJECT_DIR$/route_freelancers.go" />
-        <option value="$PROJECT_DIR$/templates/userProfile/profile.html" />
+        <option value="$PROJECT_DIR$/templates/freelancer/freelancers.html" />
+        <option value="$PROJECT_DIR$/templates/userProfile/customer/about.html" />
+        <option value="$PROJECT_DIR$/templates/userProfile/freelancer/about.html" />
+        <option value="$PROJECT_DIR$/templates/home_page.html" />
         <option value="$PROJECT_DIR$/static/js/dialogs.js" />
+        <option value="$PROJECT_DIR$/templates/order/new_order.html" />
+        <option value="$PROJECT_DIR$/templates/order/edit_order.html" />
+        <option value="$PROJECT_DIR$/templates/userProfile/profile.html" />
+        <option value="$PROJECT_DIR$/templates/userProfile/setting_base.html" />
+        <option value="$PROJECT_DIR$/templates/header.html" />
+        <option value="$PROJECT_DIR$/static/js/main.js" />
+        <option value="$PROJECT_DIR$/templates/base.html" />
+        <option value="$PROJECT_DIR$/static/js/rating.js" />
+        <option value="$PROJECT_DIR$/templates/freelancer/freelancer_view.html" />
+        <option value="$PROJECT_DIR$/static/css/main.css" />
         <option value="$PROJECT_DIR$/route_profile.go" />
+        <option value="$PROJECT_DIR$/utils.go" />
+        <option value="$PROJECT_DIR$/main.go" />
+        <option value="$PROJECT_DIR$/templates/order/orders.html" />
+        <option value="$PROJECT_DIR$/route_order.go" />
+        <option value="$PROJECT_DIR$/templates/order/order_make_done.html" />
+        <option value="$PROJECT_DIR$/route_profile_customer.go" />
+        <option value="$PROJECT_DIR$/templates/order/order_view.html" />
+        <option value="$PROJECT_DIR$/templates/userProfile/customer/my_orders.html" />
+        <option value="$PROJECT_DIR$/route_profile_freelancer.go" />
+        <option value="$PROJECT_DIR$/data/user.go" />
+        <option value="$PROJECT_DIR$/data/comments.go" />
+        <option value="$PROJECT_DIR$/templates/userProfile/freelancer/my_works.html" />
+        <option value="$PROJECT_DIR$/data/order.go" />
+        <option value="$PROJECT_DIR$/static/js/my_orders.js" />
       </list>
     </option>
   </component>
@@ -345,8 +334,8 @@
   <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="369" />
     <option name="y" value="171" />
-    <option name="width" value="882" />
-    <option name="height" value="482" />
+    <option name="width" value="880" />
+    <option name="height" value="485" />
   </component>
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="1" id="Add" />
@@ -356,6 +345,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -431,7 +421,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -505,15 +494,15 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-4" y="0" width="1374" height="742" extended-state="7" />
+    <frame x="-4" y="0" width="1374" height="742" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49837133" visible="true" weight="0.22078907" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49837133" visible="true" weight="0.24355084" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" sideWeight="0.50162864" side_tool="true" weight="0.17254902" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32561985" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.3371901" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.28760332" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -521,7 +510,7 @@
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" order="8" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="9" weight="0.3289256" />
-      <window_info anchor="bottom" id="Terminal" order="10" weight="0.91735536" />
+      <window_info anchor="bottom" id="Terminal" order="10" weight="0.36859503" />
       <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" weight="0.32899022" />
       <window_info anchor="bottom" id="Database Console" order="12" weight="0.5521173" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -574,62 +563,6 @@
     </option>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/templates/login.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="8" column="48" selection-start-line="8" selection-start-column="48" selection-end-line="8" selection-end-column="48" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/userProfile/customer/setting.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="3" column="12" lean-forward="true" selection-start-line="3" selection-start-column="12" selection-end-line="4" selection-end-column="58" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="1" selection-start-line="2" selection-start-column="1" selection-end-line="2" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/userProfile/freelancer/setting.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" column="61" lean-forward="true" selection-start-line="7" selection-start-column="61" selection-end-line="7" selection-end-column="61" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/order/edit_order.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="12" column="125" selection-end-line="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/order/new_order.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="8" selection-start-line="2" selection-start-column="8" selection-end-line="29" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data/const.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="12" selection-start-column="12" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data/data.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="91">
-          <caret line="16" column="67" selection-start-line="16" selection-start-column="67" selection-end-line="16" selection-end-column="67" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/data/requestToOrder.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="15">
@@ -656,16 +589,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/freelancer/view_freelancer.html" />
-    <entry file="file://$PROJECT_DIR$/data/comments.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="10" column="4" lean-forward="true" selection-start-line="10" selection-start-column="4" selection-end-line="10" selection-end-column="8" />
-          <folding>
-            <element signature="e#14#39#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/data/session.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="106">
@@ -680,95 +603,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/home_page.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" column="10" lean-forward="true" selection-start-line="7" selection-start-column="10" selection-end-line="7" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/registration.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="294">
-          <caret line="78" column="14" selection-start-line="78" selection-start-column="14" selection-end-line="78" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/userProfile/setting_base.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="21" column="20" lean-forward="true" selection-start-line="21" selection-start-column="20" selection-end-line="21" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/userProfile/customer/my_orders.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="9" column="38" lean-forward="true" selection-start-line="9" selection-start-column="38" selection-end-line="9" selection-end-column="56" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/static/css/materialize.min.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="55">
-          <caret line="5" column="44564" selection-start-line="5" selection-start-column="44564" selection-end-line="5" selection-end-column="44564" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/userProfile/freelancer/my_works.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="13" column="16" selection-start-line="13" selection-start-column="16" selection-end-line="13" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/order/orders.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-321">
-          <caret line="3" column="41" selection-start-line="3" selection-start-column="41" selection-end-line="3" selection-end-column="41" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/order/order_view.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="525">
-          <caret line="35" column="35" selection-start-line="35" selection-start-column="35" selection-end-line="35" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/freelancer/freelancers.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="38" column="67" selection-start-line="38" selection-start-column="67" selection-end-line="38" selection-end-column="67" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/freelancer/freelancer_view.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="14" column="74" selection-start-line="14" selection-start-column="74" selection-end-line="14" selection-end-column="74" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/userProfile/customer/about.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="43" selection-start-line="4" selection-start-column="43" selection-end-line="4" selection-end-column="43" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data/order.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="205">
-          <caret line="235" column="4" selection-start-line="235" selection-start-column="4" selection-end-line="241" selection-end-column="10" />
-          <folding>
-            <element signature="n#!!block;n#GetAllOrders#0" />
-            <element signature="n#!!block;n#GetStatusByID#0" />
-            <element signature="n#!!block;n#GetOrdersByStatus#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/data/customer.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="366">
@@ -779,44 +613,222 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/userProfile/freelancer/about.html">
+    <entry file="file://$PROJECT_DIR$/data/utils.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" selection-start-line="1" selection-end-line="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/message.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="495">
+          <caret line="36" column="102" selection-start-line="36" selection-start-column="102" selection-end-line="36" selection-end-column="102" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/userProfile/messages.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" column="4" selection-start-line="1" selection-start-column="4" selection-end-line="1" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/css/materialize.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="173">
+          <caret line="2722" column="4" selection-start-line="2722" selection-start-column="4" selection-end-line="2722" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/css/materialize.min.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="75">
-          <caret line="5" column="39" selection-start-line="5" selection-start-column="39" selection-end-line="5" selection-end-column="39" />
+          <caret line="5" column="33425" selection-start-line="5" selection-start-column="33425" selection-end-line="5" selection-end-column="33425" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/userProfile/customer/about.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="30" selection-start-line="6" selection-start-column="30" selection-end-line="6" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/home_page.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="14" lean-forward="true" selection-start-line="6" selection-start-column="14" selection-end-line="6" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/userProfile/freelancer/about.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="22" selection-start-line="2" selection-start-column="22" selection-end-line="2" selection-end-column="22" />
           <folding>
-            <marker date="1558091401477" expanded="true" signature="193:280" ph="..." />
+            <marker date="1558693079722" expanded="true" signature="191:278" ph="..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/js/dialogs.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="564">
+          <caret line="77" column="77" selection-start-line="77" selection-start-column="77" selection-end-line="77" selection-end-column="77" />
+          <folding>
+            <element signature="n#!!block;n#viewDialog#0" />
+            <element signature="n#!!block;n#setActive#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/route_freelancers.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="510">
+          <caret line="80" column="8" selection-start-line="80" selection-start-column="8" selection-end-line="99" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/userProfile/setting_base.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" column="33" selection-start-line="1" selection-start-column="33" selection-end-line="1" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/userProfile/profile.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="384">
+          <caret line="42" column="97" lean-forward="true" selection-start-line="42" selection-start-column="97" selection-end-line="42" selection-end-column="105" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/header.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="202">
+          <caret line="40" column="68" selection-start-line="40" selection-start-column="68" selection-end-line="40" selection-end-column="68" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/freelancer/freelancers.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="38" column="49" selection-start-line="38" selection-start-column="49" selection-end-line="38" selection-end-column="49" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/freelancer.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="10" column="5" selection-start-line="10" selection-start-column="5" selection-end-line="10" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/userProfile/freelancer/setting.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" selection-start-line="1" selection-end-line="15" selection-end-column="6" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/base.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="21" column="2" selection-start-line="21" selection-start-column="2" selection-end-line="21" selection-end-column="51" />
+        <state relative-caret-position="300">
+          <caret line="20" column="2" selection-start-line="20" selection-start-column="2" selection-end-line="20" selection-end-column="44" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/route_profile_freelancer.go">
+    <entry file="file://$PROJECT_DIR$/static/js/main.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="10" column="5" selection-start-line="10" selection-start-column="5" selection-end-line="10" selection-end-column="5" />
+        <state>
+          <caret selection-end-line="9" selection-end-column="3" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/route_profile_customer.go">
+    <entry file="file://$PROJECT_DIR$/templates/freelancer/freelancer_view.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="19" column="8" lean-forward="true" selection-start-line="19" selection-start-column="8" selection-end-line="20" selection-end-column="47" />
+        <state relative-caret-position="204">
+          <caret line="110" column="71" selection-start-line="110" selection-start-column="71" selection-end-line="110" selection-end-column="71" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/css/main.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="262">
+          <caret line="450" column="2" selection-start-line="450" selection-start-column="2" selection-end-line="450" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/route_auth.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="12" column="18" selection-start-line="12" selection-start-column="14" selection-end-line="12" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/route_profile.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="202">
+          <caret line="39" column="40" selection-start-line="39" selection-start-column="36" selection-end-line="39" selection-end-column="40" />
+          <folding>
+            <element signature="n#!!block;n#profileSetting#0" />
+            <element signature="n#!!block;n#uploadPhoto#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utils.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="267">
+          <caret line="82" column="45" selection-start-line="82" selection-start-column="45" selection-end-line="82" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/order/orders.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="115">
+          <caret line="36" column="55" selection-start-line="36" selection-start-column="55" selection-end-line="36" selection-end-column="55" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/order/new_order.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="127">
+          <caret line="19" column="93" selection-start-line="19" selection-start-column="93" selection-end-line="19" selection-end-column="93" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/login.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/registration.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="405">
+          <caret line="78" column="14" selection-start-line="78" selection-start-column="14" selection-end-line="78" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="249">
+          <caret line="57" column="49" lean-forward="true" selection-start-line="57" selection-start-column="25" selection-end-line="57" selection-end-column="49" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/order/edit_order.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="32" column="16" selection-start-line="32" selection-start-column="16" selection-end-line="37" selection-end-column="22" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/route_order.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="83" column="4" selection-start-line="83" selection-start-column="4" selection-end-line="84" selection-end-column="48" />
+        <state relative-caret-position="45">
+          <caret line="95" column="25" lean-forward="true" selection-start-line="95" selection-start-column="25" selection-end-line="95" selection-end-column="25" />
           <folding>
-            <element signature="n#!!block;n#newOrder#0" />
-            <element signature="n#!!block;n#editOrder#0" />
+            <element signature="e#14#121#0" expanded="true" />
             <element signature="n#!!block;n#deleteOrder#0" />
             <element signature="n#!!block;n#newRequest#0" />
           </folding>
@@ -825,139 +837,129 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/static/js/rating.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="12" column="4" selection-start-line="12" selection-start-column="4" selection-end-line="12" selection-end-column="51" />
+        <state relative-caret-position="60">
+          <caret line="4" column="47" lean-forward="true" selection-start-line="4" selection-start-column="47" selection-end-line="4" selection-end-column="54" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/static/js/main.js">
+    <entry file="file://$PROJECT_DIR$/templates/userProfile/customer/my_orders.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="9" column="3" lean-forward="true" selection-start-line="9" selection-start-column="3" selection-end-line="9" selection-end-column="3" />
+        <state relative-caret-position="-165">
+          <caret line="1" column="40" selection-start-line="1" selection-start-column="40" selection-end-line="1" selection-end-column="40" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/header.html">
+    <entry file="file://$PROJECT_DIR$/templates/order/order_view.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="173">
-          <caret line="17" column="55" selection-start-line="17" selection-start-column="50" selection-end-line="17" selection-end-column="55" />
+        <state relative-caret-position="345">
+          <caret line="116" column="51" lean-forward="true" selection-start-line="116" selection-start-column="51" selection-end-line="116" selection-end-column="51" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/route_auth.go">
+    <entry file="file://$PROJECT_DIR$/templates/order/order_make_done.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="115" column="21" lean-forward="true" selection-start-line="115" selection-start-column="21" selection-end-line="115" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data/user.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="402">
-          <caret line="218" column="8" selection-start-line="218" selection-start-column="8" selection-end-line="218" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/static/css/main.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="9630">
-          <caret line="642" column="18" selection-start-line="642" selection-start-column="18" selection-end-line="642" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data/freelancer.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1245">
-          <caret line="88" column="38" selection-start-line="88" selection-start-column="38" selection-end-line="88" selection-end-column="83" />
+        <state relative-caret-position="660">
+          <caret line="113" column="92" selection-start-line="113" selection-start-column="92" selection-end-line="113" selection-end-column="92" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/sql/volunteer.sql">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1725">
-          <caret line="115" selection-start-line="115" selection-end-line="120" selection-end-column="2" />
+        <state relative-caret-position="120">
+          <caret line="74" lean-forward="true" selection-start-line="74" selection-end-line="74" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/data/utils.go">
+    <entry file="file://$PROJECT_DIR$/route_profile_freelancer.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" selection-start-line="1" selection-end-line="1" />
+        <state relative-caret-position="150">
+          <caret line="16" column="40" selection-start-line="16" selection-start-column="40" selection-end-line="16" selection-end-column="40" />
+          <folding>
+            <element signature="n#!!block;n#settingFreelancer#0" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/utils.go">
+    <entry file="file://$PROJECT_DIR$/route_profile_customer.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="279">
-          <caret line="111" selection-start-line="111" selection-end-line="111" />
+        <state relative-caret-position="315">
+          <caret line="153" column="31" selection-start-line="153" selection-start-column="31" selection-end-line="153" selection-end-column="31" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/main.go">
+    <entry file="file://$PROJECT_DIR$/data/comments.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="125">
-          <caret line="22" column="61" selection-start-line="22" selection-start-column="61" selection-end-line="22" selection-end-column="61" />
+        <state relative-caret-position="215">
+          <caret line="26" column="90" selection-start-line="26" selection-start-column="90" selection-end-line="26" selection-end-column="90" />
+          <folding>
+            <element signature="e#14#39#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/userProfile/messages.html">
+    <entry file="file://$PROJECT_DIR$/templates/userProfile/freelancer/my_works.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="11" column="33" selection-start-line="11" selection-start-column="33" selection-end-line="11" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/order.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="325">
+          <caret line="432" column="11" selection-start-line="432" selection-start-column="8" selection-end-line="432" selection-end-column="11" />
+          <folding>
+            <element signature="n#!!block;n#CreateOrder#0" />
+            <element signature="n#!!block;n#UpdateOrder#0" />
+            <element signature="n#!!block;n#DeleteOrder#0" />
+            <element signature="n#!!block;n#deletePerformedOrder#0" />
+            <element signature="n#!!block;n#MakeOrderPerformed#0" />
+            <element signature="n#!!block;n#IsAvailable#0" />
+            <element signature="n#!!block;n#changeStatus#0" />
+            <element signature="n#!!block;n#OrderDeleteAll#0" />
+            <element signature="n#!!block;n#Orders#0" />
+            <element signature="n#!!block;n#Works#0" />
+            <element signature="n#!!block;n#CompleteOrders#0" />
+            <element signature="n#!!block;n#PerformedOrders#0" />
+            <element signature="n#!!block;n#PerformedOrders#1" />
+            <element signature="n#!!block;n#ExistOffer#0" />
+            <element signature="n#!!block;n#GetAllOrders#0" />
+            <element signature="n#!!block;n#GetOrdersWhere#0" />
+            <element signature="n#!!block;n#GetStatusByID#0" />
+            <element signature="n#!!block;n#GetOrdersByStatus#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/js/materialize.js">
       <provider selected="true" editor-type-id="text-editor">
         <state>
-          <caret line="46" column="31" selection-start-line="46" selection-start-column="31" selection-end-line="46" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/userProfile/profile.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="202">
-          <caret line="43" column="111" selection-start-line="43" selection-start-column="111" selection-end-line="43" selection-end-column="111" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data/message.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="115">
-          <caret line="124" column="18" selection-start-line="124" selection-start-column="18" selection-end-line="124" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/static/js/dialogs.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="183">
-          <caret line="15" column="71" selection-start-line="15" selection-start-column="71" selection-end-line="15" selection-end-column="71" />
           <folding>
-            <element signature="n#div#0;n#!!top" />
-            <element signature="n#!!block;n#viewDialog#0" />
-            <element signature="n#!!block;n#setActive#0" />
-            <element signature="n#!!block;n#renderMsgHistory#0" />
-            <element signature="n#div#0;n#!!top" />
-            <element signature="n#div#0;n#!!top" />
-            <element signature="n#div#0;n#!!top" />
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/js/my_orders.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="173">
+          <caret line="41" column="38" lean-forward="true" selection-start-line="41" selection-start-column="38" selection-end-line="41" selection-end-column="38" />
+          <folding>
+            <element signature="n#!!block;n#renderOrders#0" />
+            <element signature="n#!!block;n#constructor#0;n#CardAvailableOrder#0" />
+            <element signature="n#CardContent#0" />
+            <element signature="n#CardAction#0" />
+            <element signature="n#NoOrders#0" />
+            <element signature="n#!!block;n#constructor#0;n#NoOrders#0" />
             <element signature="n#!!block;n#formatDate#0" />
-            <element signature="n#!!block;n#render#0" />
-            <element signature="n#!!block;n#sendMsg#0" />
-            <element signature="e#4645#4803#0" />
-            <element signature="n#div#0;n#!!top" />
-            <element signature="e#5354#5575#0" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/route_profile.go">
+    <entry file="file://$PROJECT_DIR$/data/user.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="110">
-          <caret line="88" column="48" selection-start-line="88" selection-start-column="48" selection-end-line="88" selection-end-column="48" />
-          <folding>
-            <element signature="n#!!block;n#profileSetting#0" />
-            <element signature="n#!!block;n#uploadPhoto#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/route_freelancers.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="309">
-          <caret line="89" column="35" lean-forward="true" selection-start-line="89" selection-start-column="35" selection-end-line="92" selection-end-column="11" />
+        <state relative-caret-position="258">
+          <caret line="29" column="21" selection-start-line="29" selection-start-column="21" selection-end-line="29" selection-end-column="21" />
         </state>
       </provider>
     </entry>

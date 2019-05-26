@@ -14,7 +14,7 @@ func freelancerProfile(sess data.Session, pageData *PageData) (funcMap template.
 	if err != nil {
 		log.Println(err)
 	}
-	freelancerCompleteOrders := user.CompleteOrders()
+	freelancerCompleteOrders := user.Works()
 	pageData.Content = struct {
 		FreelancerCompleteOrders *[]data.CompleteOrder
 	}{&freelancerCompleteOrders}

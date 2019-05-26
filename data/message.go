@@ -25,7 +25,7 @@ type Message struct {
 }
 
 //SendMessage - create new message
-func (user *User) SendMessage(receiverID int, text string) (err error) {
+func (user *User) SendMessage(message Message) (err error) {
 	statement := `INSERT INTO messages (sender_id, receiver_id, dialog_id, text_message, date_send)
 								values ($1, $2, $3, $4, $5)`
 	stmt, err := Db.Prepare(statement)
@@ -34,7 +34,7 @@ func (user *User) SendMessage(receiverID int, text string) (err error) {
 		return
 	}
 	defer stmt.Close()
-	err = stmt.QueryRow(user.ID, receiverID, getDialog(user.ID, receiverID), text, time.Now()).Scan()
+	err = stmt.QueryRow(user.ID, message.ReceiverID, getDialog(user.ID, message.ReceiverID), message.Text, time.Now().UTC()).Scan()
 	if err != nil {
 		log.Println(err)
 		return

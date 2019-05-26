@@ -176,7 +176,7 @@ textarea.materialize-textarea{height: 10rem !important;}
 
 @media screen and (max-width: 580px) {
   .parallax-container{
-    height: 65%;
+    height: 400px;
   }
   .block-about {
     display: flex;
@@ -444,6 +444,13 @@ textarea.materialize-textarea{height: 10rem !important;}
   .card-action{
     text-align: center;
   }
+  .card-inform{
+    flex-direction: column;
+    justify-content: center;
+  }
+  a{
+    margin-right: 0px !important;
+  }
 }
 
 @media screen and (max-width: 990px) and (min-width: 599px) {
@@ -494,7 +501,14 @@ form.form-search::after {
 
 /*---------------------------Message----------------------------*/
 
-img{ max-width:100%;}
+.avatar {
+  vertical-align: middle;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.mesgs img{ max-width:100%;}
 .inbox_people {
   background: #f8f8f8 none repeat scroll 0 0;
   float: left;
@@ -645,6 +659,10 @@ img{ max-width:100%;}
 }
 
 @media screen and (max-width: 667px)  {
+  .avatar {
+    width: 40px;
+    height: 40px;
+  }
   .msg_history {
     height: 416px;
   }

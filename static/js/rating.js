@@ -26,8 +26,36 @@ function renderStarsComment(id, rating) {
         }
     }
     result += `<span>(${rating})</span>`
-    document.getElementById(id).innerHTML = result;
+    // document.getElementById(id).innerHTML = result;
     return result
 }
 
-// document.getElementsByName("rating").innerHTML = renderStars();
+function sendMsg(receiver_id) {
+    let url = '/send_message/user_id' + receiver_id;
+    let text = document.getElementById('message');
+    let msg = {
+        'receiver_id': receiver_id,
+        'text':text.value,
+        'read':false,
+        'date_send':new Date(),
+    };
+
+    if (text.value !== ''){
+        fetch(url,
+            {
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                method: "POST",
+                body: JSON.stringify(msg)
+            })
+        // .then(function(res){ console.log(res.body) })
+            .catch(function(res){ console.log(res) })
+
+        text.value = '';
+        let modal = document.getElementById('modal-send-message');
+        let instance = M.Modal.getInstance(modal);
+        instance.close()
+    }
+}
