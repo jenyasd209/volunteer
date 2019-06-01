@@ -1,6 +1,7 @@
 package data
 
 import (
+	"fmt"
 	"log"
 	"time"
 )
@@ -37,8 +38,8 @@ func (user *User) SendMessage(message Message) (err error) {
 	err = stmt.QueryRow(user.ID, message.ReceiverID, getDialog(user.ID, message.ReceiverID), message.Text, time.Now().UTC()).Scan()
 	if err != nil {
 		log.Println(err)
-		return
 	}
+	fmt.Println("send msg")
 	return
 }
 
@@ -66,24 +67,24 @@ func getDialog(userOneID, userTwoID int) (dialogID int) {
     							or (user1_id = $2 and user2_id = $1)`, userOneID, userTwoID).Scan(&dialogID)
 	if err != nil {
 		log.Println(err)
+		fmt.Println("Dialog no found")
+		dialogID = createDialog(userOneID, userTwoID)
 		return
 	}
-	if dialogID == 0{
-		dialogID = createDialog(userOneID, userTwoID)
-	}
+	fmt.Println("Dialog ")
 	return
 }
 
 func createDialog(userOneID, userTwoID int) (dialogID int) {
 	statement := `INSERT INTO dialogs (user1_id, user2_id, date_created)
-								values ($1, $2, $3)`
+								values ($1, $2, $3) returning id`
 	stmt, err := Db.Prepare(statement)
 	if err != nil {
 		log.Println(err)
 		return
 	}
 	defer stmt.Close()
-	err = stmt.QueryRow(userOneID, userTwoID, time.Now()).Scan()
+	err = stmt.QueryRow(userOneID, userTwoID, time.Now()).Scan(&dialogID)
 	if err != nil {
 		log.Println(err)
 		return

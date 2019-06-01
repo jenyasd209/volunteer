@@ -21,8 +21,8 @@
                             <div class="collapsible-body" id="list-specs">
                                 <ul class="collection">
                                     <a href="/freelancers"><li class="collection-item center-align">All</li></a>
-                                    {{range .Content.Specialization}}
-                                        <a href="/freelancers/specs_id{{.ID}}"><li class="collection-item center-align">{{.Name}}</li></a>
+                                    {{range .Content.Specializations}}
+                                        <a href="/freelancers/specializations_id{{.ID}}"><li class="collection-item center-align">{{.Name}}</li></a>
                                     {{end}}
                                 </ul>
                             </div>

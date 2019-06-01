@@ -12,7 +12,8 @@
       <ul class="right hide-on-med-and-down">
         {{if .User}}
             <div class="dropdown">
-                <a class="dropbtn" href="/my_profile"><i class="material-icons white-text left"> account_circle</i>{{.User.FirstName}} {{.User.LastName}}</a>
+                <a class="dropbtn" href="/my_profile"><i class="material-icons white-text right"> <img class="circle" src="{{.User.Photo}}"></i>{{.User.FirstName}} {{.User.LastName}}</a>
+{{/*                <a class="dropbtn" href="/my_profile"><img class="circle" width="30" height="30" src="{{.User.Photo}}">  {{.User.FirstName}} {{.User.LastName}}</a>*/}}
                 <div class="drop-content light-blue darken-3">
                     <a href="/my_profile">Me</a>
                     <a href="/my_profile/dialogs">Messages

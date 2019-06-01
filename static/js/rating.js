@@ -41,6 +41,7 @@ function sendMsg(receiver_id) {
     };
 
     if (text.value !== ''){
+        console.log(msg);
         fetch(url,
             {
                 headers: {
@@ -57,5 +58,7 @@ function sendMsg(receiver_id) {
         let modal = document.getElementById('modal-send-message');
         let instance = M.Modal.getInstance(modal);
         instance.close()
+    }else {
+        console.log('empty');
     }
 }

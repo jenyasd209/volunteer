@@ -8,15 +8,16 @@ window.onload = function(){
 };
 
 function renderInboxChat(dialogs) {
+    console.log(dialogs);
     let inbox_chat = document.getElementById('inbox_chat');
     let html = ``;
-    let userHref = document.createElement('a');
+    // let userHref = document.createElement('a');
     for (let i in dialogs){
-        if (dialogs[i]['user_two']['ID'] === 1){
-            userHref.href = `/freelancers/id${dialogs[i]['user_two']['ID']}`;
-        }else{
-            userHref.href = `/customers/id${dialogs[i]['user_two']['ID']}`;
-        }
+        // if (dialogs[i]['user_two']['ID'] === 1){
+        //     userHref.href = `/freelancers/id${dialogs[i]['user_two']['ID']}`;
+        // }else{
+        //     userHref.href = `/customers/id${dialogs[i]['user_two']['ID']}`;
+        // }
         let indexLastMsg = dialogs[i]['messages'].length - 1;
         let last_msg = dialogs[i]['messages'][indexLastMsg];
         let read_status = "";

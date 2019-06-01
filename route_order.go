@@ -220,11 +220,11 @@ func categoryOrders(w http.ResponseWriter, r *http.Request)  {
 	}
 	vars := mux.Vars(r)
 	id, _ := strconv.ParseInt(vars["id"], 10, 8)
-	if err != nil {
-		http.Redirect(w, r, "/my_profile", 302)
-		fmt.Println(err)
-		return
-	}
+	//if err != nil {
+	//	http.Redirect(w, r, "/my_profile", 302)
+	//	fmt.Println(err)
+	//	return
+	//}
 	orders := new([]data.Order)
 	specializations, _ := data.GetAllSpecialization()
 	if search := r.FormValue("search"); search != ""{

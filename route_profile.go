@@ -126,6 +126,10 @@ func sendMessage(w http.ResponseWriter, r *http.Request)  {
 		}
 		user, _ := data.GetUserByID(sess.UserID)
 		err = user.SendMessage(*message)
+		log.Println(message)
+		if err != nil{
+			log.Println(err)
+		}
 		//messageText := r.PostFormValue("message")
 		//if err = user.SendMessage(int(id), messageText); err != nil{
 		//	log.Println(err)

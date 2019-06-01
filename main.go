@@ -47,6 +47,7 @@ func main() {
 	subFreelancers := r.PathPrefix("/freelancers").Subrouter()
 	subFreelancers.HandleFunc("", logging(allFreelancers))
 	subFreelancers.HandleFunc("/", logging(allFreelancers))
+	subFreelancers.HandleFunc("/specializations_id{id:[0-9]+}", logging(specialization))
 	subFreelancers.HandleFunc("/id{id:[0-9]+}", logging(viewFreelancer))
 	//subFreelancers.HandleFunc("/id{id:[0-9]+}/send_message", logging(newMessage))
 
