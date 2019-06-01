@@ -43,12 +43,11 @@
                                             <div class="rating" id="{{.User.ID}}">
                                                 <script>renderStars({{.User.ID}}, {{.Rait }})</script>
                                             </div>
-                                            <p>Count works: 0</p>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="card-action">
-                                    <span>Date join: {{.CreatedAt.Format "02 Jan 2006 15:04:05"}}</span>
+                                    <span>Date join: {{.CreatedAt.Format "02.01.2006"}}</span>
                                 </div>
                             </div>
                         {{end}}

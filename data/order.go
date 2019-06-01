@@ -267,7 +267,7 @@ func (customer *Customer) Orders() (orders []Order) {
 	return
 }
 
-func (freelancer *Freelancer) Works() (completeOrders []CompleteOrder) {
+func (freelancer *Freelancer) FinishWorks() (completeOrders []CompleteOrder) {
 	var freelancerCommentID sql.NullInt64
 	rows, err := Db.Query(`SELECT id, order_id, freelancer_id, freelancer_comment_id, customer_comment_id,
        								date_complete FROM complete_orders 
@@ -294,6 +294,28 @@ func (freelancer *Freelancer) Works() (completeOrders []CompleteOrder) {
 	return
 }
 
+func (freelancer *Freelancer) PerformingOrders() (performedOrders []PerformedOrder) {
+	rows, err := Db.Query(`SELECT id, order_id, freelancer_id
+								  FROM performed_orders
+								  WHERE freelancer_id = $1;`, freelancer.User.ID)
+	if err != nil {
+		return
+	}
+	for rows.Next() {
+		performedOrder := PerformedOrder{}
+		err = rows.Scan(&performedOrder.ID, &performedOrder.Order.ID, &performedOrder.Freelancer.User.ID)
+		if err != nil {
+			log.Println(err)
+			return
+		}
+		performedOrder.Freelancer, _ = GetFreelancerByUserID(performedOrder.Freelancer.User.ID)
+		performedOrder.Order = GetOrderByID(performedOrder.Order.ID)
+		performedOrders = append(performedOrders, performedOrder)
+	}
+	rows.Close()
+	return
+}
+
 func (customer *Customer) CompleteOrders() (completeOrders []CompleteOrder) {
 	rows, err := Db.Query(`SELECT id, order_id, freelancer_id, freelancer_comment_id, customer_comment_id,
        							  	date_complete
@@ -315,7 +337,7 @@ func (customer *Customer) CompleteOrders() (completeOrders []CompleteOrder) {
 			completeOrder.FreelancerComment = GetCommentByID(int(freelancerCommentID.Int64))
 		}
 		completeOrder.Freelancer, _ = GetFreelancerByUserID(completeOrder.Freelancer.User.ID)
-		//completeOrder.FreelancerComment = GetCommentByID(completeOrder.FreelancerComment.ID)
+		fmt.Println(completeOrder.Freelancer)
 		completeOrder.CustomerComment = GetCommentByID(completeOrder.CustomerComment.ID)
 		completeOrder.Order = GetOrderByID(completeOrder.Order.ID)
 		completeOrders = append(completeOrders, completeOrder)

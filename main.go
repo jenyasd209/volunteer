@@ -10,6 +10,7 @@ import (
 func main() {
 	r := mux.NewRouter()
 
+	//r.HandleFunc("/user_id{id:[0-9]+}_has_new_msg", logging(HasNewMessage))
 	r.NotFoundHandler = http.HandlerFunc(notFound)
 	r.HandleFunc("/not_found", logging(notFound))
 
@@ -40,6 +41,7 @@ func main() {
 	subUserProfile.HandleFunc("/delete_order/id{id:[0-9]+}", logging(deleteOrder))
 
 	//route freelancer profile
+	subUserProfile.HandleFunc("/sort_works_by_{status}", logging(sortWorks))
 
 	//route freelancers
 	subFreelancers := r.PathPrefix("/freelancers").Subrouter()

@@ -7,10 +7,10 @@ import (
 
 //Customer struct for "customers" table
 type Customer struct {
-	ID           int
-	Organization string
-	CreatedAt    time.Time
-	User
+	ID           int		`json:"id"`
+	Organization string		`json:"organization"`
+	CreatedAt    time.Time	`json:"created_at"`
+	User					`json:"user"`
 }
 
 //Create new row from "customer" table

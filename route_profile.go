@@ -78,10 +78,10 @@ func profileDialogs(w http.ResponseWriter, r *http.Request)  {
 		return
 	} else {
 		user, _ := data.GetUserByID(sess.UserID)
-		dialog, _ := json.Marshal(user.Dialogs())
+		dialogs, _ := json.Marshal(user.Dialogs())
 
 		w.Header().Set("Content-Type", "application/json")
-		w.Write(dialog)
+		w.Write(dialogs)
 	}
 }
 
@@ -95,10 +95,12 @@ func profileDialog(w http.ResponseWriter, r *http.Request)  {
 		vars := mux.Vars(r)
 		id, _ := strconv.ParseInt(vars["id"], 10, 8)
 		user, _ := data.GetUserByID(sess.UserID)
-		dialog, _ := json.Marshal(user.DialogByID(int(id)))
+		dialog := user.DialogByID(int(id))
+		user.ReadMessage(dialog.ID)
+		json, _ := json.Marshal(dialog)
 
 		w.Header().Set("Content-Type", "application/json")
-		w.Write(dialog)
+		w.Write(json)
 	}
 }
 

@@ -10,15 +10,31 @@ window.onload = function(){
 function renderInboxChat(dialogs) {
     let inbox_chat = document.getElementById('inbox_chat');
     let html = ``;
+    let userHref = document.createElement('a');
     for (let i in dialogs){
+        if (dialogs[i]['user_two']['ID'] === 1){
+            userHref.href = `/freelancers/id${dialogs[i]['user_two']['ID']}`;
+        }else{
+            userHref.href = `/customers/id${dialogs[i]['user_two']['ID']}`;
+        }
         let indexLastMsg = dialogs[i]['messages'].length - 1;
+        let last_msg = dialogs[i]['messages'][indexLastMsg];
+        let read_status = "";
+        if (!last_msg.read){
+            if (last_msg.sender_id === dialogs[i].user_current.ID){
+                read_status = `<span class="grey-dot right"></span>`;
+            }else {
+                read_status = `<span class="red-dot right"></span>`;
+            }
+        }
         html += `<div class="chat_list" onclick="viewDialog(${dialogs[i]['id']}, this)">
                      <div class="chat_people">
-                         <div class="chat_img"> <img class="avatar" src="${dialogs[i]['user_two']['Photo']}" alt="sunil"> </div>
+                         <div class="chat_img"><img class="avatar" src="${dialogs[i]['user_two']['Photo']}" alt="sunil"></div>
                          <div class="chat_ib">
                              <h5>${dialogs[i]['user_two']['FirstName']} ${dialogs[i]['user_two']['LastName']}
-                             <span class="chat_date">${formatDate(new Date(dialogs[i]['messages'][indexLastMsg]['date_send']))}</span></h5>
-                             <p>${dialogs[i]['messages'][indexLastMsg]['text']}</p>
+                                <span class="chat_date">${formatDate(new Date(dialogs[i]['messages'][indexLastMsg]['date_send']))}</span>   
+                             </h5>
+                             <p id="last-msg">${last_msg.text} ${read_status}</p>
                          </div>
                      </div>
                  </div>`
@@ -119,29 +135,37 @@ function sendMsg(sender_id, receiver_id, dialog_id) {
         'read':false,
         'date_send':new Date(),
     };
-    let msg_text = `<p>${msg.text}</p>`;
-    let msg_date_send = `<span class=\"time_date\">${formatDate(msg.date_send)}</span>`;
-    let newMsg = `<div class="outgoing_msg">
+    if (msg.text !== ""){
+        let msg_text = `<p>${msg.text}</p>`;
+        let msg_date_send = `<span class=\"time_date\">${formatDate(msg.date_send)}</span>`;
+        let newMsg = `<div class="outgoing_msg">
                       <div class="sent_msg">
                           ${msg_text}
                           ${msg_date_send}
                       </div>
                   </div>`;
-    let msg_history = document.getElementById('msg_history');
+        let msg_history = document.getElementById('msg_history');
 
-    fetch(url,
-        {
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            method: "POST",
-            body: JSON.stringify(msg)
-        })
+        fetch(url,
+            {
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                method: "POST",
+                body: JSON.stringify(msg)
+            })
         // .then(function(res){ console.log(res.body) })
-        .catch(function(res){ console.log(res) })
+            .catch(function(res){ console.log(res) })
 
-    text.value = '';
-    msg_history.innerHTML += newMsg;
-    msg_history.scrollTop = msg_history.scrollHeight;
+        text.value = '';
+        msg_history.innerHTML += newMsg;
+        msg_history.scrollTop = msg_history.scrollHeight;
+        lastMessageRender(msg.text);
+    }
+}
+
+function lastMessageRender(msg_text) {
+    let last_msg = document.getElementById('last-msg')
+    last_msg.innerText = msg_text
 }

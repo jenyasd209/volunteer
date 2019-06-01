@@ -76,14 +76,11 @@ func sortOrders(w http.ResponseWriter, r *http.Request,) () {
 	if status == "" {
 		orders, _ = json.Marshal(customer.Orders())
 	}else if status == "available" {
-		//orders = customer.GetOrdersByStatus(data.OrderStatusPerformed)
 		orders, _ = json.Marshal(customer.GetOrdersByStatus(data.OrderStatusAvailable))
 	}else if status == "performed" {
 		orders, _ = json.Marshal(customer.PerformedOrders())
-		//orders = customer.GetOrdersByStatus(data.OrderStatusPerformed)
 	}else if status == "done" {
 		orders, _ = json.Marshal(customer.CompleteOrders())
-		//orders = customer.GetOrdersByStatus(data.OrderStatusDone)
 	}
 
 	w.Header().Set("Content-Type", "application/json")
@@ -116,7 +113,6 @@ func selectRequest(w http.ResponseWriter, r *http.Request)  {
 	}
 	http.Redirect(w, r, "/orders/id"+vars["id"], 302)
 }
-
 
 func orderDone(w http.ResponseWriter, r *http.Request)  {
 	sess, err := session(w, r)

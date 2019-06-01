@@ -1,35 +1,76 @@
 {{ define "profile_content" }}
   {{$countWorks := len .Content.FreelancerCompleteOrders}}
-<div class="content">
-  <h5 class="center">My works ({{$countWorks}})</h5>
-  {{if .Content.FreelancerCompleteOrders}}
-    {{range .Content.FreelancerCompleteOrders}}
-      <div class="content__works">
-        <div class="card order">
-          <div class="card-content">
-            <span class="card-title"> <a href="/orders/id{{.Order.ID}}">{{.Title}}</a></span>
-            <div class="rating" id="{{.Order.ID}}">
-              <script>renderStars({{.Order.ID}}, {{.CustomerComment.Rait }})</script>
-            </div>
-            <span>{{.CustomerComment.Text}}</span>
-          </div>
-          <div class="card-action card-inform">
-            <span>{{.CreatedAt.Format "02 Jan 2006 15:04:05"}}</span>
-            <span><a class="center" href="#">{{.Order.Customer.FirstName}} {{.Order.Customer.LastName}}</a></span>
-          </div>
-        </div>
+  <div class="content">
+    <div class="section">
+      <span class="flow-text">My orders ({{$countWorks}})</span>
+      <a class="btn right" href="/my_profile/new_order">New Order</a>
+    </div>
+    <div class="row section-wrap center-align">
+      <div class="col s12 input-field">
+        <form method="get" action="/my_profile">
+          <select onchange="getOrders()" id="status" name="status" required>
+            <option value="performed" selected>In work</option>
+            <option value="done">Done</option>
+          </select>
+          <label for="status">Select</label>
+        </form>
       </div>
-    {{end}}
-  {{end}}
-  <div class="swap-page">
-    <ul class="pagination">
-      <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
-      <li class="active"><a href="#!">1</a></li>
-      <li class="waves-effect"><a href="#!">2</a></li>
-      <li class="waves-effect"><a href="#!">3</a></li>
-      <li class="waves-effect"><a href="#!">4</a></li>
-      <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
-    </ul>
+    </div>
+    <div class="row">
+      <div class="col s12" id="works">
+          {{if .Content.FreelancerCompleteOrders}}
+            {{range .Content.FreelancerCompleteOrders}}
+              <div class="content__works">
+                <div class="card order">
+                  <div class="card-content">
+                    <span class="card-title"> <a href="/orders/id{{.Order.ID}}">{{.Title}}</a></span>
+                    <div class="rating" id="{{.Order.ID}}">
+                      <script>renderStars({{.Order.ID}}, {{.CustomerComment.Rait }})</script>
+                    </div>
+                    <span>{{.CustomerComment.Text}}</span>
+                  </div>
+                  <div class="card-action card-inform">
+                    <span>{{.CreatedAt.Format "02 Jan 2006 15:04:05"}}</span>
+                    <span><a class="center" href="#">{{.Order.Customer.FirstName}} {{.Order.Customer.LastName}}</a></span>
+                  </div>
+                </div>
+              </div>
+            {{end}}
+          {{end}}
+      </div>
+    </div>
   </div>
-</div>
+  <script src="/static/js/my_works.js"></script>
+{{/*<div class="content">*/}}
+{{/*  <h5 class="center">My works ({{$countWorks}})</h5>*/}}
+{{/*  {{if .Content.FreelancerCompleteOrders}}*/}}
+{{/*    {{range .Content.FreelancerCompleteOrders}}*/}}
+{{/*      <div class="content__works">*/}}
+{{/*        <div class="card order">*/}}
+{{/*          <div class="card-content">*/}}
+{{/*            <span class="card-title"> <a href="/orders/id{{.Order.ID}}">{{.Title}}</a></span>*/}}
+{{/*            <div class="rating" id="{{.Order.ID}}">*/}}
+{{/*              <script>renderStars({{.Order.ID}}, {{.CustomerComment.Rait }})</script>*/}}
+{{/*            </div>*/}}
+{{/*            <span>{{.CustomerComment.Text}}</span>*/}}
+{{/*          </div>*/}}
+{{/*          <div class="card-action card-inform">*/}}
+{{/*            <span>{{.CreatedAt.Format "02 Jan 2006 15:04:05"}}</span>*/}}
+{{/*            <span><a class="center" href="#">{{.Order.Customer.FirstName}} {{.Order.Customer.LastName}}</a></span>*/}}
+{{/*          </div>*/}}
+{{/*        </div>*/}}
+{{/*      </div>*/}}
+{{/*    {{end}}*/}}
+{{/*  {{end}}*/}}
+{{/*  <div class="swap-page">*/}}
+{{/*    <ul class="pagination">*/}}
+{{/*      <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>*/}}
+{{/*      <li class="active"><a href="#!">1</a></li>*/}}
+{{/*      <li class="waves-effect"><a href="#!">2</a></li>*/}}
+{{/*      <li class="waves-effect"><a href="#!">3</a></li>*/}}
+{{/*      <li class="waves-effect"><a href="#!">4</a></li>*/}}
+{{/*      <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>*/}}
+{{/*    </ul>*/}}
+{{/*  </div>*/}}
+{{/*</div>*/}}
 {{ end }}

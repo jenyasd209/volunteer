@@ -4,37 +4,24 @@ function collapsible() {
 }
 
 const select = document.getElementById('status');
-const orders = document.getElementById('orders');
+const orders = document.getElementById('works');
 
 window.onload = function(){
     getOrders();
 };
 
 function getOrders() {
-    fetch('/my_profile/sort_orders_by_'+select.value)
+    fetch('/my_profile/sort_works_by_'+select.value)
         .then(res => res.json())
         .then((json) => {
             orders.innerText = ``;
             if (select.value === select.options[0].value){
-                renderAvailableOrders(json);
-            }else if (select.value === select.options[1].value){
                 renderPerformedOrders(json)
-            }else if (select.value === select.options[2].value){
-                renderDoneOrders(json)
+            }else if (select.value === select.options[1].value){
+                renderDoneOrders(json);
             }
         })
         .catch(err => { throw err });
-}
-
-function renderAvailableOrders(availableOrders) {
-    if (availableOrders === null){
-        renderOrders(new NoOrders(select.value).create());
-    }else {
-        for (let i in availableOrders) {
-            let order = new CardAvailableOrder(availableOrders[i]);
-            renderOrders(order.create());
-        }
-    }
 }
 
 function renderPerformedOrders(performedOrders) {
@@ -85,32 +72,33 @@ class CardDoneOrder{
         if (freelancer_comment === ""){
             freelancer_comment = "Volunteer did not comment";
         }
+
         card_content.innerHTML = `<span class="card-title">
                                      <a href="/orders/id${this.doneOrder.order.id}"> ${this.doneOrder.order.title} </a>
                                   </span>
                                   <ul class="collapsible">
                                     <li>
                                       <div class="collapsible-header card-inform">
-                                          <span>My comment</span>
+                                          <span>Customer comment</span>
                                           
                                           <div class="rating" id="${this.doneOrder.customer_comment.id}">
                                                 ${renderStarsComment(this.doneOrder.customer_comment.id, this.doneOrder.customer_comment.rait)}
                                           </div>
                                       </div>
-                                      <div class="collapsible-body"><span>${this.doneOrder.customer_comment.text}</span></div>
+                                      <div class="collapsible-body">
+                                          <p> <a href="/customers/id"> ${this.doneOrder.order.customer.user.FirstName} ${this.doneOrder.order.customer.user.LastName} </a></p>
+                                          <span>${this.doneOrder.customer_comment.text}</span>
+                                      </div>
                                     </li>
                                     <li>
                                       <div class="collapsible-header card-inform">
-                                        <span>Volunteer comment</span>
+                                        <span>My comment</span>
                                           
                                           <div class="rating" id="${this.doneOrder.freelancer_comment.id}">
                                               ${renderStarsComment(this.doneOrder.freelancer_comment.id, this.doneOrder.freelancer_comment.rait)}
                                           </div>
                                       </div>
-                                      <div class="collapsible-body">
-                                        <p> <a href="freelancers/id${this.doneOrder.freelancer.ID}"> ${this.doneOrder.freelancer.FirstName} ${this.doneOrder.freelancer.LastName}</a></p>
-                                        <span>${freelancer_comment}</span>
-                                      </div>
+                                      <div class="collapsible-body"><span>${freelancer_comment}</span></div>
                                     </li>
                                   </ul>`;
         return card_content
@@ -119,8 +107,7 @@ class CardDoneOrder{
     createAction(){
         let card_action = new CardAction().create();
         card_action.classList.add('card-inform');
-        card_action.innerHTML = `<span class="center">Complete: ${formatDate(new Date(this.doneOrder.date_complete))}</span>
-                                <span class="center"> <a href="/freelancers/id${this.doneOrder.freelancer.ID}">${this.doneOrder.freelancer.FirstName} ${this.doneOrder.freelancer.LastName}</a></span>`;
+        card_action.innerHTML = `<span class="center">Complete: ${formatDate(new Date(this.doneOrder.date_complete))}</span>`;
 
         return card_action
     }
@@ -134,7 +121,7 @@ class CardPerformedOrder{
     create(){
         let card = document.createElement("div");
         card.className = 'card order';
-        console.log(this.performedOrder);
+
         card.appendChild(this.createContent());
         card.appendChild(this.createAction());
         return card;
@@ -152,52 +139,8 @@ class CardPerformedOrder{
 
     createAction(){
         let card_action = new CardAction().create();
-        card_action.innerHTML = `<p class="green-text">${this.performedOrder.order.status.Name}</p>
-                                <span><a href="/freelancers/id${this.performedOrder.freelancer.id}">${this.performedOrder.freelancer.FirstName} ${this.performedOrder.freelancer.LastName}</a></span> 
-                                <div class="action-block right">
-                                    <a href="/orders/id${this.performedOrder.order.id}/make_done" title="Done"><i class="material-icons  light-blue-text darken-1 right">check_circle</i></a>
-                                </div>`;
-
-        return card_action
-    }
-}
-
-class CardAvailableOrder{
-    constructor(performedOrder) {
-        this.order = performedOrder;
-    }
-
-    create(){
-        let card = document.createElement("div");
-        card.className = 'card order';
-
-        card.appendChild(this.createContent());
-        card.appendChild(this.createAction());
-
-        return card;
-    }
-
-    createContent(){
-        let card_content = new CardContent().create();
-        let request_count = 0;
-        if (this.order.freelancer_request !== null){request_count = this.order.freelancer_request.length}
-        card_content.innerHTML = `<span class="card-title">
-                                     <a href="/orders/id${this.order.id}"> ${this.order.title} </a>
-                                  </span>
-                                  <p class="bold">Requests ${request_count}</p>
-                                  <span>${this.order.content}</span>`;
-
-        return card_content
-    }
-
-    createAction(){
-        let card_action = new CardAction().create();
-        card_action.innerHTML = `<p class="green-text">${this.order.status.Name}</p>
-                                <span>${formatDate(new Date(this.order.created_at))}</span>
-                                <div class="action-block right">
-                                    <a href="/my_profile/delete_order/id${this.order.id}" title="Delete"><i class="material-icons  light-blue-text darken-1 right">delete</i></a>
-                                    <a href="/my_profile/edit_order/id${this.order.id}" title="Edit"><i class="material-icons  light-blue-text darken-1 right">edit</i></a>
-                                </div>`;
+        card_action.innerHTML = `<p>Status: <span class="green-text">${this.performedOrder.order.status.Name}</span></p>
+                                <span>Customer: <a href="/customers/id${this.performedOrder.order.customer.user.ID}">${this.performedOrder.order.customer.user.FirstName} ${this.performedOrder.order.customer.user.LastName}</a></span>`;
 
         return card_action
     }
@@ -225,7 +168,7 @@ class CardAction{
 
 class NoOrders {
     constructor(statusName){
-        this.text= 'No ' + statusName + ' orders';
+        this.text= 'No ' + statusName;
     }
     create(){
         let no_orders = document.createElement('p');

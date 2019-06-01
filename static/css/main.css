@@ -566,19 +566,24 @@ form.form-search::after {
 .chat_list:hover{
   cursor: pointer;
 }
-.inbox_chat { height: 450px; overflow-y: scroll;}
+.inbox_chat {
+  height: 450px;
+  height: 542px;
+  overflow-y: scroll;
+}
 
 .active_chat{ background:#ebebeb;}
 
 .incoming_msg_img {
   display: inline-block;
-  width: 6%;
+  width: 10%;
+  height: auto;
 }
 .received_msg {
   display: inline-block;
   padding: 0 0 0 10px;
   vertical-align: top;
-  width: 92%;
+  width: 85%;
 }
 .received_withd_msg p {
   background: #ebebeb none repeat scroll 0 0;
@@ -644,17 +649,45 @@ form.form-search::after {
   overflow-y: auto;
 }
 
+.new-msg{
+  border-radius: 2px;
+  padding: 5px;
+  font-size: 0.8rem;
+}
+
 .red-dot {
-  height: 8px;
-  width: 8px;
+  margin-top: 6px;
+  height: 10px;
+  width: 10px;
   background-color: red;
   border-radius: 50%;
   display: inline-block;
 }
 
-@media screen and (max-width: 850px)  {
+.grey-dot {
+  margin-top: 6px;
+  height: 10px;
+  width: 10px;
+  background-color: grey;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+@media screen and (max-width: 991px)  {
   .chat_date{
     display: none;
+  }
+  .chat_ib{
+    text-align: center;
+  }
+  .incoming_msg_img{
+    width: 15%;
+  }
+  .received_msg{
+    width: 80%;
+  }
+  .received_withd_msg{
+    width: 100%;
   }
 }
 
@@ -667,7 +700,8 @@ form.form-search::after {
     height: 416px;
   }
   .inbox_people{
-    width: 15%;
+    width: 70px;
+    /*min-width: 67px;*/
   }
   .headind_srch{
     display: none;
@@ -680,9 +714,10 @@ form.form-search::after {
   }
   .chat_img{
     width: 100%;
+    text-align: center;
   }
   .mesgs{
-    width: 85%;
+    width: calc(100% - 70px);
   }
   .chat_list {
     padding: 5px;
