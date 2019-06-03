@@ -11,24 +11,28 @@ function renderInboxChat(dialogs) {
     console.log(dialogs);
     let inbox_chat = document.getElementById('inbox_chat');
     let html = ``;
-    // let userHref = document.createElement('a');
-    for (let i in dialogs){
-        // if (dialogs[i]['user_two']['ID'] === 1){
-        //     userHref.href = `/freelancers/id${dialogs[i]['user_two']['ID']}`;
-        // }else{
-        //     userHref.href = `/customers/id${dialogs[i]['user_two']['ID']}`;
-        // }
-        let indexLastMsg = dialogs[i]['messages'].length - 1;
-        let last_msg = dialogs[i]['messages'][indexLastMsg];
-        let read_status = "";
-        if (!last_msg.read){
-            if (last_msg.sender_id === dialogs[i].user_current.ID){
-                read_status = `<span class="grey-dot right"></span>`;
-            }else {
-                read_status = `<span class="red-dot right"></span>`;
+    if (dialogs === null){
+        html += `<div class="valign-wrapper" style="height: 100%; justify-content: center">
+                        <h5>No dialogs</h5>
+                    </div>`
+    }else {
+        for (let i in dialogs){
+            // if (dialogs[i]['user_two']['ID'] === 1){
+            //     userHref.href = `/freelancers/id${dialogs[i]['user_two']['ID']}`;
+            // }else{
+            //     userHref.href = `/customers/id${dialogs[i]['user_two']['ID']}`;
+            // }
+            let indexLastMsg = dialogs[i]['messages'].length - 1;
+            let last_msg = dialogs[i]['messages'][indexLastMsg];
+            let read_status = "";
+            if (!last_msg.read){
+                if (last_msg.sender_id === dialogs[i].user_current.ID){
+                    read_status = `<span class="grey-dot right"></span>`;
+                }else {
+                    read_status = `<span class="red-dot right"></span>`;
+                }
             }
-        }
-        html += `<div class="chat_list" onclick="viewDialog(${dialogs[i]['id']}, this)">
+            html += `<div class="chat_list" onclick="viewDialog(${dialogs[i]['id']}, this)">
                      <div class="chat_people">
                          <div class="chat_img"><img class="avatar" src="${dialogs[i]['user_two']['Photo']}" alt="sunil"></div>
                          <div class="chat_ib">
@@ -39,6 +43,7 @@ function renderInboxChat(dialogs) {
                          </div>
                      </div>
                  </div>`
+        }
     }
     addInnerHTML(inbox_chat, html);
 }

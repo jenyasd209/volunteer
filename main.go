@@ -51,6 +51,10 @@ func main() {
 	subFreelancers.HandleFunc("/id{id:[0-9]+}", logging(viewFreelancer))
 	//subFreelancers.HandleFunc("/id{id:[0-9]+}/send_message", logging(newMessage))
 
+	//route customer
+	r.HandleFunc("/customers/id{id:[0-9]+}", logging(viewCustomer))
+	r.HandleFunc("/customers/id{id:[0-9]+}/sort_orders_by_{status}", logging(customerSortOrders))
+
 	//route orders
 	subOrder := r.PathPrefix("/orders").Subrouter()
 	subOrder.HandleFunc("", logging(allOrders))
@@ -59,6 +63,7 @@ func main() {
 	subOrder.HandleFunc("/id{id:[0-9]+}", logging(viewOrder))
 	subOrder.HandleFunc("/id{id:[0-9]+}/new_request", logging(newRequest))
 	subOrder.HandleFunc("/id{id:[0-9]+}/make_done", logging(orderDone))
+	subOrder.HandleFunc("/id{id:[0-9]+}/freelancer_comment", logging(freelancerComment))
 	subOrder.HandleFunc("/id{id:[0-9]+}/select_freelancer_id{freelancer_id:[0-9]+}", logging(selectRequest))
 	subOrder.HandleFunc("/search", logging(allOrders))
 

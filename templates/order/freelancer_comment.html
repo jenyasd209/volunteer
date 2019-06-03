@@ -1,0 +1,130 @@
+{{define "content"}}
+    <script src="/static/js/rating.js"></script>
+    <div class="page">
+        <div class="container">
+            <div class="section white z-depth-2">
+
+                <div class="row">
+                    <div class="col s12">
+{{/*                        <div class="section-wrap">*/}}
+                            <div class="content">
+                                <div class="row">
+                                    <div class="col s12 center-align">
+                                        <span class="flow-text">{{.Content.CompleteOrder.Order.Title}}</span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col s12 center-align">
+                                        <span>Status: </span><span class="green-text">{{.Content.CompleteOrder.Order.Status.Name}}</span>
+                                        <p> <a href="/freelancers/id{{.Content.CompleteOrder.Freelancer.ID}}">{{.Content.CompleteOrder.Freelancer.FirstName}} {{.Content.CompleteOrder.Freelancer.LastName}}</a></p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col s12">
+                                        <div class="section">
+                                            <label for="description">Description</label>
+                                            <p id="description">{{.Content.CompleteOrder.Order.Content}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+{{/*                        </div>*/}}
+                    </div>
+                </div>
+                <div class="content">
+                    <div class="row">
+                        <div class="row order">
+                            <div class="col s12">
+                                <label for="customer-comment">Customer comment</label>
+                                <p name="customer-comment" id="customer-comment" class="materialize-textarea" required>{{.Content.CompleteOrder.CustomerComment.Text}}</p>
+                            </div>
+                        </div>
+                        <form class="col s12" method="post">
+                            <div class="row">
+                                <div class="col s12 ">
+                                    <label for="rating">Rating</label>
+                                    <p>
+                                        <label>
+                                            <input class="with-gap" value="1" name="rating" type="radio" />
+                                            <span>
+                                                <span class="fa fa-star checked"></span>
+                                                <span class="fa fa-star"></span>
+                                                <span class="fa fa-star"></span>
+                                                <span class="fa fa-star"></span>
+                                                <span class="fa fa-star"></span>
+                                                <span>(1)</span>
+                                            </span>
+                                        </label>
+                                    </p>
+                                    <p>
+                                        <label>
+                                            <input class="with-gap" value="2" name="rating" type="radio" />
+                                            <span>
+                                                <span class="fa fa-star checked"></span>
+                                                <span class="fa fa-star checked"></span>
+                                                <span class="fa fa-star"></span>
+                                                <span class="fa fa-star"></span>
+                                                <span class="fa fa-star"></span>
+                                                <span>(2)</span>
+                                            </span>
+                                        </label>
+                                    </p>
+                                    <p>
+                                        <label>
+                                            <input class="with-gap" value="3" name="rating" type="radio" />
+                                            <span>
+                                                <span class="fa fa-star checked"></span>
+                                                <span class="fa fa-star checked"></span>
+                                                <span class="fa fa-star checked"></span>
+                                                <span class="fa fa-star"></span>
+                                                <span class="fa fa-star"></span>
+                                                <span>(3)</span>
+                                            </span>
+                                        </label>
+                                    </p>
+                                    <p>
+                                        <label>
+                                            <input class="with-gap" value="4" name="rating" type="radio" checked/>
+                                            <span>
+                                                <span class="fa fa-star checked"></span>
+                                                <span class="fa fa-star checked"></span>
+                                                <span class="fa fa-star checked"></span>
+                                                <span class="fa fa-star checked"></span>
+                                                <span class="fa fa-star"></span>
+                                                <span>(4)</span>
+                                            </span>
+                                        </label>
+                                    </p>
+                                    <p>
+                                        <label>
+                                            <input class="with-gap" value="5" name="rating" type="radio" />
+                                            <span>
+                                                <span class="fa fa-star checked"></span>
+                                                <span class="fa fa-star checked"></span>
+                                                <span class="fa fa-star checked"></span>
+                                                <span class="fa fa-star checked"></span>
+                                                <span class="fa fa-star checked"></span>
+                                                <span>(5)</span>
+                                            </span>
+                                        </label>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <textarea name="comment" id="comment" class="materialize-textarea" required></textarea>
+                                    <label for="comment">Your comment</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="center col s12">
+                                    <button class="btn waves-effect" type="submit">Leave comment</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{{ end }}

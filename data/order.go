@@ -316,6 +316,21 @@ func (freelancer *Freelancer) PerformingOrders() (performedOrders []PerformedOrd
 	return
 }
 
+func (completeOrder *CompleteOrder) UpdateFreelancerComment() {
+	statement := `UPDATE complete_orders SET freelancer_comment_id = $1 WHERE id = $2`
+	stmt, err := Db.Prepare(statement)
+	if err != nil {
+		log.Println(err)
+	}
+
+	defer stmt.Close()
+	stmt.QueryRow(&completeOrder.FreelancerComment.ID, &completeOrder.ID).Scan()
+	completeOrder.FreelancerComment = GetCommentByID(completeOrder.FreelancerComment.ID)
+
+	completeOrder.Order.Customer.calcRating(completeOrder.FreelancerComment.Rait)
+	return
+}
+
 func (customer *Customer) CompleteOrders() (completeOrders []CompleteOrder) {
 	rows, err := Db.Query(`SELECT id, order_id, freelancer_id, freelancer_comment_id, customer_comment_id,
        							  	date_complete
@@ -337,7 +352,6 @@ func (customer *Customer) CompleteOrders() (completeOrders []CompleteOrder) {
 			completeOrder.FreelancerComment = GetCommentByID(int(freelancerCommentID.Int64))
 		}
 		completeOrder.Freelancer, _ = GetFreelancerByUserID(completeOrder.Freelancer.User.ID)
-		fmt.Println(completeOrder.Freelancer)
 		completeOrder.CustomerComment = GetCommentByID(completeOrder.CustomerComment.ID)
 		completeOrder.Order = GetOrderByID(completeOrder.Order.ID)
 		completeOrders = append(completeOrders, completeOrder)
@@ -380,6 +394,23 @@ func GetPerformedOrdersByID(orderID int) (performedOrder PerformedOrder) {
 	}
 	performedOrder.Freelancer, _ = GetFreelancerByUserID(performedOrder.Freelancer.User.ID)
 	performedOrder.Order = GetOrderByID(performedOrder.Order.ID)
+	return
+}
+
+func GetDoneOrderByID(orderID int) (doneOrder CompleteOrder) {
+	var freelancerCommentID sql.NullInt64
+	err := Db.QueryRow(`SELECT id, order_id, freelancer_id, freelancer_comment_id, customer_comment_id
+								  FROM complete_orders
+								  WHERE order_id = $1;`, orderID).Scan(&doneOrder.ID, &doneOrder.Order.ID,
+		&doneOrder.Freelancer.User.ID, &freelancerCommentID, &doneOrder.CustomerComment.ID)
+	if err != nil {
+		log.Println(err)
+		return
+	}
+	doneOrder.FreelancerComment.ID = int(freelancerCommentID.Int64)
+	doneOrder.Freelancer, _ = GetFreelancerByUserID(doneOrder.Freelancer.User.ID)
+	doneOrder.Order = GetOrderByID(doneOrder.Order.ID)
+	doneOrder.CustomerComment = GetCommentByID(doneOrder.CustomerComment.ID)
 	return
 }
 

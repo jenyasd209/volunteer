@@ -100,7 +100,7 @@
                 <div class="row white z-depth-2">
                     <div class="col s12">
                         <div class="section">
-                            <h4 class="center">Works ({{len .Content.FreelancerOrders}})</h4>
+                            <p class="flow-text center">Works ({{len .Content.FreelancerOrders}})</p>
                             {{if .Content.FreelancerOrders}}
                                 {{range .Content.FreelancerOrders}}
                                     <div class="content__works">
@@ -115,7 +115,7 @@
                                             <div class="card-action card-inform">
                                                 <span>{{.CreatedAt.Format "02 Jan 2006 15:04:05"}}</span>
                                                 <span>
-                                                    <a href="#">{{.Order.Customer.FirstName}} {{.Order.Customer.LastName}}</a>
+                                                    <a href="/customers/id{{.Order.Customer.User.ID}}">{{.Order.Customer.FirstName}} {{.Order.Customer.LastName}}</a>
                                                 </span>
                                             </div>
                                         </div>
