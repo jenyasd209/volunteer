@@ -3,22 +3,54 @@ package data
 import (
 	"crypto/rand"
 	"crypto/sha1"
-	"database/sql"
 	"fmt"
-	"log"
-
 	_ "github.com/lib/pq"
+	"log"
 )
 
-var Db *sql.DB
+//var Db *sql.DB
+//
+//func init() {
+//	var err error
+//	Db, err = sql.Open("postgres", "user=volunteer dbname=volunteer password=qwerty123 sslmode=disable")
+//	if err != nil {
+//		panic(err)
+//	}
+//}
+//var Db *sql.DB
 
-func init() {
-	var err error
-	Db, err = sql.Open("postgres", "user=volunteer dbname=volunteer password=qwerty123 sslmode=disable")
-	if err != nil {
-		panic(err)
-	}
-}
+//func init() {
+//	var err error
+//	Db, err = sql.Open("postgres", os.Getenv("DATABASE_URL"))
+//	if err != nil {
+//		log.Fatalf("Error opening database: %q", err)
+//	}
+//}
+//
+//const (
+//	host     = "ec2-54-225-89-195.compute-1.amazonaws.com"
+//	port     = 5432
+//	user     = "cskzypgpkgsquz"
+//	password = "67c01a36179e9bcbf616c82c0a1667b147ff53930a67bf1715342268fd878b58"
+//	dbname   = "d87sk8skd787p4"
+//)
+//
+//var Db *sql.DB
+//
+//func init() {
+//	var err error
+//	psqlInfo := fmt.Sprintf("host=%s port=%d user=%s "+
+//		"password=%s dbname=%s sslmode=disable",
+//		host, port, user, password, dbname)
+//	fmt.Println(psqlInfo)
+//	Db, _ = sql.Open("postgres", psqlInfo)
+//	if err != nil {
+//		panic(err)
+//	}
+//
+//	fmt.Println(Db.QueryRow("SELECT * FROM users"))
+//
+//}
 
 func CreateUUID() (uuid string) {
 	u := new([16]byte)

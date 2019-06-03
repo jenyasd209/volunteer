@@ -26,7 +26,10 @@ func registration(w http.ResponseWriter, r *http.Request) {
 	if _, err := r.Cookie("_cookie"); err == nil {
 		http.Redirect(w, r, "/my_profile", 302)
 	} else {
-		specialization, _ := data.GetAllSpecialization()
+		specialization, err := data.GetAllSpecialization()
+		if err!=nil {
+			log.Fatal(err)
+		}
 		pageData := PageData{
 			Title :"Registration",
 			Content : struct{

@@ -157,11 +157,12 @@ func GetFreelancersWhere(query string, args ...interface{}) (freelancers []Freel
 //GetAllSpecialization return all rows from table "specialization"
 func GetAllSpecialization() (specs []Specialization, err error) {
 	rows, err := Db.Query(`SELECT id, name FROM specialization`)
-	defer rows.Close()
 	if err != nil {
 		log.Println(err)
 		return
 	}
+	defer rows.Close()
+
 	for rows.Next() {
 		spec := Specialization{}
 		err = rows.Scan(&spec.ID, &spec.Name)

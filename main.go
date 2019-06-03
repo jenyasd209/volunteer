@@ -77,7 +77,9 @@ func main() {
 		Addr: config.Address,
 	}
 	server.ListenAndServe()
-	//http.ListenAndServe(":8080", nil)
+
+	//port := os.Getenv("PORT")
+	//http.ListenAndServe(":" + port, nil)
 }
 
 func home(w http.ResponseWriter, r *http.Request) {

@@ -7,5 +7,11 @@
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql://localhost:5432/volunteer</jdbc-url>
     </data-source>
+    <data-source source="LOCAL" name="HerokuGraduate" uuid="137fbe7a-1c6c-4c08-9c8b-1ba30c8294d5">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://ec2-54-225-89-195.compute-1.amazonaws.com:5432/d87sk8skd787p4</jdbc-url>
+    </data-source>
   </component>
 </project>
