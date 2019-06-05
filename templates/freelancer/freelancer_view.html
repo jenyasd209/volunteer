@@ -1,4 +1,5 @@
 {{define "content"}}
+    {{$counWorks := len .Content.FreelancerOrders}}
     <script src="/static/js/rating.js"></script>
     <div class="page">
         <div class="container">
@@ -100,8 +101,8 @@
                 <div class="row white z-depth-2">
                     <div class="col s12">
                         <div class="section">
-                            <p class="flow-text center">Works ({{len .Content.FreelancerOrders}})</p>
-                            {{if .Content.FreelancerOrders}}
+                            <p class="flow-text center">Works ({{$counWorks}})</p>
+                            {{if ne $counWorks 0}}
                                 {{range .Content.FreelancerOrders}}
                                     <div class="content__works">
                                         <div class="card order">

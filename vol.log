@@ -8468,3 +8468,32 @@ INFO 2019/06/05 12:49:57 utils.go:92: 127.0.0.1:59048 method: GET - /my_profile
 INFO 2019/06/05 12:49:57 utils.go:92: 127.0.0.1:59048 method: GET - /my_profile/sort_works_by_performed
 INFO 2019/06/05 12:49:59 utils.go:92: 127.0.0.1:59048 method: GET - /orders
 INFO 2019/06/05 12:50:00 utils.go:92: 127.0.0.1:59048 method: GET - /freelancers
+INFO 2019/06/05 13:03:51 utils.go:35: -------------------------------------------------------------------
+INFO 2019/06/05 13:03:51 utils.go:36: Server START  Wed Jun  5 13:03:51 2019
+INFO 2019/06/05 13:03:51 utils.go:37: -------------------------------------------------------------------
+INFO 2019/06/05 13:04:06 utils.go:92: [::1]:60938 method: GET - /login
+INFO 2019/06/05 13:04:30 utils.go:92: [::1]:60938 method: GET - /registration
+INFO 2019/06/05 13:04:36 utils.go:92: [::1]:60938 method: GET - /orders
+INFO 2019/06/05 13:04:38 utils.go:92: [::1]:60938 method: GET - /freelancers
+INFO 2019/06/05 13:04:39 utils.go:92: [::1]:60952 method: GET - /orders
+INFO 2019/06/05 13:04:39 utils.go:92: [::1]:60952 method: GET - /freelancers
+INFO 2019/06/05 13:04:40 utils.go:92: [::1]:60952 method: GET - /freelancers
+INFO 2019/06/05 13:04:40 utils.go:92: [::1]:60952 method: GET - /orders
+INFO 2019/06/05 13:04:41 utils.go:92: [::1]:60952 method: GET - /freelancers
+INFO 2019/06/05 13:04:41 utils.go:92: [::1]:60952 method: GET - /freelancers
+INFO 2019/06/05 13:04:42 utils.go:92: [::1]:60952 method: GET - /orders
+INFO 2019/06/05 13:04:42 utils.go:92: [::1]:60952 method: GET - /freelancers
+INFO 2019/06/05 13:04:43 utils.go:92: [::1]:60952 method: GET - /orders
+INFO 2019/06/05 13:04:44 utils.go:92: [::1]:60952 method: GET - /freelancers
+INFO 2019/06/05 13:11:23 utils.go:92: 127.0.0.1:59960 method: GET - /
+INFO 2019/06/05 13:11:24 utils.go:92: 127.0.0.1:59960 method: GET - /freelancers
+INFO 2019/06/05 13:11:25 utils.go:92: 127.0.0.1:59960 method: GET - /orders
+INFO 2019/06/05 13:11:26 utils.go:92: 127.0.0.1:59960 method: GET - /freelancers
+INFO 2019/06/05 13:11:27 utils.go:92: 127.0.0.1:59960 method: GET - /freelancers/id4
+INFO 2019/06/05 13:11:45 utils.go:92: 127.0.0.1:59960 method: GET - /freelancers
+INFO 2019/06/05 13:11:46 utils.go:92: 127.0.0.1:59960 method: GET - /orders
+INFO 2019/06/05 13:11:55 utils.go:92: 127.0.0.1:59960 method: GET - /freelancers
+INFO 2019/06/05 13:12:47 utils.go:92: 127.0.0.1:59960 method: GET - /freelancers
+INFO 2019/06/05 13:12:48 utils.go:92: 127.0.0.1:59960 method: GET - /freelancers/id4
+INFO 2019/06/05 13:12:51 utils.go:92: 127.0.0.1:59960 method: GET - /freelancers
+INFO 2019/06/05 13:12:52 utils.go:92: 127.0.0.1:59960 method: GET - /freelancers/id1
