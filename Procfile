@@ -1,1 +1,1 @@
-web:graduate
+web: bin/graduate
