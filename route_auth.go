@@ -17,7 +17,6 @@ func login(w http.ResponseWriter, r *http.Request) {
 		pageData := PageData{
 			Title :"Login",
 		}
-		//pageData.Title = "Login"
 		generateHTML(w, &pageData, nil, "base", "header", "footer", "login")
 	}
 }

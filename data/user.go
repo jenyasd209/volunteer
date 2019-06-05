@@ -196,7 +196,6 @@ func (user *User) CheckLoginData() (exist bool) {
 	if exist{
 		err = Db.QueryRow(`SELECT id FROM users WHERE email = $1 and password = $2`,
 			user.Email, user.Password).Scan(&user.ID)
-		fmt.Println(user)
 	}
 	return
 }

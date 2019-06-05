@@ -8441,3 +8441,30 @@ INFO 2019/06/03 17:45:34 utils.go:36: Server START  Mon Jun  3 17:45:34 2019
 INFO 2019/06/03 17:45:34 utils.go:37: -------------------------------------------------------------------
 INFO 2019/06/03 17:45:40 utils.go:92: 127.0.0.1:45608 method: GET - /
 INFO 2019/06/03 17:45:41 utils.go:92: 127.0.0.1:45608 method: GET - /registration
+INFO 2019/06/05 12:38:15 utils.go:35: -------------------------------------------------------------------
+INFO 2019/06/05 12:38:15 utils.go:36: Server START  Wed Jun  5 12:38:15 2019
+INFO 2019/06/05 12:38:15 utils.go:37: -------------------------------------------------------------------
+INFO 2019/06/05 12:40:35 utils.go:35: -------------------------------------------------------------------
+INFO 2019/06/05 12:40:35 utils.go:36: Server START  Wed Jun  5 12:40:35 2019
+INFO 2019/06/05 12:40:35 utils.go:37: -------------------------------------------------------------------
+INFO 2019/06/05 12:40:40 utils.go:92: 127.0.0.1:58946 method: GET - /
+INFO 2019/06/05 12:40:41 utils.go:92: 127.0.0.1:58946 method: GET - /registration
+INFO 2019/06/05 12:40:42 utils.go:92: 127.0.0.1:58946 method: GET - /login
+INFO 2019/06/05 12:40:47 utils.go:92: 127.0.0.1:58946 method: POST - /login_account
+INFO 2019/06/05 12:40:47 utils.go:92: 127.0.0.1:58946 method: GET - /my_profile
+INFO 2019/06/05 12:40:48 utils.go:92: 127.0.0.1:58946 method: GET - /my_profile/sort_works_by_performed
+INFO 2019/06/05 12:40:51 utils.go:92: 127.0.0.1:58946 method: GET - /my_profile/dialogs
+INFO 2019/06/05 12:40:51 utils.go:92: 127.0.0.1:58946 method: GET - /my_profile/user_dialogs
+INFO 2019/06/05 12:40:54 utils.go:92: 127.0.0.1:58946 method: GET - /my_profile
+INFO 2019/06/05 12:40:54 utils.go:92: 127.0.0.1:58946 method: GET - /my_profile/sort_works_by_performed
+INFO 2019/06/05 12:49:42 utils.go:92: 127.0.0.1:59048 method: GET - /my_profile/sort_works_by_done
+INFO 2019/06/05 12:49:44 utils.go:92: 127.0.0.1:59048 method: GET - /customers/id3
+INFO 2019/06/05 12:49:44 utils.go:92: 127.0.0.1:59048 method: GET - /customers/id3/sort_orders_by_available
+INFO 2019/06/05 12:49:46 utils.go:92: 127.0.0.1:59048 method: GET - /my_profile
+INFO 2019/06/05 12:49:46 utils.go:92: 127.0.0.1:59048 method: GET - /my_profile/sort_works_by_performed
+INFO 2019/06/05 12:49:48 utils.go:92: 127.0.0.1:59048 method: GET - /my_profile/sort_works_by_done
+INFO 2019/06/05 12:49:54 utils.go:92: 127.0.0.1:59048 method: GET - /orders/id25/freelancer_comment
+INFO 2019/06/05 12:49:57 utils.go:92: 127.0.0.1:59048 method: GET - /my_profile
+INFO 2019/06/05 12:49:57 utils.go:92: 127.0.0.1:59048 method: GET - /my_profile/sort_works_by_performed
+INFO 2019/06/05 12:49:59 utils.go:92: 127.0.0.1:59048 method: GET - /orders
+INFO 2019/06/05 12:50:00 utils.go:92: 127.0.0.1:59048 method: GET - /freelancers
