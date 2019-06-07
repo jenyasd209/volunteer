@@ -96,6 +96,7 @@ func profileDialog(w http.ResponseWriter, r *http.Request)  {
 		id, _ := strconv.ParseInt(vars["id"], 10, 8)
 		user, _ := data.GetUserByID(sess.UserID)
 		dialog := user.DialogByID(int(id))
+		fmt.Println(id)
 		user.ReadMessage(dialog.ID)
 		json, _ := json.Marshal(dialog)
 

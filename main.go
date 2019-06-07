@@ -5,7 +5,6 @@ import (
 	"graduate/data"
 	"log"
 	"net/http"
-	"os"
 )
 
 func main() {
@@ -74,13 +73,13 @@ func main() {
 
 	http.Handle("/", r)
 	log.Println("Listening...")
-	//server := http.Server{
-	//	Addr: config.Address,
-	//}
-	//server.ListenAndServe()
+	server := http.Server{
+		Addr: config.Address,
+	}
+	server.ListenAndServe()
 
-	port := os.Getenv("PORT")
-	http.ListenAndServe(":" + port, nil)
+	//port := os.Getenv("PORT")
+	//http.ListenAndServe(":" + port, nil)
 }
 
 func home(w http.ResponseWriter, r *http.Request) {

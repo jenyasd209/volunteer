@@ -22,7 +22,8 @@ func login(w http.ResponseWriter, r *http.Request) {
 }
 
 func registration(w http.ResponseWriter, r *http.Request) {
-	if _, err := r.Cookie("_cookie"); err == nil {
+	_, err := session(w, r)
+	if err == nil {
 		http.Redirect(w, r, "/my_profile", 302)
 	} else {
 		specialization, err := data.GetAllSpecialization()

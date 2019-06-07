@@ -7,27 +7,26 @@ import (
 	"fmt"
 	_ "github.com/lib/pq"
 	"log"
-	"os"
 )
 
 var Db *sql.DB
 
-//func init() {
-//	var err error
-//	Db, err = sql.Open("postgres", "user=volunteer dbname=volunteer password=qwerty123 sslmode=disable")
-//	if err != nil {
-//		panic(err)
-//	}
-//}
-//var Db *sql.DB
-
 func init() {
 	var err error
-	Db, err = sql.Open("postgres", os.Getenv("DATABASE_URL"))
+	Db, err = sql.Open("postgres", "user=volunteer dbname=volunteer password=qwerty123 sslmode=disable")
 	if err != nil {
-		log.Fatalf("Error opening database: %q", err)
+		panic(err)
 	}
 }
+//var Db *sql.DB
+
+//func init() {
+//	var err error
+//	Db, err = sql.Open("postgres", os.Getenv("DATABASE_URL"))
+//	if err != nil {
+//		log.Fatalf("Error opening database: %q", err)
+//	}
+//}
 //
 //const (
 //	host     = "ec2-54-225-89-195.compute-1.amazonaws.com"
@@ -49,8 +48,6 @@ func init() {
 //	if err != nil {
 //		panic(err)
 //	}
-//
-//	fmt.Println(Db.QueryRow("SELECT * FROM users"))
 //
 //}
 

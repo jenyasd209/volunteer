@@ -95,7 +95,7 @@ func createDialog(userOneID, userTwoID int) (dialogID int) {
 func (user *User) Dialogs() (dialogs []*Dialog) {
 	var userOne, userTwo int
 	rows, err := Db.Query(`SELECT id, user1_id, user2_id, date_created
-                         FROM dialogs WHERE user2_id = $1 or user1_id = $1`, user.ID)
+                         FROM dialogs WHERE user2_id = $1 or user1_id = $1 ORDER BY  date_created DESC `, user.ID)
 	if err != nil {
 		log.Println(err)
 		return
@@ -126,10 +126,11 @@ func (user *User) Dialogs() (dialogs []*Dialog) {
 func (user *User) DialogByID(dialogID int) (dialog Dialog) {
 	var userOne, userTwo int
 	err := Db.QueryRow(`SELECT id, user1_id, user2_id, date_created
-                         FROM dialogs WHERE user2_id = $1 or user1_id = $1 and id = $2`, user.ID,
+                         FROM dialogs WHERE (user2_id = $1 or user1_id = $1) and id = $2`, user.ID,
                          dialogID).Scan(&dialog.ID, &userOne, &userTwo, &dialog.CreatedAt)
 	if err != nil {
 		log.Println(err)
+		fmt.Println("return")
 		return
 	}
 	if user.ID == userOne{
@@ -150,7 +151,7 @@ func (user *User) DialogByID(dialogID int) (dialog Dialog) {
 
 func (dialog *Dialog) GetMessages() (messages []*Message) {
 	rows, err := Db.Query(`SELECT id, sender_id, receiver_id, dialog_id, text_message, read, date_send
-                         FROM messages WHERE dialog_id = $1`, dialog.ID)
+                         FROM messages WHERE dialog_id = $1 order by date_send ASC `, dialog.ID)
 	if err != nil {
 		log.Println(err)
 		return
@@ -164,6 +165,7 @@ func (dialog *Dialog) GetMessages() (messages []*Message) {
 			&message.Read, &message.DateSend)
 		if err == nil {
 			messages = append(messages, &message)
+			fmt.Println(message)
 		}
 	}
 	return

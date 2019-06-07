@@ -8,7 +8,6 @@ window.onload = function(){
 };
 
 function renderInboxChat(dialogs) {
-    console.log(dialogs);
     let inbox_chat = document.getElementById('inbox_chat');
     let html = ``;
     if (dialogs === null){
@@ -17,11 +16,6 @@ function renderInboxChat(dialogs) {
                     </div>`
     }else {
         for (let i in dialogs){
-            // if (dialogs[i]['user_two']['ID'] === 1){
-            //     userHref.href = `/freelancers/id${dialogs[i]['user_two']['ID']}`;
-            // }else{
-            //     userHref.href = `/customers/id${dialogs[i]['user_two']['ID']}`;
-            // }
             let indexLastMsg = dialogs[i]['messages'].length - 1;
             let last_msg = dialogs[i]['messages'][indexLastMsg];
             let read_status = "";
@@ -39,7 +33,7 @@ function renderInboxChat(dialogs) {
                              <h5>${dialogs[i]['user_two']['FirstName']} ${dialogs[i]['user_two']['LastName']}
                                 <span class="chat_date">${formatDate(new Date(dialogs[i]['messages'][indexLastMsg]['date_send']))}</span>   
                              </h5>
-                             <p id="last-msg">${last_msg.text} ${read_status}</p>
+                             <p id="last-msg_id${dialogs[i]['id']}">${last_msg.text} ${read_status}</p>
                          </div>
                      </div>
                  </div>`
@@ -75,12 +69,14 @@ function renderMsgHistory(dialog){
     let input_field = `<div class="type_msg">
                            <div class="input_msg_write">
                                <input type="text" id="msg_text" class="write_msg" placeholder="Type a message" />
-                               <button class="msg_send_btn" onclick="sendMsg(${dialog['user_current']['ID']}, ${dialog['user_two']['ID']}, ${dialog['ID']})" type="button"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
+                               <button class="msg_send_btn" onclick="sendMsg(${dialog['user_current']['ID']}, ${dialog['user_two']['ID']}, ${dialog['id']})" type="button"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
                            </div>
                        </div>`;
     let msg_history = document.createElement("div");
     msg_history.id = 'msg_history';
     msg_history.className = "msg_history";
+    // let msg_history = document.getElementById('msg_history');
+    // msg_history.innerText = '';
     let messages = dialog['messages'];
 
     document.getElementById('mesgs').innerHTML = ``;
@@ -133,6 +129,7 @@ function addInnerHTML(elem, html) {
 function sendMsg(sender_id, receiver_id, dialog_id) {
     let url = '/send_message/user_id' + receiver_id;
     let text = document.getElementById('msg_text');
+
     let msg = {
         'sender_id':sender_id,
         'receiver_id': receiver_id,
@@ -161,17 +158,17 @@ function sendMsg(sender_id, receiver_id, dialog_id) {
                 method: "POST",
                 body: JSON.stringify(msg)
             })
-        // .then(function(res){ console.log(res.body) })
             .catch(function(res){ console.log(res) })
 
         text.value = '';
         msg_history.innerHTML += newMsg;
         msg_history.scrollTop = msg_history.scrollHeight;
-        lastMessageRender(msg.text);
+        lastMessageRender(msg.text, dialog_id);
     }
 }
 
-function lastMessageRender(msg_text) {
-    let last_msg = document.getElementById('last-msg')
-    last_msg.innerText = msg_text
+function lastMessageRender(msg_text, dialog_id) {
+    let last_msg = document.getElementById('last-msg_id'+dialog_id);
+    last_msg.innerText = msg_text;
+    last_msg.innerHTML += `<span class="grey-dot right"></span>`;
 }

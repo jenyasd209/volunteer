@@ -10,6 +10,7 @@ drop table if exists performed_orders cascade;
 drop table if exists complete_orders cascade;
 drop table if exists comments cascade;
 drop table if exists messages cascade;
+drop table if exists dialogs cascade;
 drop table if exists session cascade;
 
 create table roles (
@@ -70,6 +71,7 @@ create table orders (
   content text not null,
   customer_id integer references customers(user_id) on delete cascade on update cascade,
   status_id integer references order_status(id) on delete cascade on update cascade DEFAULT 1,
+  specialization_id integer references specialization(id) on delete cascade on update cascade,
   created_at timestamp not null
 );
 
@@ -104,20 +106,21 @@ create table complete_orders(
   date_complete timestamp not null
 );
 
+create table dialogs(
+                        id serial primary key,
+                        user1_id integer references users(id) on delete cascade on update cascade,
+                        user2_id integer references users(id) on delete cascade on update cascade,
+                        date_created timestamp not null
+);
+
 create table messages(
   id serial primary key,
   sender_id integer references users(id) on delete cascade on update cascade,
   receiver_id integer references users(id) on delete cascade on update cascade,
   text_message text not null,
   read boolean DEFAULT FALSE,
+  dialog_id integer references dialogs(id) on delete cascade on update cascade,
   date_send timestamp not null
-);
-
-create table dialogs(
-                        id serial primary key,
-                        user1_id integer references users(id) on delete cascade on update cascade,
-                        user2_id integer references users(id) on delete cascade on update cascade,
-                        date_created timestamp not null
 );
 
 -- create table messages(

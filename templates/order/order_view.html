@@ -2,9 +2,11 @@
     {{$current := false}}
     {{$orderID := .Content.Order.ID}}
     {{$statusID := .Content.Order.Status.ID}}
-    {{if eq .Content.Customer.User.ID .User.ID}}
-        {{$current = true}}
-    {{end}}
+        {{if .User}}
+            {{if eq .Content.Customer.User.ID .User.ID}}
+                {{$current = true}}
+            {{end}}
+        {{end}}
     <script src="/static/js/rating.js"></script>
     <div class="page">
         <div class="container">
