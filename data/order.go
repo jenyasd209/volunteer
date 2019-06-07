@@ -1,11 +1,9 @@
 package data
 
 import (
-	"database/sql"
 	"errors"
 	"fmt"
 	"log"
-	"math"
 	"time"
 )
 
@@ -20,23 +18,6 @@ type Order struct {
 	SpecializationID int 					`json:"specialization_id"`
 	CreatedAt time.Time						`json:"created_at"`
 	FreelancerRequest *[]FreelancerRequest	`json:"freelancer_request"`
-}
-
-//PerformedOrder struct for "performed_order" table
-type PerformedOrder struct {
-	ID int				`json:"id"`
-	Order				`json:"order"`
-	Freelancer			`json:"freelancer"`
-}
-
-//CompleteOrder struct for "complete_order" table
-type CompleteOrder struct {
-	ID int						`json:"id"`
-	Order						`json:"order"`
-	Freelancer      			`json:"freelancer"`
-	FreelancerComment Comment	`json:"freelancer_comment"`
-	CustomerComment   Comment	`json:"customer_comment"`
-	DateComplete      time.Time	`json:"date_complete"`
 }
 
 //Status struct for "order_status" table
@@ -110,115 +91,6 @@ func (customer *Customer) DeleteOrder(order Order) (err error) {
 	return
 }
 
-func (customer *Customer) deletePerformedOrder(orderID int) {
-	statement := `DELETE FROM performed_orders WHERE order_id = $1`
-	stmt, err := Db.Prepare(statement)
-	if err != nil {
-		log.Println(err)
-	}
-	defer stmt.Close()
-	stmt.QueryRow(orderID).Scan()
-}
-
-//MakeOrderPerformed row in "Order" table
-func (customer *Customer) MakeOrderPerformed(performedOrder *PerformedOrder) (err error) {
-	if performedOrder.Order.Status.ID == OrderStatusAvailable {
-		if performedOrder.Customer.User.ID == customer.User.ID {
-			statement := `INSERT INTO performed_orders (order_id, freelancer_id) values ($1, $2)`
-			stmt, err := Db.Prepare(statement)
-			if err != nil {
-				log.Println(err)
-			}
-			defer stmt.Close()
-			err = stmt.QueryRow(performedOrder.Order.ID, performedOrder.Freelancer.User.ID).Scan(&performedOrder.ID)
-			if err != nil {
-				log.Println(err)
-			}
-			performedOrder.Order.changeStatus(OrderStatusPerformed)
-			//customer.deletePerformedOrder(performedOrder.Order.ID)
-		} else {
-			return errors.New("insufficient rights make performedOrder performed")
-		}
-	}else {return errors.New("performedOrder is not available")}
-	return
-}
-
-//MakeOrderDone row in "Order" table
-func (customer *Customer) MakeOrderDone(completeOrder *CompleteOrder) (err error) {
-	if completeOrder.Order.Status.ID == OrderStatusPerformed {
-		if completeOrder.Customer.User.ID == customer.User.ID {
-			statement := `INSERT INTO complete_orders (order_id, freelancer_id, customer_comment_id, date_complete)
-									values ($1, $2, $3, $4)`
-			stmt, err := Db.Prepare(statement)
-			if err != nil {
-				log.Println(err)
-				return err
-			}
-
-			err = customer.CreateComment(&completeOrder.CustomerComment)
-			if err != nil {
-				log.Println(err)
-			}
-			defer stmt.Close()
-			err = stmt.QueryRow(completeOrder.Order.ID, completeOrder.Freelancer.User.ID, completeOrder.CustomerComment.ID, time.Now()).Scan()
-			if err != nil {
-				log.Println(err)
-			}
-			completeOrder.Freelancer, _ = GetFreelancerByUserID(completeOrder.Freelancer.User.ID)
-			completeOrder.Order.changeStatus(OrderStatusDone)
-			customer.deletePerformedOrder(completeOrder.Order.ID)
-			//customer.updateRating(completeOrder.FreelancerComment.Rait)
-
-			completeOrder.Freelancer.calcRating(completeOrder.CustomerComment.Rait)
-		} else {
-			return errors.New("insufficient rights make order done")
-		}
-	}else {return errors.New("order is not preformed")}
-	return
-}
-
-func (user *User) updateRating(rait float32)  {
-	rait = float32(math.Round(float64(rait*100)) / 100)
-	statement := `UPDATE users SET rait = $1 WHERE id = $2 returning rait`
-	stmt, err := Db.Prepare(statement)
-	if err != nil {
-		log.Println(err)
-	}
-
-	defer stmt.Close()
-	err = stmt.QueryRow(rait, user.ID).Scan(&user.Rait)
-	if err != nil {
-		fmt.Println(err)
-	}
-	return
-}
-
-func (freelancer *Freelancer) calcRating(newMark float32) (countMark sql.NullInt64) {
-	err := Db.QueryRow(`SELECT COUNT(customer_comment_id) FROM complete_orders 
-							   WHERE freelancer_id = $1`, freelancer.User.ID).Scan(&countMark)
-	if err != nil {
-		log.Println(err)
-		return
-	}
-	rait := (freelancer.Rait * float32(countMark.Int64 - 1) + newMark) / float32(countMark.Int64)
-	freelancer.User.updateRating(rait)
-	return
-}
-
-func (customer *Customer) calcRating(newMark float32) (countMark sql.NullInt64) {
-	err := Db.QueryRow(`SELECT COUNT(freelancer_comment_id) FROM complete_orders 
-							   WHERE order_id IN (
-							       SELECT id 
-							       FROM orders WHERE status_id = 3 and customer_id = $1)`, customer.User.ID).Scan(&countMark)
-	if err != nil {
-		log.Println(err)
-		return
-	}
-	rait := (customer.Rait * float32(countMark.Int64 - 1) + newMark) / float32(countMark.Int64)
-	customer.User.updateRating(rait)
-	return
-}
-
 //IsAvailable - check Order status, if "available" return true
 func (order *Order) IsAvailable() (available bool) {
 	if order.Status.ID == OrderStatusAvailable{
@@ -264,153 +136,6 @@ func (customer *Customer) Orders() (orders []Order) {
 		orders = append(orders, order)
 	}
 	rows.Close()
-	return
-}
-
-func (freelancer *Freelancer) FinishWorks() (completeOrders []CompleteOrder) {
-	var freelancerCommentID sql.NullInt64
-	rows, err := Db.Query(`SELECT id, order_id, freelancer_id, freelancer_comment_id, customer_comment_id,
-       								date_complete FROM complete_orders 
-									WHERE freelancer_id = $1 ORDER BY date_complete ASC `, freelancer.User.ID)
-	if err != nil {
-		return
-	}
-	for rows.Next() {
-		completeOrder := CompleteOrder{}
-		err = rows.Scan(&completeOrder.ID, &completeOrder.Order.ID, &completeOrder.Freelancer.User.ID,
-						&freelancerCommentID, &completeOrder.CustomerComment.ID, &completeOrder.DateComplete)
-		if err != nil {
-			log.Println(err)
-			return
-		}
-		if freelancerCommentID.Valid{
-			completeOrder.FreelancerComment = GetCommentByID(int(freelancerCommentID.Int64))
-		}
-		completeOrder.CustomerComment = GetCommentByID(completeOrder.CustomerComment.ID)
-		completeOrder.Order = GetOrderByID(completeOrder.Order.ID)
-		completeOrders = append(completeOrders, completeOrder)
-	}
-	rows.Close()
-	return
-}
-
-func (freelancer *Freelancer) PerformingOrders() (performedOrders []PerformedOrder) {
-	rows, err := Db.Query(`SELECT id, order_id, freelancer_id
-								  FROM performed_orders
-								  WHERE freelancer_id = $1;`, freelancer.User.ID)
-	if err != nil {
-		return
-	}
-	for rows.Next() {
-		performedOrder := PerformedOrder{}
-		err = rows.Scan(&performedOrder.ID, &performedOrder.Order.ID, &performedOrder.Freelancer.User.ID)
-		if err != nil {
-			log.Println(err)
-			return
-		}
-		performedOrder.Freelancer, _ = GetFreelancerByUserID(performedOrder.Freelancer.User.ID)
-		performedOrder.Order = GetOrderByID(performedOrder.Order.ID)
-		performedOrders = append(performedOrders, performedOrder)
-	}
-	rows.Close()
-	return
-}
-
-func (completeOrder *CompleteOrder) UpdateFreelancerComment() {
-	statement := `UPDATE complete_orders SET freelancer_comment_id = $1 WHERE id = $2`
-	stmt, err := Db.Prepare(statement)
-	if err != nil {
-		log.Println(err)
-	}
-
-	defer stmt.Close()
-	stmt.QueryRow(&completeOrder.FreelancerComment.ID, &completeOrder.ID).Scan()
-	completeOrder.FreelancerComment = GetCommentByID(completeOrder.FreelancerComment.ID)
-
-	completeOrder.Order.Customer.calcRating(completeOrder.FreelancerComment.Rait)
-	return
-}
-
-func (customer *Customer) CompleteOrders() (completeOrders []CompleteOrder) {
-	rows, err := Db.Query(`SELECT id, order_id, freelancer_id, freelancer_comment_id, customer_comment_id,
-       							  	date_complete
-								  FROM complete_orders
-								  WHERE
-								  	order_id IN (SELECT id FROM orders WHERE customer_id = $1);`, customer.User.ID)
-	if err != nil {
-		return
-	}
-	var freelancerCommentID sql.NullInt64
-	for rows.Next() {
-		completeOrder := CompleteOrder{}
-		err = rows.Scan(&completeOrder.ID, &completeOrder.Order.ID, &completeOrder.Freelancer.User.ID,
-			&freelancerCommentID, &completeOrder.CustomerComment.ID, &completeOrder.DateComplete)
-		if err != nil {
-			log.Println(err)
-		}
-		if freelancerCommentID.Valid{
-			completeOrder.FreelancerComment = GetCommentByID(int(freelancerCommentID.Int64))
-		}
-		completeOrder.Freelancer, _ = GetFreelancerByUserID(completeOrder.Freelancer.User.ID)
-		completeOrder.CustomerComment = GetCommentByID(completeOrder.CustomerComment.ID)
-		completeOrder.Order = GetOrderByID(completeOrder.Order.ID)
-		completeOrders = append(completeOrders, completeOrder)
-	}
-	rows.Close()
-	return
-}
-
-func (customer *Customer) PerformedOrders() (performedOrders []PerformedOrder) {
-	rows, err := Db.Query(`SELECT id, order_id, freelancer_id
-								  FROM performed_orders
-								  WHERE
-								  	order_id IN (SELECT id FROM orders WHERE customer_id = $1);`, customer.User.ID)
-	if err != nil {
-		return
-	}
-	for rows.Next() {
-		performedOrder := PerformedOrder{}
-		err = rows.Scan(&performedOrder.ID, &performedOrder.Order.ID, &performedOrder.Freelancer.User.ID)
-		if err != nil {
-			log.Println(err)
-			return
-		}
-		performedOrder.Freelancer, _ = GetFreelancerByUserID(performedOrder.Freelancer.User.ID)
-		performedOrder.Order = GetOrderByID(performedOrder.Order.ID)
-		performedOrders = append(performedOrders, performedOrder)
-	}
-	rows.Close()
-	return
-}
-
-func GetPerformedOrdersByID(orderID int) (performedOrder PerformedOrder) {
-	err := Db.QueryRow(`SELECT id, order_id, freelancer_id
-								  FROM performed_orders
-								  WHERE order_id = $1;`, orderID).Scan(&performedOrder.ID, &performedOrder.Order.ID,
-								  	&performedOrder.Freelancer.User.ID)
-	if err != nil {
-		log.Println(err)
-		return
-	}
-	performedOrder.Freelancer, _ = GetFreelancerByUserID(performedOrder.Freelancer.User.ID)
-	performedOrder.Order = GetOrderByID(performedOrder.Order.ID)
-	return
-}
-
-func GetDoneOrderByID(orderID int) (doneOrder CompleteOrder) {
-	var freelancerCommentID sql.NullInt64
-	err := Db.QueryRow(`SELECT id, order_id, freelancer_id, freelancer_comment_id, customer_comment_id
-								  FROM complete_orders
-								  WHERE order_id = $1;`, orderID).Scan(&doneOrder.ID, &doneOrder.Order.ID,
-		&doneOrder.Freelancer.User.ID, &freelancerCommentID, &doneOrder.CustomerComment.ID)
-	if err != nil {
-		log.Println(err)
-		return
-	}
-	doneOrder.FreelancerComment.ID = int(freelancerCommentID.Int64)
-	doneOrder.Freelancer, _ = GetFreelancerByUserID(doneOrder.Freelancer.User.ID)
-	doneOrder.Order = GetOrderByID(doneOrder.Order.ID)
-	doneOrder.CustomerComment = GetCommentByID(doneOrder.CustomerComment.ID)
 	return
 }
 

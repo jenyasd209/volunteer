@@ -3,6 +3,7 @@ package data
 import (
 	"fmt"
 	"log"
+	"math"
 	"time"
 )
 
@@ -185,6 +186,23 @@ func GetAllUsers() (users []User, r error) {
 	rows.Close()
 	return
 }
+
+func (user *User) updateRating(rait float32)  {
+	rait = float32(math.Round(float64(rait*100)) / 100)
+	statement := `UPDATE users SET rait = $1 WHERE id = $2 returning rait`
+	stmt, err := Db.Prepare(statement)
+	if err != nil {
+		log.Println(err)
+	}
+
+	defer stmt.Close()
+	err = stmt.QueryRow(rait, user.ID).Scan(&user.Rait)
+	if err != nil {
+		fmt.Println(err)
+	}
+	return
+}
+
 
 func (user *User) CheckLoginData() (exist bool) {
 	err := Db.QueryRow(`SELECT EXISTS(SELECT id FROM users WHERE email = $1 and password = $2)`,

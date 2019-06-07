@@ -8877,3 +8877,4 @@ INFO 2019/06/07 11:45:33 utils.go:92: 127.0.0.1:48162 method: GET - /my_profile/
 INFO 2019/06/07 11:45:37 utils.go:92: 127.0.0.1:48162 method: POST - /send_message/user_id3
 INFO 2019/06/07 11:45:42 utils.go:92: 127.0.0.1:48162 method: GET - /my_profile/dialog/id5
 INFO 2019/06/07 11:45:46 utils.go:92: 127.0.0.1:48162 method: POST - /send_message/user_id4
+INFO 2019/06/07 13:46:03 utils.go:92: [::1]:53206 method: GET - /

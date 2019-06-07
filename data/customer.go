@@ -1,6 +1,7 @@
 package data
 
 import (
+	"database/sql"
 	"log"
 	"time"
 )
@@ -57,6 +58,20 @@ func (customer *Customer) Delete() (err error) {
 
 	defer stmt.Close()
 	_, err = stmt.Exec(customer.ID)
+	return
+}
+
+func (customer *Customer) calcRating(newMark float32) (countMark sql.NullInt64) {
+	err := Db.QueryRow(`SELECT COUNT(freelancer_comment_id) FROM complete_orders 
+							   WHERE order_id IN (
+							       SELECT id 
+							       FROM orders WHERE status_id = 3 and customer_id = $1)`, customer.User.ID).Scan(&countMark)
+	if err != nil {
+		log.Println(err)
+		return
+	}
+	rait := (customer.Rait * float32(countMark.Int64 - 1) + newMark) / float32(countMark.Int64)
+	customer.User.updateRating(rait)
 	return
 }
 

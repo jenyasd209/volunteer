@@ -14,12 +14,6 @@ type Freelancer struct {
 	User
 }
 
-//Specialization struct for "specializations" table
-type Specialization struct {
-	ID   int
-	Name string
-}
-
 //Create new row from "freelancer" table
 func (freelancer *Freelancer) Create() (err error) {
 	if err = freelancer.User.Create(); err != nil {
@@ -151,41 +145,5 @@ func GetFreelancersWhere(query string, args ...interface{}) (freelancers []Freel
 		freelancers = append(freelancers, freelancer)
 	}
 	rows.Close()
-	return
-}
-
-//GetAllSpecialization return all rows from table "specialization"
-func GetAllSpecialization() (specs []Specialization, err error) {
-	rows, err := Db.Query(`SELECT id, name FROM specialization`)
-	if err != nil {
-		log.Println(err)
-		return
-	}
-	defer rows.Close()
-
-	for rows.Next() {
-		spec := Specialization{}
-		err = rows.Scan(&spec.ID, &spec.Name)
-		if err != nil {
-			log.Println(err)
-		} else {
-			specs = append(specs, spec)
-		}
-	}
-	return
-}
-
-//GetSpecializationName -
-func GetSpecializationName(id int) (name string) {
-	Db.QueryRow(`SELECT name FROM specialization WHERE id = $1`, id).Scan(&name)
-	return
-}
-
-func (freelancer *Freelancer) ContainsSpecialization(id int) (exist bool) {
-	for i := range freelancer.Specialization {
-		if id == freelancer.Specialization[i] {
-			return true
-		}
-	}
 	return
 }

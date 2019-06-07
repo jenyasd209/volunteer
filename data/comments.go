@@ -38,6 +38,21 @@ func GetCommentByID(commentID int) (comment Comment) {
 	return
 }
 
+func (completeOrder *CompleteOrder) UpdateFreelancerComment() {
+	statement := `UPDATE complete_orders SET freelancer_comment_id = $1 WHERE id = $2`
+	stmt, err := Db.Prepare(statement)
+	if err != nil {
+		log.Println(err)
+	}
+
+	defer stmt.Close()
+	stmt.QueryRow(&completeOrder.FreelancerComment.ID, &completeOrder.ID).Scan()
+	completeOrder.FreelancerComment = GetCommentByID(completeOrder.FreelancerComment.ID)
+
+	completeOrder.Order.Customer.calcRating(completeOrder.FreelancerComment.Rait)
+	return
+}
+
 //CommentsDeleteAll - delete all rows in table "comments"
 func CommentsDeleteAll() (err error) {
 	statement := "delete from comments"
