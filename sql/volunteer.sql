@@ -33,7 +33,7 @@ create table users(
   facebook varchar(255) DEFAULT '',
   skype varchar(255) DEFAULT '',
   role_id integer references roles(id) on delete cascade on update cascade,
-  photo_url varchar(255) DEFAULT '/static/image/profile.jpg',
+  photo_url varchar(255) DEFAULT '/static/image/profile.png',
   created_at timestamp not null
 );
 

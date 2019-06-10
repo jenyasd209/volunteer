@@ -44,6 +44,8 @@ func profile(w http.ResponseWriter, r *http.Request) {
 			}
 			generateHTML(w, &pageData, funcMap, "base", "header", "footer", "userProfile/profile",
 				"userProfile/customer/my_orders", "userProfile/customer/about")
+		}else {
+			http.Redirect(w, r, "/moderator", 302)
 		}
 	}
 }

@@ -23,6 +23,9 @@ func allOrders(w http.ResponseWriter, r *http.Request)  {
 		}else if user.IsCustomer(){
 			user, _ := data.GetCustomerByUserID(user.ID)
 			pageData.User = &user
+		}else {
+			user, _ := data.GetUserByID(user.ID)
+			pageData.User = &user
 		}
 	}
 	orders := new([]data.Order)

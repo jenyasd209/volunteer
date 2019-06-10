@@ -1,0 +1,23 @@
+{{define "content"}}
+    <div class="page">
+        <div class="container">
+            <div class="row" style="min-height: 70vh;">
+                <div class="col s12 m12 l4">
+                    <ul class="collapsible">
+                        <li class="active">
+                            <div class="collapsible-header" style="justify-content: center;">Menu<i class="material-icons">expand_more</i></div>
+                            <div class="collapsible-body" id="list-specs">
+                                <ul class="collection">
+                                    <a href="/moderator/specializations"><li class="collection-item center-align">Specializations</li></a>
+                                    <a href="/moderator/available_orders"><li class="collection-item center-align">Available orders</li></a>
+                                    <a href="/moderator/users"><li class="collection-item center-align">Users</li></a>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                {{template "content_panel" .}}
+            </div>
+        </div>
+    </div>
+{{ end }}

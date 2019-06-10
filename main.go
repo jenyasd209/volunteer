@@ -43,6 +43,24 @@ func main() {
 	//route freelancer profile
 	subUserProfile.HandleFunc("/sort_works_by_{status}", logging(sortWorks))
 
+	//route moderator
+	subAdminPanel := r.PathPrefix("/moderator").Subrouter()
+	subAdminPanel.HandleFunc("", logging(moderatorMain))
+	subAdminPanel.HandleFunc("/", logging(moderatorMain))
+	subAdminPanel.HandleFunc("/specializations", logging(allSpecializations))
+	subAdminPanel.HandleFunc("/available_orders", logging(allAvailableOrders))
+	subAdminPanel.HandleFunc("/users", logging(allUsers))
+	subAdminPanel.HandleFunc("/create_spec", logging(createSpecialization))
+	subAdminPanel.HandleFunc("/edit_spec_id{id:[0-9]+}", logging(moderatorEditSpecialization))
+	subAdminPanel.HandleFunc("/delete_spec_id{id:[0-9]+}", logging(moderatorDeleteSpecialization))
+	//subUserProfile.HandleFunc("", logging(moderatorEditAvailableOrder))
+	//subUserProfile.HandleFunc("", logging(moderatorDeleteAvailableOrder))
+	subAdminPanel.HandleFunc("/edit_customer_id{id:[0-9]+}", logging(moderatorEditCustomer))
+	//subUserProfile.HandleFunc("", logging(moderatorDeleteCustomer))
+	subAdminPanel.HandleFunc("/edit_freelancer_id{id:[0-9]+}", logging(moderatorEditFreelancer))
+	subAdminPanel.HandleFunc("/delete_user_id{id:[0-9]+}", logging(moderatorDeleteUser))
+	r.HandleFunc("/delete_request_id{id:[0-9]+}", logging(moderatorDeleteRequest))
+
 	//route freelancers
 	subFreelancers := r.PathPrefix("/freelancers").Subrouter()
 	subFreelancers.HandleFunc("", logging(allFreelancers))
@@ -72,6 +90,9 @@ func main() {
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
 
 	http.Handle("/", r)
+
+	data.CheckModerator()
+
 	log.Println("Listening...")
 	server := http.Server{
 		Addr: config.Address,
@@ -95,6 +116,9 @@ func home(w http.ResponseWriter, r *http.Request) {
 		}else if user.IsCustomer(){
 			customer, _ := data.GetCustomerByUserID(sess.UserID)
 			pageData.User = &customer
+		}else {
+			moderator, _ := data.GetUserByID(sess.UserID)
+			pageData.User = &moderator
 		}
 	}
 	generateHTML(w, pageData, nil, "base", "header", "footer", "home_page")
@@ -113,6 +137,9 @@ func notFound(w http.ResponseWriter, r *http.Request) {
 		}else if user.IsCustomer(){
 			customer, _ := data.GetCustomerByUserID(sess.UserID)
 			pageData.User = &customer
+		}else {
+			moderator, _ := data.GetUserByID(sess.UserID)
+			pageData.User = &moderator
 		}
 	}
 	generateHTML(w, pageData, nil, "not_found")

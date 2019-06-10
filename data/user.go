@@ -176,7 +176,7 @@ func GetAllUsers() (users []User, r error) {
 		user := User{}
 
 		if err = rows.Scan(&user.ID, &user.FirstName, &user.LastName, &user.Email, &user.Password, &user.Phone,
-			&user.Facebook, &user.Skype, &user.About, &user.Rait, &user.Photo, &user.CreatedAt); err != nil {
+			&user.Facebook, &user.Photo, &user.Skype, &user.About, &user.Rait, &user.CreatedAt); err != nil {
 			log.Println(err)
 			return
 		}
@@ -202,7 +202,6 @@ func (user *User) updateRating(rait float32)  {
 	}
 	return
 }
-
 
 func (user *User) CheckLoginData() (exist bool) {
 	err := Db.QueryRow(`SELECT EXISTS(SELECT id FROM users WHERE email = $1 and password = $2)`,

@@ -41,9 +41,12 @@ func registration(w http.ResponseWriter, r *http.Request) {
 }
 
 func registrationAccount(w http.ResponseWriter, r *http.Request) {
+	var error string
+	var success string
 	err := r.ParseForm()
 	if err != nil {
-		panic(err)
+		log.Println(err)
+		error = "Registration error"
 	}
 	group := r.Form.Get("group")
 	user := &data.User{
@@ -64,7 +67,9 @@ func registrationAccount(w http.ResponseWriter, r *http.Request) {
 		}
 		if err := freelancer.Create(); err != nil {
 			fmt.Println(err)
+			error = "Registration error"
 		}
+		success = "Successful registration"
 	}
 	if group == "customer" {
 		user.RoleID = data.UserRoleCustomer
@@ -74,10 +79,21 @@ func registrationAccount(w http.ResponseWriter, r *http.Request) {
 		}
 		if err := customer.Create(); err != nil {
 			fmt.Println(err)
+			error = "Registration error"
 		}
+		success = "Successful registration"
 	}
 
-	http.Redirect(w, r, "/login", 302)
+	pageData := PageData{
+		Title :"Registration",
+		Content: struct {
+			Error string
+			Success string
+		}{error, success},
+	}
+
+	generateHTML(w, &pageData, nil, "base", "header", "footer", "registration")
+	//http.Redirect(w, r, "/login", 302)
 }
 
 func loginAccount(w http.ResponseWriter, r *http.Request) {
@@ -88,7 +104,7 @@ func loginAccount(w http.ResponseWriter, r *http.Request) {
 	}
 
 	pageData := PageData{
-		Title :"Registration",
+		Title :"Login",
 	}
 
 	user := data.User{
@@ -99,6 +115,7 @@ func loginAccount(w http.ResponseWriter, r *http.Request) {
 	if user.CheckLoginData(){
 		sess, err := user.CreateSession()
 		if err != nil {
+			log.Println("Error create session")
 			return
 		}
 		cookie := http.Cookie{
@@ -115,47 +132,6 @@ func loginAccount(w http.ResponseWriter, r *http.Request) {
 		generateHTML(w, &pageData, nil, "base", "header", "footer", "login")
 		return
 	}
-	//user, err := data.GetUserByEmail(r.PostFormValue("email"))
-	//if err != nil {
-	//	pageData.Errors = []string{"User is not found"}
-	//	generateHTML(w, &pageData, nil, "base", "header", "footer", "login")
-	//	return
-	//}
-
-	//if user.Password == data.Encrypt(r.PostFormValue("password")) {
-	//	if user.IsFreelancer(){
-	//		if ok := data.CheckFreelancer(user.ID); !ok {
-	//			http.Redirect(w, r, "/login", 302)
-	//			return
-	//		}
-	//	} else if user.IsCustomer(){
-	//		if ok := data.CheckCustomer(user.ID); !ok {
-	//			http.Redirect(w, r, "/login", 302)
-	//			return
-	//		}
-	//	} else {
-	//		http.Redirect(w, r, "/login", 302)
-	//		return
-	//	}
-	//	sess, err := user.CreateSession()
-	//	if err != nil {
-	//		return
-	//	}
-	//	cookie := http.Cookie{
-	//		Name: "_cookie",
-	//		Value:    sess.UUID,
-	//		HttpOnly: true,
-	//		MaxAge: 60 * 60 * 24 * 30,
-	//	}
-	//	http.SetCookie(w, &cookie)
-	//
-	//	http.Redirect(w, r, "/my_profile", 302)
-	//} else {
-	//	pageData.Errors = []string{"Password is wrong"}
-	//	//http.Redirect(w, r, "/login", 302)
-	//	generateHTML(w, &pageData, nil, "base", "header", "footer", "login")
-	//	return
-	//}
 }
 
 func logout(w http.ResponseWriter, r *http.Request) {

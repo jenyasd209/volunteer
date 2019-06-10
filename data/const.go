@@ -12,3 +12,15 @@ const (
 	UserRoleCustomer   = 2
 	UserRoleModerator  = 3
 )
+
+const (
+	ModeratorFirstName  = "Moderator"
+	ModeratorLastName  = "Moderator"
+	ModeratorEmail  = "moderator@gmail.com"
+	ModeratorPassword  = "moderator"
+	ModeratorPhone  = ""
+	ModeratorFacebook  = ""
+	ModeratorSkype  = ""
+	ModeratorAbout  = `This user follows the order on the site. His duties include deleting and editing users,
+					   requests, orders. He can also create, update and delete specialties.`
+)

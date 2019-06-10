@@ -158,7 +158,7 @@ function sendMsg(sender_id, receiver_id, dialog_id) {
                 method: "POST",
                 body: JSON.stringify(msg)
             })
-            .catch(function(res){ console.log(res) })
+            .catch(function(res){ console.log(res) });
 
         text.value = '';
         msg_history.innerHTML += newMsg;

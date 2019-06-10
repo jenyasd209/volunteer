@@ -109,16 +109,3 @@ func uploadFile(path string, file multipart.File, handler *multipart.FileHeader)
 	filepath = "/" + path + handler.Filename
 	return
 }
-
-//func setRating(rait float64) (result template.HTML) {
-//	for i := 1.0; i <= 5.0; i++ {
-//		if rait >= i {
-//			result += `<span class="fa fa-star checked"></span>`
-//		}else if rait < i && rait > i - 1.0 {
-//			result += `<span class="fa fa-star-half-empty checked"></span>`
-//		}else if rait < i {
-//			result += `<span class="fa fa-star"></span>`
-//		}
-//	}
-//	return
-//}

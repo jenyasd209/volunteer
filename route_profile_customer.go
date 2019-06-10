@@ -18,15 +18,6 @@ func customerProfile(sess data.Session, pageData *PageData, r *http.Request) (fu
 		return
 	}
 	pageData.User = &user
-	//orders := new([]data.CardOrder)
-	//if param := r.Form.Get("param"); param != ""{
-	//	vars := mux.Vars(r)
-	//	orders = sortOrder(vars["param"], user)
-	//	log.Println("param")
-	//}else {
-	//	log.Println("no param")
-	//	*orders = user.Orders()
-	//}
 	specs, _ := data.GetAllSpecialization()
 	pageData.Content = struct {
 		Orders []data.Order

@@ -11,6 +11,7 @@
       </ul>
       <ul class="right hide-on-med-and-down">
         {{if .User}}
+            {{if ne .User.RoleID 3}}
             <div class="dropdown">
                 <a class="dropbtn" href="/my_profile"><i class="material-icons white-text right"> <img class="circle" width="35" src="{{.User.Photo}}"></i>{{.User.FirstName}} {{.User.LastName}}</a>
 {{/*                <a class="dropbtn" href="/my_profile"><img class="circle" width="30" height="30" src="{{.User.Photo}}">  {{.User.FirstName}} {{.User.LastName}}</a>*/}}
@@ -24,6 +25,9 @@
                     <a href="/logout">Logout</a>
                 </div>
             </div>
+            {{else}}
+                <li><a href="/moderator"><i class="material-icons white-text left">build</i>Moderator panel</a></li>
+            {{end}}
         {{else}}
           <li><a href="/login"><i class="material-icons left"><img src="../static/image/login.png"></i>Login</a></li>
           <li><a href="/registration"><i class="material-icons left"> person_add</i>Registration</a></li>

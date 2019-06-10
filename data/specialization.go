@@ -8,13 +8,61 @@ import (
 
 //Specialization struct for "specializations" table
 type Specialization struct {
-	ID   int
-	Name string
+	ID   int 	`json:"id"`
+	Name string `json:"name"`
+}
+
+func (specialization *Specialization) Create () (err error) {
+	statement := `INSERT INTO specialization (name) values ($1) returning id`
+	stmt, err := Db.Prepare(statement)
+	if err != nil {
+		log.Println(err)
+		return
+	}
+
+	defer stmt.Close()
+	err = stmt.QueryRow(specialization.Name).Scan(&specialization.ID)
+	if err != nil {
+		log.Println(err)
+	}
+	return
+}
+
+func (specialization *Specialization) Update () (err error) {
+	statement := `UPDATE specialization SET name = $1 WHERE id = $2 returning name`
+	stmt, err := Db.Prepare(statement)
+	if err != nil {
+		log.Println(err)
+		return
+	}
+
+	defer stmt.Close()
+	err = stmt.QueryRow(specialization.Name, specialization.ID).Scan(&specialization.Name)
+	if err != nil {
+		log.Println(err)
+	}
+	return
+}
+
+func (specialization *Specialization) Delete () (err error) {
+	statement := `DELETE FROM specialization WHERE id = $1`
+	stmt, err := Db.Prepare(statement)
+	if err != nil {
+		log.Println(err)
+		return
+	}
+
+	defer stmt.Close()
+	err = stmt.QueryRow(specialization.ID).Scan()
+	if err != nil {
+		log.Println(err)
+	}
+	return
 }
 
 //GetAllSpecialization return all rows from table "specialization"
 func GetAllSpecialization() (specs []Specialization, err error) {
-	rows, err := Db.Query(`SELECT id, name FROM specialization`)
+	rows, err := Db.Query(`SELECT id, name FROM specialization order by name`)
 	if err != nil {
 		log.Println(err)
 		return

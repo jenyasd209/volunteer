@@ -1,0 +1,1285 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 10.8 (Ubuntu 10.8-0ubuntu0.18.04.1)
+-- Dumped by pg_dump version 10.8 (Ubuntu 10.8-0ubuntu0.18.04.1)
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: -
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- Name: comments; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.comments (
+    id integer NOT NULL,
+    comment_text text,
+    rait double precision NOT NULL,
+    user_id integer,
+    created_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: comments_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.comments_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: comments_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.comments_id_seq OWNED BY public.comments.id;
+
+
+--
+-- Name: complete_orders; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.complete_orders (
+    id integer NOT NULL,
+    order_id integer,
+    freelancer_id integer,
+    freelancer_comment_id integer,
+    customer_comment_id integer,
+    date_complete timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: complete_orders_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.complete_orders_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: complete_orders_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.complete_orders_id_seq OWNED BY public.complete_orders.id;
+
+
+--
+-- Name: customers; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.customers (
+    id integer NOT NULL,
+    user_id integer,
+    organization character varying(255)
+);
+
+
+--
+-- Name: customers_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.customers_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: customers_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.customers_id_seq OWNED BY public.customers.id;
+
+
+--
+-- Name: dialogs; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.dialogs (
+    id integer NOT NULL,
+    user1_id integer,
+    user2_id integer,
+    date_created timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: dialogs_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.dialogs_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: dialogs_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.dialogs_id_seq OWNED BY public.dialogs.id;
+
+
+--
+-- Name: freelancers; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.freelancers (
+    id integer NOT NULL,
+    user_id integer,
+    specialization integer[] NOT NULL
+);
+
+
+--
+-- Name: freelancers_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.freelancers_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: freelancers_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.freelancers_id_seq OWNED BY public.freelancers.id;
+
+
+--
+-- Name: messages; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.messages (
+    id integer NOT NULL,
+    sender_id integer,
+    receiver_id integer,
+    text_message text NOT NULL,
+    read boolean DEFAULT false,
+    date_send timestamp without time zone NOT NULL,
+    dialog_id integer NOT NULL
+);
+
+
+--
+-- Name: messages_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.messages_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: messages_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.messages_id_seq OWNED BY public.messages.id;
+
+
+--
+-- Name: order_status; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.order_status (
+    id integer NOT NULL,
+    name character varying(255) NOT NULL
+);
+
+
+--
+-- Name: order_status_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.order_status_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: order_status_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.order_status_id_seq OWNED BY public.order_status.id;
+
+
+--
+-- Name: orders; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.orders (
+    id integer NOT NULL,
+    title character varying(255) NOT NULL,
+    content text NOT NULL,
+    customer_id integer,
+    status_id integer DEFAULT 1,
+    created_at timestamp without time zone NOT NULL,
+    specialization_id integer NOT NULL
+);
+
+
+--
+-- Name: orders_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.orders_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: orders_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.orders_id_seq OWNED BY public.orders.id;
+
+
+--
+-- Name: performed_orders; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.performed_orders (
+    id integer NOT NULL,
+    order_id integer,
+    freelancer_id integer
+);
+
+
+--
+-- Name: performed_orders_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.performed_orders_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: performed_orders_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.performed_orders_id_seq OWNED BY public.performed_orders.id;
+
+
+--
+-- Name: requests; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.requests (
+    id integer NOT NULL,
+    freelancer_id integer,
+    order_id integer,
+    created_at timestamp without time zone NOT NULL,
+    comment text
+);
+
+
+--
+-- Name: requests_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.requests_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: requests_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.requests_id_seq OWNED BY public.requests.id;
+
+
+--
+-- Name: roles; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.roles (
+    id integer NOT NULL,
+    name character varying(255) NOT NULL
+);
+
+
+--
+-- Name: roles_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.roles_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: roles_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.roles_id_seq OWNED BY public.roles.id;
+
+
+--
+-- Name: session; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.session (
+    id integer NOT NULL,
+    uuid character varying(64) NOT NULL,
+    email character varying(255) NOT NULL,
+    user_id integer,
+    created_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: session_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.session_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: session_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.session_id_seq OWNED BY public.session.id;
+
+
+--
+-- Name: specialization; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.specialization (
+    id integer NOT NULL,
+    name character varying(255) NOT NULL
+);
+
+
+--
+-- Name: specialization_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.specialization_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: specialization_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.specialization_id_seq OWNED BY public.specialization.id;
+
+
+--
+-- Name: users; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.users (
+    id integer NOT NULL,
+    email character varying(255) NOT NULL,
+    password character varying(255) NOT NULL,
+    first_name character varying(255) NOT NULL,
+    last_name character varying(255) NOT NULL,
+    about text,
+    rait double precision DEFAULT 0,
+    phone character varying(255) DEFAULT ''::character varying,
+    facebook character varying(255) DEFAULT ''::character varying,
+    skype character varying(255) DEFAULT ''::character varying,
+    role_id integer,
+    photo_url character varying(255) DEFAULT 'static/image/profile.jpg'::character varying NOT NULL,
+    created_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: users_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.users_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.users_id_seq OWNED BY public.users.id;
+
+
+--
+-- Name: comments id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.comments ALTER COLUMN id SET DEFAULT nextval('public.comments_id_seq'::regclass);
+
+
+--
+-- Name: complete_orders id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.complete_orders ALTER COLUMN id SET DEFAULT nextval('public.complete_orders_id_seq'::regclass);
+
+
+--
+-- Name: customers id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.customers ALTER COLUMN id SET DEFAULT nextval('public.customers_id_seq'::regclass);
+
+
+--
+-- Name: dialogs id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.dialogs ALTER COLUMN id SET DEFAULT nextval('public.dialogs_id_seq'::regclass);
+
+
+--
+-- Name: freelancers id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.freelancers ALTER COLUMN id SET DEFAULT nextval('public.freelancers_id_seq'::regclass);
+
+
+--
+-- Name: messages id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.messages ALTER COLUMN id SET DEFAULT nextval('public.messages_id_seq'::regclass);
+
+
+--
+-- Name: order_status id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.order_status ALTER COLUMN id SET DEFAULT nextval('public.order_status_id_seq'::regclass);
+
+
+--
+-- Name: orders id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.orders ALTER COLUMN id SET DEFAULT nextval('public.orders_id_seq'::regclass);
+
+
+--
+-- Name: performed_orders id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.performed_orders ALTER COLUMN id SET DEFAULT nextval('public.performed_orders_id_seq'::regclass);
+
+
+--
+-- Name: requests id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.requests ALTER COLUMN id SET DEFAULT nextval('public.requests_id_seq'::regclass);
+
+
+--
+-- Name: roles id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.roles ALTER COLUMN id SET DEFAULT nextval('public.roles_id_seq'::regclass);
+
+
+--
+-- Name: session id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.session ALTER COLUMN id SET DEFAULT nextval('public.session_id_seq'::regclass);
+
+
+--
+-- Name: specialization id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.specialization ALTER COLUMN id SET DEFAULT nextval('public.specialization_id_seq'::regclass);
+
+
+--
+-- Name: users id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_id_seq'::regclass);
+
+
+--
+-- Data for Name: comments; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.comments (id, comment_text, rait, user_id, created_at) FROM stdin;
+1	good	5	1	2019-05-17 13:22:40.733781
+2	goooooood	5	3	2019-05-17 13:22:40.733781
+3	yes	4	1	2019-05-11 11:32:23.15507
+4	yyyyyes	4	3	2019-05-11 11:32:23.15507
+5	norm	4	3	2019-05-26 03:10:12.45582
+6	ccc	4	3	2019-05-26 03:12:11.486871
+7	ccccccc	4	3	2019-05-26 03:13:35.603983
+8	cccccccc	4	3	2019-05-26 03:14:41.180373
+9	test3	3	3	2019-05-26 11:02:59.815464
+10	mark	2	3	2019-05-26 15:45:28.964031
+11	MARK	1	3	2019-05-26 15:49:08.236933
+12	test MARK2	4	3	2019-05-26 15:52:49.678635
+13	Abra	5	3	2019-05-26 15:57:56.21644
+14	test Abra	5	3	2019-05-26 15:59:40.890818
+15	text	3	1	2019-05-26 16:02:29.630872
+16	Order 1	4	3	2019-05-26 16:05:21.896085
+17	log.Println(err)	4	3	2019-05-26 16:08:00.656324
+18	fmt.Println(comment)	4	3	2019-05-26 16:10:05.946768
+19	Test done order comment	4	3	2019-05-26 16:15:12.738936
+20	Done order	3	3	2019-05-26 16:17:34.31516
+21	Order 3	4	3	2019-05-26 16:19:45.519039
+22	leave comment	4	1	2019-06-03 12:49:15.455262
+23	testDoneOrder	3	1	2019-06-03 12:56:50.413379
+24	;lf,bldfblsedblkdgbmslkg;b	4	1	2019-06-03 13:00:32.66026
+25	comment with rait	4	1	2019-06-03 13:05:27.846198
+\.
+
+
+--
+-- Data for Name: complete_orders; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.complete_orders (id, order_id, freelancer_id, freelancer_comment_id, customer_comment_id, date_complete) FROM stdin;
+16	25	1	\N	21	2019-05-26 16:19:45.537769
+14	23	1	24	19	2019-05-26 16:15:12.774738
+15	24	1	25	20	2019-05-26 16:17:34.345531
+\.
+
+
+--
+-- Data for Name: customers; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.customers (id, user_id, organization) FROM stdin;
+1	3	New
+\.
+
+
+--
+-- Data for Name: dialogs; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.dialogs (id, user1_id, user2_id, date_created) FROM stdin;
+3	3	1	2019-06-01 15:23:06.740335
+4	3	4	2019-06-02 04:24:50.60436
+5	4	1	2019-06-06 09:38:44.852072
+\.
+
+
+--
+-- Data for Name: freelancers; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.freelancers (id, user_id, specialization) FROM stdin;
+1	1	{1,3}
+2	4	{1,3}
+\.
+
+
+--
+-- Data for Name: messages; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.messages (id, sender_id, receiver_id, text_message, read, date_send, dialog_id) FROM stdin;
+59	3	1	from customer	f	2019-06-01 12:08:38.269395	0
+60	3	1	send	f	2019-06-01 12:11:38.325186	0
+61	3	1	ssssssss	f	2019-06-01 12:15:10.626194	0
+62	3	1	sssss	f	2019-06-01 12:15:18.734468	0
+63	3	1	sgsd	f	2019-06-01 12:17:01.556583	0
+64	3	1	sdfgsdf	f	2019-06-01 12:17:48.026621	0
+65	3	1	';sdv';sd	f	2019-06-01 12:18:31.507887	0
+66	3	1	dshdf	f	2019-06-01 12:19:48.290882	0
+67	3	1	sgsdgfs	f	2019-06-01 12:21:25.183811	0
+78	1	3	qu	f	2019-06-07 08:32:30.353527	3
+70	1	3	norm	t	2019-06-01 12:24:09.983209	3
+79	1	4	as	f	2019-06-07 08:32:46.260999	5
+72	4	3	;sdf;lsds;ld	t	2019-06-02 01:25:08.670752	4
+80	1	3	as	f	2019-06-07 08:32:54.576391	3
+81	1	3	qw	f	2019-06-07 08:39:47.767245	3
+82	1	3	sd	f	2019-06-07 08:41:37.412423	3
+83	1	3	asas	f	2019-06-07 08:42:07.321015	3
+84	1	3	asaaa	f	2019-06-07 08:42:48.598294	3
+85	1	4	as	f	2019-06-07 08:43:44.31808	5
+68	3	1	yes	t	2019-06-01 12:23:06.764487	3
+69	3	1	test	t	2019-06-01 12:23:56.109033	3
+86	1	3	ffff	f	2019-06-07 08:45:37.650882	3
+73	4	1	Hello	t	2019-06-06 06:38:44.939529	5
+74	4	1	Hello	t	2019-06-07 08:22:16.68279	5
+87	1	4	ss	f	2019-06-07 08:45:46.356779	5
+71	3	4	s;dls;ldl	t	2019-06-02 01:24:50.675033	4
+75	1	4	hellosd	f	2019-06-07 08:27:43.526305	5
+76	1	4	dcad	f	2019-06-07 08:30:18.522427	5
+77	1	4	;ld,s;	f	2019-06-07 08:31:56.094309	5
+\.
+
+
+--
+-- Data for Name: order_status; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.order_status (id, name) FROM stdin;
+1	Available
+3	Done
+2	In work
+\.
+
+
+--
+-- Data for Name: orders; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.orders (id, title, content, customer_id, status_id, created_at, specialization_id) FROM stdin;
+23	Test done order	Test done order	3	3	2019-05-26 16:14:27.569977	1
+24	Done order	Done order	3	3	2019-05-26 16:16:41.254626	1
+25	Order 3	Order 3	3	3	2019-05-26 16:19:02.538805	1
+26	In work	In work	3	2	2019-05-27 11:41:27.615554	2
+27	Tesr order	Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.	3	1	2019-06-04 13:50:29.296197	1
+\.
+
+
+--
+-- Data for Name: performed_orders; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.performed_orders (id, order_id, freelancer_id) FROM stdin;
+14	26	1
+\.
+
+
+--
+-- Data for Name: requests; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.requests (id, freelancer_id, order_id, created_at, comment) FROM stdin;
+13	1	23	2019-05-26 16:14:51.022463	Test done order request
+14	1	24	2019-05-26 16:17:11.670168	Done order
+15	1	25	2019-05-26 16:19:11.987646	Order 3
+16	1	26	2019-05-27 11:41:37.027981	In work
+\.
+
+
+--
+-- Data for Name: roles; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.roles (id, name) FROM stdin;
+1	Freelancer
+2	Customer
+3	Moderator
+\.
+
+
+--
+-- Data for Name: session; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.session (id, uuid, email, user_id, created_at) FROM stdin;
+1	09c19603-a1e7-431d-6607-481f382dd3ba	freelancer@freelancer.com	1	2019-05-02 10:57:20.590048
+5	471d2917-8393-4c9b-6c06-eb6f24d7e753	freelancer@freelancer.com	1	2019-05-05 13:34:48.086919
+9	db185692-7091-4977-5d78-ad93961e10a4	freelancer@freelancer.com	1	2019-05-05 14:56:04.040362
+14	3f7e1510-4c76-4c99-6885-072d220ea52a	freelancer@freelancer.com	1	2019-05-05 19:11:44.739375
+15	006e54a0-8166-4fcc-41d5-660b6d8cd8e0	freelancer@freelancer.com	1	2019-05-06 12:22:44.035109
+16	fe860e48-1757-422e-7fab-35ece31a6ac8	freelancer@freelancer.com	1	2019-05-06 16:41:16.76045
+17	8d30e7fd-5f2f-4499-46f7-ef0d18dd8e92	customer@customer.com	3	2019-05-06 18:18:17.049195
+18	534b1784-6d3b-44da-67ba-c63840fbbea0	freelancer@freelancer.com	1	2019-05-09 10:54:22.896411
+20	2245fbd0-4277-4543-7fef-5d395c1f1669	freelancer@freelancer.com	1	2019-05-10 10:45:08.176653
+21	84aff1fc-fb42-4c21-7e21-f207d1e10783	customer@customer.com	3	2019-05-10 12:36:10.413432
+22	fe1cbaa2-4148-49f9-648c-49c7606b3b8f	customer@customer.com	3	2019-05-10 12:37:36.582242
+24	351b41a0-7c8d-4530-6278-9ffb419cc3e0	freelancer@freelancer.com	1	2019-05-10 16:01:04.678352
+25	6c322c9c-f36a-4ab3-6fb7-2174d4682fd2	customer@customer.com	3	2019-05-10 16:08:16.95114
+26	ac1d4507-e8c5-4a74-737a-74189fffd082	freelancer@freelancer.com	1	2019-05-10 17:11:11.556656
+27	4cb9e607-02a0-478c-588f-081af841277a	customer@customer.com	3	2019-05-10 19:00:02.582295
+28	fb985188-c644-44a8-67bf-3670db94ac8d	customer@customer.com	3	2019-05-10 19:10:36.069903
+29	17482c35-7fbb-4048-5ae6-58b84bb1fbb8	customer@customer.com	3	2019-05-10 19:18:10.706678
+30	6e8267e0-fca8-4f99-579b-953c1d8ea2c3	customer@customer.com	3	2019-05-11 09:55:28.051905
+31	116407e2-4662-4566-46a9-1cc051476d8f	customer@customer.com	3	2019-05-11 09:57:23.8315
+33	76de66f5-8bfe-493f-7be1-f138bf81cf5c	customer@customer.com	3	2019-05-12 09:39:34.630299
+34	ec49b535-7780-4a63-5c89-cd86492f3256	customer@customer.com	3	2019-05-12 09:41:38.746647
+35	d71e1eab-d4ee-4f77-6ade-e67b2bd5a6c9	customer@customer.com	3	2019-05-12 09:47:41.677075
+37	214c6736-4e88-4886-6965-0f37d573035f	freelancer@freelancer.com	1	2019-05-12 12:21:48.981541
+38	ce3b4831-cacf-4fc1-41e7-369e88a5db3f	customer@customer.com	3	2019-05-13 15:20:18.29329
+39	f848e302-63d1-4d63-781a-49859d09fc9c	customer@customer.com	3	2019-05-14 14:41:06.595107
+40	73d5dad4-4a9c-4a2c-6fe8-58de32259df9	customer@customer.com	3	2019-05-14 14:54:52.723252
+41	f2e400b6-99ff-48bd-68d8-43244e923245	customer@customer.com	3	2019-05-15 10:32:51.95174
+42	1883716c-a37a-4f97-5cbd-08afaeabe4eb	customer@customer.com	3	2019-05-15 10:35:18.154623
+43	cb6881d6-dc0f-4e0d-7600-a8695444708f	customer@customer.com	3	2019-05-15 10:37:08.307351
+44	998b3805-3e81-4346-498f-27df4db094d0	freelancer@freelancer.com	1	2019-05-15 15:18:54.641932
+45	d9eef7ad-6cb5-4c20-728e-035244789347	customer@customer.com	3	2019-05-15 17:45:06.959136
+47	3cab1b88-a44f-47f7-6467-0dc6c11edc58	customer@customer.com	3	2019-05-15 20:52:02.538111
+49	80d78273-8c80-45fa-6a7f-ee2569182462	freelancer@freelancer.com	1	2019-05-15 22:01:08.592088
+50	2ad925ae-7176-4168-7753-e917b6f3bcf1	customer@customer.com	3	2019-05-16 12:22:23.548725
+51	ac8e1569-584f-4413-776f-b9409b1277cd	customer@customer.com	3	2019-05-16 12:26:43.717094
+52	481dac4f-9b96-404f-6134-3d99d12e9d0e	freelancer@freelancer.com	1	2019-05-16 12:31:19.644733
+53	c362e3a0-9f54-45f0-7071-9aa45610b1b6	freelancer@freelancer.com	1	2019-05-17 14:00:46.748606
+55	615742ad-790e-44ee-7c2a-66b3074c2c6b	freelancer@freelancer.com	1	2019-05-17 18:18:00.14564
+57	1f5f8e39-a287-4358-6d73-52346bbc8e2f	customer@customer.com	3	2019-05-20 20:34:33.411433
+58	1a88e842-ecd2-4f87-5ca3-ee9b5fc8010f	freelancer@freelancer.com	1	2019-05-20 23:12:44.004781
+59	b0c579b9-28f8-4eaf-57b8-c22faf6f9c94	freelancer@freelancer.com	1	2019-05-21 18:15:06.559444
+60	7ebc05aa-7b02-460c-530c-77d29319240b	freelancer@freelancer.com	1	2019-05-24 12:47:51.400946
+61	417ab9f2-82dc-496b-5ea6-db9065c18e31	customer@customer.com	3	2019-05-24 13:12:38.612985
+62	b19c7899-cdc5-40ba-4ce7-28e28ccd4f80	freelancer@freelancer.com	1	2019-05-25 14:29:24.118213
+63	6c64dcb9-15cf-49b1-7f85-fc0a0cc6f60a	freelancer@freelancer.com	1	2019-05-25 15:16:16.66458
+64	0ae783e3-c3f1-4890-6e79-1c2816382d91	freelancer@freelancer.com	1	2019-05-25 23:30:44.335957
+65	c0e48340-ab13-42a8-417b-911f437567b7	freelancer@freelancer.com	1	2019-05-26 03:24:31.106679
+66	dd142ced-68dd-4144-777e-7ca490d19b3f	freelancer@freelancer.com	1	2019-05-27 11:06:17.009362
+67	055d20cd-bfc1-416d-487d-dd5c48eeee20	freelancer@freelancer.com	1	2019-06-01 12:02:12.376102
+69	199b32a9-fb22-4e43-7c94-4cf9996507a2	user@email.com	4	2019-06-01 23:40:04.758721
+70	432ce99e-28a2-4980-455b-5eaad53e5877	freelancer@freelancer.com	1	2019-06-01 23:41:23.57567
+72	2496e3af-58ba-4a10-4c48-4b462975ef26	user@email.com	4	2019-06-02 03:44:58.299892
+73	401e59d8-1738-4c83-4fe5-3173e7995270	freelancer@freelancer.com	1	2019-06-02 14:56:28.716678
+74	8c366d6e-2cc9-474e-4e52-44ba0e14d076	freelancer@freelancer.com	1	2019-06-03 12:20:35.460078
+77	8569abb6-8810-4094-52d4-c462376b6e09	freelancer@freelancer.com	1	2019-06-06 09:42:23.70695
+78	bd39a94a-d41d-45d0-4e96-de4b36bf9e8e	freelancer@freelancer.com	1	2019-06-06 13:54:39.16253
+79	262486be-41b9-4c49-5659-867a652fafbd	freelancer@freelancer.com	1	2019-06-07 11:22:44.430559
+\.
+
+
+--
+-- Data for Name: specialization; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.specialization (id, name) FROM stdin;
+1	Web
+2	Mobile
+3	Desktop
+\.
+
+
+--
+-- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.users (id, email, password, first_name, last_name, about, rait, phone, facebook, skype, role_id, photo_url, created_at) FROM stdin;
+1	freelancer@freelancer.com	9d329da7ff79fae4001abaaace252a11ae9a8e85	free	freelancerov	Lorem ipsum dolor sit amet, consectLorem ipsum dolor sit amet, consectLorem ipsum dolor sit amet, consectLorem ipsum dolor sit amet, consectLorem ipsum dolor sit amet, consectLorem ipsum dolor sit amet,	3.67000007629394531	11111111	freelancer	freelancer	1	/static/image/les_doroga_derevia_131963_1366x768.jpg	2019-05-02 10:55:45.606927
+4	user@email.com	12dea96fec20593566ab75692c9949596833adc9	user	user		0	111111	user	user	1	/static/image/IMG_20190412_204026_522.jpg	2019-06-01 23:39:17.36111
+3	customer@customer.com	b39f008e318efd2bb988d724a161b61c6909677f	customer	customer	Lorem ipsum dolor sit amet, consect	2	11111111	customer	customer	2	/static/image/15586969171967281329951980872392.jpg	2019-05-06 18:18:09.408115
+\.
+
+
+--
+-- Name: comments_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.comments_id_seq', 25, true);
+
+
+--
+-- Name: complete_orders_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.complete_orders_id_seq', 16, true);
+
+
+--
+-- Name: customers_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.customers_id_seq', 1, true);
+
+
+--
+-- Name: dialogs_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.dialogs_id_seq', 5, true);
+
+
+--
+-- Name: freelancers_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.freelancers_id_seq', 2, true);
+
+
+--
+-- Name: messages_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.messages_id_seq', 87, true);
+
+
+--
+-- Name: order_status_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.order_status_id_seq', 3, true);
+
+
+--
+-- Name: orders_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.orders_id_seq', 27, true);
+
+
+--
+-- Name: performed_orders_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.performed_orders_id_seq', 14, true);
+
+
+--
+-- Name: requests_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.requests_id_seq', 16, true);
+
+
+--
+-- Name: roles_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.roles_id_seq', 3, true);
+
+
+--
+-- Name: session_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.session_id_seq', 79, true);
+
+
+--
+-- Name: specialization_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.specialization_id_seq', 3, true);
+
+
+--
+-- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.users_id_seq', 4, true);
+
+
+--
+-- Name: comments comments_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.comments
+    ADD CONSTRAINT comments_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: complete_orders complete_orders_customer_comment_id_key; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.complete_orders
+    ADD CONSTRAINT complete_orders_customer_comment_id_key UNIQUE (customer_comment_id);
+
+
+--
+-- Name: complete_orders complete_orders_freelancer_comment_id_key; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.complete_orders
+    ADD CONSTRAINT complete_orders_freelancer_comment_id_key UNIQUE (freelancer_comment_id);
+
+
+--
+-- Name: complete_orders complete_orders_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.complete_orders
+    ADD CONSTRAINT complete_orders_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: customers customers_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.customers
+    ADD CONSTRAINT customers_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: customers customers_user_id_key; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.customers
+    ADD CONSTRAINT customers_user_id_key UNIQUE (user_id);
+
+
+--
+-- Name: dialogs dialogs_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.dialogs
+    ADD CONSTRAINT dialogs_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: freelancers freelancers_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.freelancers
+    ADD CONSTRAINT freelancers_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: freelancers freelancers_user_id_key; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.freelancers
+    ADD CONSTRAINT freelancers_user_id_key UNIQUE (user_id);
+
+
+--
+-- Name: messages messages_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.messages
+    ADD CONSTRAINT messages_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: order_status order_status_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.order_status
+    ADD CONSTRAINT order_status_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: orders orders_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.orders
+    ADD CONSTRAINT orders_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: performed_orders performed_orders_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.performed_orders
+    ADD CONSTRAINT performed_orders_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: requests requests_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.requests
+    ADD CONSTRAINT requests_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: roles roles_name_key; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.roles
+    ADD CONSTRAINT roles_name_key UNIQUE (name);
+
+
+--
+-- Name: roles roles_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.roles
+    ADD CONSTRAINT roles_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: session session_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.session
+    ADD CONSTRAINT session_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: session session_uuid_key; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.session
+    ADD CONSTRAINT session_uuid_key UNIQUE (uuid);
+
+
+--
+-- Name: specialization specialization_name_key; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.specialization
+    ADD CONSTRAINT specialization_name_key UNIQUE (name);
+
+
+--
+-- Name: specialization specialization_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.specialization
+    ADD CONSTRAINT specialization_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: users users_email_key; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT users_email_key UNIQUE (email);
+
+
+--
+-- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: comments comments_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.comments
+    ADD CONSTRAINT comments_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.users(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: complete_orders complete_orders_customer_comment_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.complete_orders
+    ADD CONSTRAINT complete_orders_customer_comment_id_fkey FOREIGN KEY (customer_comment_id) REFERENCES public.comments(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: complete_orders complete_orders_freelancer_comment_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.complete_orders
+    ADD CONSTRAINT complete_orders_freelancer_comment_id_fkey FOREIGN KEY (freelancer_comment_id) REFERENCES public.comments(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: complete_orders complete_orders_freelancer_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.complete_orders
+    ADD CONSTRAINT complete_orders_freelancer_id_fkey FOREIGN KEY (freelancer_id) REFERENCES public.freelancers(user_id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: complete_orders complete_orders_order_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.complete_orders
+    ADD CONSTRAINT complete_orders_order_id_fkey FOREIGN KEY (order_id) REFERENCES public.orders(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: customers customers_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.customers
+    ADD CONSTRAINT customers_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.users(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: dialogs dialogs_user1_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.dialogs
+    ADD CONSTRAINT dialogs_user1_id_fkey FOREIGN KEY (user1_id) REFERENCES public.users(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: dialogs dialogs_user2_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.dialogs
+    ADD CONSTRAINT dialogs_user2_id_fkey FOREIGN KEY (user2_id) REFERENCES public.users(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: freelancers freelancers_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.freelancers
+    ADD CONSTRAINT freelancers_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.users(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: messages messages_receiver_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.messages
+    ADD CONSTRAINT messages_receiver_id_fkey FOREIGN KEY (receiver_id) REFERENCES public.users(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: messages messages_sender_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.messages
+    ADD CONSTRAINT messages_sender_id_fkey FOREIGN KEY (sender_id) REFERENCES public.users(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: orders orders_customer_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.orders
+    ADD CONSTRAINT orders_customer_id_fkey FOREIGN KEY (customer_id) REFERENCES public.customers(user_id);
+
+
+--
+-- Name: orders orders_specialization_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.orders
+    ADD CONSTRAINT orders_specialization_id_fkey FOREIGN KEY (specialization_id) REFERENCES public.specialization(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: orders orders_status_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.orders
+    ADD CONSTRAINT orders_status_id_fkey FOREIGN KEY (status_id) REFERENCES public.order_status(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: performed_orders performed_orders_freelancer_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.performed_orders
+    ADD CONSTRAINT performed_orders_freelancer_id_fkey FOREIGN KEY (freelancer_id) REFERENCES public.freelancers(user_id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: performed_orders performed_orders_order_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.performed_orders
+    ADD CONSTRAINT performed_orders_order_id_fkey FOREIGN KEY (order_id) REFERENCES public.orders(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: requests requests_freelancer_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.requests
+    ADD CONSTRAINT requests_freelancer_id_fkey FOREIGN KEY (freelancer_id) REFERENCES public.freelancers(user_id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: requests requests_order_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.requests
+    ADD CONSTRAINT requests_order_id_fkey FOREIGN KEY (order_id) REFERENCES public.orders(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: session session_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.session
+    ADD CONSTRAINT session_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.users(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: users users_role_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT users_role_id_fkey FOREIGN KEY (role_id) REFERENCES public.roles(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- PostgreSQL database dump complete
+--
+

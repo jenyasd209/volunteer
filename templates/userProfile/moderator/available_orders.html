@@ -1,0 +1,36 @@
+{{define "content_panel"}}
+    <div class="col s12 m12 l8">
+        <div class="row">
+            <div class="col s12">
+                <p class="center-align flow-text">Available orders</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s12">
+                {{if .Content.AvailableOrders}}
+                    {{range .Content.AvailableOrders}}
+                        <div class="card order">
+                            <div class="card-content">
+                                <span class="card-title"> <a href="/orders/id{{.ID}}">{{.Title}}</a></span>
+                                {{if .FreelancerRequest}}
+                                    <p class="bold">Requests: {{len .FreelancerRequest}}</p>
+                                {{else}}
+                                    <p class="bold">Requests: 0</p>
+                                {{end}}
+                                <span>{{.Content}}</span>
+                            </div>
+                            <div class="card-action">
+                                <p class="green-text">{{.Status.Name}}</p>
+                                <span>Posted: {{.CreatedAt.Format "02 Jan 2006 15:04:05"}}</span>
+                            </div>
+                        </div>
+                    {{end}}
+                {{else}}
+                    <div class="section">
+                        <p class="center-align flow-text">No orders</p>
+                    </div>
+                {{end}}
+            </div>
+        </div>
+    </div>
+{{ end }}

@@ -43,7 +43,9 @@
           <label for="skype">Skype</label>
         </div>
       </div>
-      {{template "extention_setting" .}}
+      {{if ne .User.RoleID 3}}
+        {{template "extention_setting" .}}
+      {{end}}
       <div class="row">
         <div class="input-field col s12 center">
           <button class="light-blue waves-effect waves-light btn" type="submit" name="save-inform" id="save-inform">Save setting</button>
