@@ -9599,3 +9599,106 @@ INFO 2019/06/11 01:21:22 utils.go:92: 127.0.0.1:38736 method: POST - /moderator/
 INFO 2019/06/11 01:21:59 utils.go:92: 127.0.0.1:38736 method: GET - /moderator/users
 INFO 2019/06/11 01:22:06 utils.go:92: 127.0.0.1:38736 method: GET - /moderator/available_orders
 INFO 2019/06/11 01:22:08 utils.go:92: 127.0.0.1:38736 method: GET - /moderator/users
+INFO 2019/06/11 01:26:52 utils.go:92: 127.0.0.1:38736 method: GET - /moderator/users
+INFO 2019/06/11 01:26:55 utils.go:92: 127.0.0.1:38736 method: GET - /moderator/users
+INFO 2019/06/11 01:27:28 utils.go:92: 127.0.0.1:40110 method: GET - /moderator/users
+INFO 2019/06/11 01:27:45 utils.go:92: 127.0.0.1:40110 method: GET - /moderator/users
+INFO 2019/06/11 01:28:53 utils.go:92: 127.0.0.1:40110 method: GET - /moderator/users
+INFO 2019/06/11 01:28:53 utils.go:92: 127.0.0.1:40112 method: GET - /moderator/users
+INFO 2019/06/11 01:28:53 utils.go:92: 127.0.0.1:38736 method: GET - /moderator/users
+INFO 2019/06/11 01:28:53 utils.go:92: 127.0.0.1:37580 method: GET - /moderator/users
+INFO 2019/06/11 01:28:53 utils.go:92: 127.0.0.1:40114 method: GET - /moderator/users
+INFO 2019/06/11 01:28:53 utils.go:92: 127.0.0.1:40116 method: GET - /moderator/users
+INFO 2019/06/11 01:28:53 utils.go:92: 127.0.0.1:41016 method: GET - /moderator/users
+INFO 2019/06/11 01:28:53 utils.go:92: 127.0.0.1:41022 method: GET - /moderator/users
+INFO 2019/06/11 01:28:54 utils.go:92: 127.0.0.1:41024 method: GET - /moderator/users
+INFO 2019/06/11 01:28:54 utils.go:92: 127.0.0.1:41026 method: GET - /moderator/users
+INFO 2019/06/11 01:28:54 utils.go:92: 127.0.0.1:41036 method: GET - /moderator/users
+INFO 2019/06/11 01:28:59 utils.go:92: 127.0.0.1:41078 method: GET - /moderator/users
+INFO 2019/06/11 01:28:59 utils.go:92: 127.0.0.1:41080 method: GET - /moderator/users
+INFO 2019/06/11 01:28:59 utils.go:92: 127.0.0.1:41082 method: GET - /moderator/users
+INFO 2019/06/11 01:29:07 utils.go:92: 127.0.0.1:41150 method: GET - /moderator/users
+INFO 2019/06/11 01:29:11 utils.go:92: 127.0.0.1:41150 method: GET - /moderator/users
+INFO 2019/06/11 01:30:31 utils.go:92: 127.0.0.1:41182 method: GET - /moderator/users
+INFO 2019/06/11 01:30:33 utils.go:92: 127.0.0.1:41182 method: GET - /moderator/users
+INFO 2019/06/11 01:30:51 utils.go:92: 127.0.0.1:41188 method: GET - /moderator/users
+INFO 2019/06/11 01:32:21 utils.go:35: -------------------------------------------------------------------
+INFO 2019/06/11 01:32:21 utils.go:36: Server START  Tue Jun 11 01:32:21 2019
+INFO 2019/06/11 01:32:21 utils.go:37: -------------------------------------------------------------------
+INFO 2019/06/11 01:32:21 utils.go:92: 127.0.0.1:42716 method: GET - /moderator/users
+INFO 2019/06/11 01:32:34 utils.go:92: 127.0.0.1:42716 method: GET - /moderator/users
+INFO 2019/06/11 01:32:54 utils.go:92: 127.0.0.1:42716 method: GET - /moderator/users
+INFO 2019/06/11 01:37:03 utils.go:35: -------------------------------------------------------------------
+INFO 2019/06/11 01:37:03 utils.go:36: Server START  Tue Jun 11 01:37:03 2019
+INFO 2019/06/11 01:37:03 utils.go:37: -------------------------------------------------------------------
+INFO 2019/06/11 01:37:08 utils.go:92: 127.0.0.1:44864 method: GET - /moderator/users
+INFO 2019/06/11 01:37:12 utils.go:92: 127.0.0.1:44864 method: GET - /moderator/users
+INFO 2019/06/11 01:37:13 utils.go:92: 127.0.0.1:44916 method: POST - /moderator/delete_user_id4
+INFO 2019/06/11 01:37:18 utils.go:92: 127.0.0.1:44916 method: GET - /moderator/users
+INFO 2019/06/11 01:38:18 utils.go:35: -------------------------------------------------------------------
+INFO 2019/06/11 01:38:18 utils.go:36: Server START  Tue Jun 11 01:38:18 2019
+INFO 2019/06/11 01:38:18 utils.go:37: -------------------------------------------------------------------
+INFO 2019/06/11 01:38:29 utils.go:92: 127.0.0.1:44962 method: GET - /moderator/users
+INFO 2019/06/11 01:38:31 utils.go:92: 127.0.0.1:44964 method: POST - /moderator/delete_user_id4
+INFO 2019/06/11 01:38:33 utils.go:92: 127.0.0.1:44964 method: GET - /moderator/users
+INFO 2019/06/11 01:39:27 utils.go:92: 127.0.0.1:44964 method: GET - /moderator/users
+INFO 2019/06/11 01:39:30 utils.go:92: 127.0.0.1:44966 method: POST - /moderator/delete_user_id4
+INFO 2019/06/11 01:41:37 utils.go:35: -------------------------------------------------------------------
+INFO 2019/06/11 01:41:37 utils.go:36: Server START  Tue Jun 11 01:41:37 2019
+INFO 2019/06/11 01:41:37 utils.go:37: -------------------------------------------------------------------
+INFO 2019/06/11 01:41:53 utils.go:35: -------------------------------------------------------------------
+INFO 2019/06/11 01:41:53 utils.go:36: Server START  Tue Jun 11 01:41:53 2019
+INFO 2019/06/11 01:41:53 utils.go:37: -------------------------------------------------------------------
+INFO 2019/06/11 01:41:55 utils.go:92: 127.0.0.1:46212 method: GET - /moderator/users
+INFO 2019/06/11 01:41:57 utils.go:92: 127.0.0.1:46212 method: POST - /moderator/delete_user_id4
+INFO 2019/06/11 01:43:16 utils.go:35: -------------------------------------------------------------------
+INFO 2019/06/11 01:43:16 utils.go:36: Server START  Tue Jun 11 01:43:16 2019
+INFO 2019/06/11 01:43:16 utils.go:37: -------------------------------------------------------------------
+INFO 2019/06/11 01:43:18 utils.go:92: 127.0.0.1:46886 method: GET - /moderator/users
+INFO 2019/06/11 01:43:21 utils.go:92: 127.0.0.1:46886 method: POST - /moderator/delete_user_id4
+INFO 2019/06/11 01:43:24 utils.go:92: 127.0.0.1:46886 method: GET - /moderator/users
+INFO 2019/06/11 01:43:36 utils.go:92: 127.0.0.1:46886 method: GET - /moderator/users
+INFO 2019/06/11 01:43:37 utils.go:92: 127.0.0.1:47038 method: POST - /moderator/delete_user_id4
+INFO 2019/06/11 01:43:41 utils.go:92: 127.0.0.1:47038 method: GET - /moderator/users
+INFO 2019/06/11 01:43:48 utils.go:92: 127.0.0.1:47038 method: GET - /moderator/users
+INFO 2019/06/11 01:43:52 utils.go:92: 127.0.0.1:47044 method: POST - /moderator/delete_user_id4
+INFO 2019/06/11 01:43:55 utils.go:92: 127.0.0.1:47044 method: GET - /moderator/users
+INFO 2019/06/11 01:44:30 utils.go:35: -------------------------------------------------------------------
+INFO 2019/06/11 01:44:30 utils.go:36: Server START  Tue Jun 11 01:44:30 2019
+INFO 2019/06/11 01:44:30 utils.go:37: -------------------------------------------------------------------
+INFO 2019/06/11 01:44:31 utils.go:92: 127.0.0.1:47500 method: GET - /moderator/users
+INFO 2019/06/11 01:44:32 utils.go:92: 127.0.0.1:47510 method: GET - /moderator/users
+INFO 2019/06/11 01:44:33 utils.go:92: 127.0.0.1:47500 method: POST - /moderator/delete_user_id4
+INFO 2019/06/11 01:44:35 utils.go:92: 127.0.0.1:47500 method: GET - /moderator/users
+INFO 2019/06/11 01:44:54 utils.go:92: 127.0.0.1:47500 method: GET - /freelancers/id1
+INFO 2019/06/11 01:49:10 utils.go:92: 127.0.0.1:47500 method: GET - /moderator/users
+INFO 2019/06/11 01:49:37 utils.go:92: 127.0.0.1:47500 method: GET - /moderator/users
+INFO 2019/06/11 01:49:41 utils.go:92: 127.0.0.1:47500 method: GET - /moderator
+INFO 2019/06/11 01:49:41 utils.go:92: 127.0.0.1:47500 method: GET - /moderator/specializations
+INFO 2019/06/11 01:50:14 utils.go:92: 127.0.0.1:47500 method: GET - /moderator/specializations
+INFO 2019/06/11 01:50:44 utils.go:92: 127.0.0.1:49870 method: GET - /moderator/specializations
+INFO 2019/06/11 01:50:46 utils.go:92: 127.0.0.1:49870 method: GET - /moderator
+INFO 2019/06/11 01:50:46 utils.go:92: 127.0.0.1:49870 method: GET - /moderator/specializations
+INFO 2019/06/11 01:50:48 utils.go:92: 127.0.0.1:49870 method: GET - /my_profile/dialogs
+INFO 2019/06/11 01:50:48 utils.go:92: 127.0.0.1:49870 method: GET - /my_profile/user_dialogs
+INFO 2019/06/11 01:50:50 utils.go:92: 127.0.0.1:49870 method: GET - /my_profile/setting
+INFO 2019/06/11 01:51:07 utils.go:92: 127.0.0.1:49870 method: GET - /my_profile/dialogs
+INFO 2019/06/11 01:51:07 utils.go:92: 127.0.0.1:49870 method: GET - /my_profile/user_dialogs
+INFO 2019/06/11 01:51:09 utils.go:92: 127.0.0.1:49870 method: GET - /moderator
+INFO 2019/06/11 01:51:09 utils.go:92: 127.0.0.1:49870 method: GET - /moderator/specializations
+INFO 2019/06/11 01:51:11 utils.go:92: 127.0.0.1:49870 method: GET - /moderator/available_orders
+INFO 2019/06/11 01:51:12 utils.go:92: 127.0.0.1:49870 method: GET - /moderator/users
+INFO 2019/06/11 01:51:13 utils.go:92: 127.0.0.1:49870 method: GET - /moderator/specializations
+INFO 2019/06/11 01:51:14 utils.go:92: 127.0.0.1:49870 method: GET - /moderator/available_orders
+INFO 2019/06/11 01:55:14 utils.go:92: 127.0.0.1:49870 method: GET - /moderator/available_orders
+INFO 2019/06/11 01:57:17 utils.go:92: 127.0.0.1:49870 method: GET - /moderator/available_orders
+INFO 2019/06/11 01:57:40 utils.go:35: -------------------------------------------------------------------
+INFO 2019/06/11 01:57:40 utils.go:36: Server START  Tue Jun 11 01:57:40 2019
+INFO 2019/06/11 01:57:40 utils.go:37: -------------------------------------------------------------------
+INFO 2019/06/11 01:57:44 utils.go:92: 127.0.0.1:49918 method: GET - /moderator/available_orders
+INFO 2019/06/11 01:57:45 utils.go:92: 127.0.0.1:49918 method: GET - /moderator/available_orders
+INFO 2019/06/11 01:57:54 utils.go:92: 127.0.0.1:49920 method: POST - /moderator/delete_order_id27
+INFO 2019/06/11 01:57:57 utils.go:92: 127.0.0.1:49920 method: GET - /moderator/available_orders
+INFO 2019/06/11 01:58:01 utils.go:92: 127.0.0.1:49920 method: GET - /moderator/specializations
+INFO 2019/06/11 01:58:03 utils.go:92: 127.0.0.1:49920 method: GET - /moderator/available_orders
+INFO 2019/06/11 01:58:04 utils.go:92: 127.0.0.1:49920 method: GET - /moderator/users

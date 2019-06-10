@@ -167,7 +167,7 @@ func (user *User) IsModerator()(result bool)  {
 //GetAllUsers return all rows from table "freelancer"
 func GetAllUsers() (users []User, r error) {
 	rows, err := Db.Query(`SELECT id, first_name, last_name, email, password, phone, facebook,
-       						photo_url, skype, about, rait, created_at FROM users`)
+       						photo_url, skype, about, rait, role_id, created_at FROM users`)
 	if err != nil {
 		return
 	}
@@ -176,7 +176,7 @@ func GetAllUsers() (users []User, r error) {
 		user := User{}
 
 		if err = rows.Scan(&user.ID, &user.FirstName, &user.LastName, &user.Email, &user.Password, &user.Phone,
-			&user.Facebook, &user.Photo, &user.Skype, &user.About, &user.Rait, &user.CreatedAt); err != nil {
+			&user.Facebook, &user.Photo, &user.Skype, &user.About, &user.Rait, &user.RoleID, &user.CreatedAt); err != nil {
 			log.Println(err)
 			return
 		}

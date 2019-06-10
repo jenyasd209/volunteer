@@ -9,7 +9,7 @@
             <div class="col s12">
                 {{if .Content.AvailableOrders}}
                     {{range .Content.AvailableOrders}}
-                        <div class="card order">
+                        <div class="card order" id="order-id{{.ID}}">
                             <div class="card-content">
                                 <span class="card-title"> <a href="/orders/id{{.ID}}">{{.Title}}</a></span>
                                 {{if .FreelancerRequest}}
@@ -22,6 +22,7 @@
                             <div class="card-action">
                                 <p class="green-text">{{.Status.Name}}</p>
                                 <span>Posted: {{.CreatedAt.Format "02 Jan 2006 15:04:05"}}</span>
+                                <button class="btn-small right" onclick="deleteAvailableOrder({{.ID}})" title="Delete"><i class="material-icons">delete</i></button>
                             </div>
                         </div>
                     {{end}}
@@ -33,4 +34,5 @@
             </div>
         </div>
     </div>
+    <script src="/static/js/all_availbale_orders.js"></script>
 {{ end }}

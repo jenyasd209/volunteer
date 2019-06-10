@@ -53,12 +53,8 @@ func main() {
 	subAdminPanel.HandleFunc("/create_spec", logging(createSpecialization))
 	subAdminPanel.HandleFunc("/edit_spec_id{id:[0-9]+}", logging(moderatorEditSpecialization))
 	subAdminPanel.HandleFunc("/delete_spec_id{id:[0-9]+}", logging(moderatorDeleteSpecialization))
-	//subUserProfile.HandleFunc("", logging(moderatorEditAvailableOrder))
-	//subUserProfile.HandleFunc("", logging(moderatorDeleteAvailableOrder))
-	subAdminPanel.HandleFunc("/edit_customer_id{id:[0-9]+}", logging(moderatorEditCustomer))
-	//subUserProfile.HandleFunc("", logging(moderatorDeleteCustomer))
-	subAdminPanel.HandleFunc("/edit_freelancer_id{id:[0-9]+}", logging(moderatorEditFreelancer))
 	subAdminPanel.HandleFunc("/delete_user_id{id:[0-9]+}", logging(moderatorDeleteUser))
+	subAdminPanel.HandleFunc("/delete_order_id{id:[0-9]+}", logging(moderatorDeleteAvailableOrder))
 	r.HandleFunc("/delete_request_id{id:[0-9]+}", logging(moderatorDeleteRequest))
 
 	//route freelancers

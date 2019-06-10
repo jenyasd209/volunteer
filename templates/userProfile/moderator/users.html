@@ -1,4 +1,6 @@
 {{define "content_panel"}}
+    {{$userID := .User.ID}}
+    <script src="/static/js/rating.js"></script>
     <div class="col s12 m12 l8">
         <div class="row">
             <div class="col s12">
@@ -9,14 +11,22 @@
             <div class="col s12">
                 {{if .Content.Users}}
                     {{range .Content.Users}}
-                        <div class="card order">
+                        {{if ne $userID .ID}}
+                        <div class="card order" id="user-id{{.ID}}">
                             <div class="card-content">
                                 <div class="row">
                                     <div class="col s12 m4">
                                         <img class="responsive-img materialboxed" src="{{.Photo}}" style="width: auto; max-width: 100%; max-height: 200px; margin: auto">
                                     </div>
                                     <div class="col s12 m8">
-                                        <span class="card-title"> <a href="/freelancers/id{{.ID}}">{{.FirstName}} {{.LastName}}</a></span>
+                                        {{if eq .RoleID 1}}
+                                            <p class="card-title"> <a href="/freelancers/id{{.ID}}">{{.FirstName}} {{.LastName}}</a></p>
+                                            <p>Role: Freelancer</p>
+                                        {{end}}
+                                        {{if eq .RoleID 2}}
+                                            <p class="card-title"> <a href="/customer/id{{.ID}}">{{.FirstName}} {{.LastName}}</a></p>
+                                            <p>Role: Customer</p>
+                                        {{end}}
                                         <div class="rating" id="{{.ID}}">
                                             <script>renderStars({{.ID}}, {{.Rait }})</script>
                                         </div>
@@ -25,8 +35,10 @@
                             </div>
                             <div class="card-action">
                                 <span>Date join: {{.CreatedAt.Format "02.01.2006"}}</span>
+                                <button class="btn-small right" onclick="deleteUser({{.ID}})" title="Delete"><i class="material-icons">delete</i></button>
                             </div>
                         </div>
+                        {{end}}
                     {{end}}
                 {{else}}
                     <div class="section">
@@ -36,4 +48,5 @@
             </div>
         </div>
     </div>
+    <script src="/static/js/all_users.js"></script>
 {{ end }}

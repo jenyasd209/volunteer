@@ -73,31 +73,6 @@ func allAvailableOrders(w http.ResponseWriter, r *http.Request)  {
 		"userProfile/moderator/available_orders")
 }
 
-func moderatorCreateSpecialization(w http.ResponseWriter, r *http.Request){
-	moderator, err := checkModeratorSession(w, r)
-	pageData := PageData{}
-	if err != nil {
-		log.Println(err)
-		return
-	}
-	if r.Method == http.MethodPost{
-		err = r.ParseForm()
-		if err != nil {
-			pageData.Content = struct {Info string}{"Error parse form"}
-			return
-		}
-		err = moderator.CreateSpecialization(&data.Specialization{
-			Name:r.PostFormValue("name"),
-		})
-		if err != nil{
-			pageData.Content = struct {Info string}{"Unsuccessful create specialization: " + err.Error()}
-			return
-		}
-		pageData.Content = struct {Info string}{"Successful create specialization"}
-	}
-	generateHTML(w, &pageData, nil, "base", "header", "footer", "moderator/new_specialization")
-}
-
 func createSpecialization(w http.ResponseWriter, r *http.Request)  {
 	sess, err := session(w, r)
 	if err != nil {
@@ -197,13 +172,38 @@ func moderatorEditCustomer(w http.ResponseWriter, r *http.Request){
 
 }
 
-
 func moderatorEditFreelancer(w http.ResponseWriter, r *http.Request){
 
 }
 
 func moderatorDeleteUser(w http.ResponseWriter, r *http.Request){
+	sess, err := session(w, r)
+	if err != nil {
+		log.Println(err)
+		http.Redirect(w, r, "/login", 302)
+		return
+	}
+	moderator := data.Moderator{}
+	moderator.User, _ = data.GetUserByID(sess.UserID)
+	if r.Method == http.MethodPost {
+		body, readErr := ioutil.ReadAll(r.Body)
+		if readErr != nil {
+			log.Println(readErr)
+		}
 
+		//var id int
+		user := &data.User{}
+		jsonErr := json.Unmarshal(body, user)
+		if jsonErr != nil {
+			log.Println(jsonErr)
+		}
+		err = moderator.DeleteUser(user)
+		if err != nil{
+			log.Println(err)
+		}
+	}
+
+	return
 }
 
 func moderatorEditAvailableOrder(w http.ResponseWriter, r *http.Request){
@@ -211,18 +211,36 @@ func moderatorEditAvailableOrder(w http.ResponseWriter, r *http.Request){
 }
 
 func moderatorDeleteAvailableOrder(w http.ResponseWriter, r *http.Request){
+	sess, err := session(w, r)
+	if err != nil {
+		log.Println(err)
+		http.Redirect(w, r, "/login", 302)
+		return
+	}
+	moderator := data.Moderator{}
+	moderator.User, _ = data.GetUserByID(sess.UserID)
+	if r.Method == http.MethodPost {
+		body, readErr := ioutil.ReadAll(r.Body)
+		if readErr != nil {
+			log.Println(readErr)
+		}
 
+		//var id int
+		availableOrder := &data.Order{}
+		jsonErr := json.Unmarshal(body, availableOrder)
+		if jsonErr != nil {
+			log.Println(jsonErr)
+		}
+		fmt.Println(availableOrder.ID)
+		err = moderator.UpdateAvailableOrder(availableOrder)
+		if err != nil{
+			log.Println(err)
+		}
+	}
+
+	return
 }
 
 func moderatorDeleteRequest(w http.ResponseWriter, r *http.Request){
 
-}
-
-func checkModeratorSession(w http.ResponseWriter, r *http.Request) (moderator data.Moderator, err error) {
-	sess, err := session(w, r)
-	if err != nil {
-		return
-	}
-	moderator.User, err = data.GetUserByID(sess.ID)
-	return
 }

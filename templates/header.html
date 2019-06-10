@@ -14,19 +14,25 @@
             {{if ne .User.RoleID 3}}
             <div class="dropdown">
                 <a class="dropbtn" href="/my_profile"><i class="material-icons white-text right"> <img class="circle" width="35" src="{{.User.Photo}}"></i>{{.User.FirstName}} {{.User.LastName}}</a>
-{{/*                <a class="dropbtn" href="/my_profile"><img class="circle" width="30" height="30" src="{{.User.Photo}}">  {{.User.FirstName}} {{.User.LastName}}</a>*/}}
                 <div class="drop-content light-blue darken-3">
                     <a href="/my_profile">Me</a>
-                    <a href="/my_profile/dialogs">Messages
-{{/*                        <span class="red white-text" style="border-radius: 2px; padding: 5px;font-size: 0.8rem;">new</span>*/}}
-                    </a>
+                    <a href="/my_profile/dialogs">Messages</a>
                     <a href="/my_profile/setting#setting">Setting</a>
                     <div class="divider"></div>
                     <a href="/logout">Logout</a>
                 </div>
             </div>
             {{else}}
-                <li><a href="/moderator"><i class="material-icons white-text left">build</i>Moderator panel</a></li>
+                <div class="dropdown">
+                    <a class="dropbtn" href="/my_profile"><i class="material-icons white-text right"></i>Moderator panel</a>
+                    <div class="drop-content light-blue darken-3">
+                        <a href="/moderator">Panel</a>
+                        <a href="/my_profile/dialogs">Messages</a>
+{{/*                        <a href="/my_profile/setting#setting">Setting</a>*/}}
+                        <div class="divider"></div>
+                        <a href="/logout">Logout</a>
+                    </div>
+                </div>
             {{end}}
         {{else}}
           <li><a href="/login"><i class="material-icons left"><img src="../static/image/login.png"></i>Login</a></li>
@@ -38,13 +44,17 @@
 </div>
 <ul class="sidenav light-blue darken-3" id="mobile-menu">
   {{if .User}}
+    {{if ne .User.RoleID 3}}
     <li><a href="/my_profile"><i class="material-icons white-text left"> account_circle</i>My profile</a></li>
-    <li><a href="/my_profile/dialogs" class="center-align"><i class="material-icons white-text left"> message</i>Messages
-{{/*            <span id="new_msg" class="red white-text new-msg">new</span>*/}}
-        </a>
-    </li>
+    <li><a href="/my_profile/dialogs" class="center-align"><i class="material-icons white-text left"> message</i>Messages</a></li>
     <li><a class="collection-item" href="/my_profile/setting#setting" onclick="setSelected(this)"><i class="material-icons white-text left">settings</i>Setting</a></li>
     <li><a href="/logout"><i class="material-icons white-text left"> exit_to_app</i>Logout</a></li>
+    {{else}}
+        <li><a href="/moderator"><i class="material-icons white-text left">build</i>Moderator panel</a></li>
+        <li><a href="/my_profile/dialogs" class="center-align"><i class="material-icons white-text left"> message</i>Messages</a></li>
+{{/*        <li><a class="collection-item" href="/my_profile/setting#setting" onclick="setSelected(this)"><i class="material-icons white-text left">settings</i>Setting</a></li>*/}}
+        <li><a href="/logout"><i class="material-icons white-text left"> exit_to_app</i>Logout</a></li>
+    {{end}}
   {{else}}
     <li><a href="/login"><i class="material-icons left"> <img src="../static/image/login.png" alt=""></i>Login</a></li>
     <li><a href="/registration"><i class="material-icons left"> <img src="../static/image/account-plus-outline.png" alt=""></i>Registration</a></li>
@@ -52,7 +62,6 @@
   <hr>
   <li><a href="/#home"><i class="material-icons left white-text">home</i>Home</a></li>
   <li><a href="/#about"><i class="material-icons left white-text">info</i>About</a></li>
-{{/*  <li><a href="/#contacts"><i class="material-icons left white-text">contact_support</i>Contacts</a></li>*/}}
   <li><a href="/orders"><i class="material-icons white-text left">work</i>Jobs</a></li>
   <li><a href="/freelancers"><i class="material-icons white-text left">person</i>Freelancers</a></li>
 </ul>

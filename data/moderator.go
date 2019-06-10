@@ -66,7 +66,7 @@ func (moderator *Moderator) UpdateSpecialization (specialization *Specialization
 	return
 }
 
-func (moderator *Moderator) DeleteCustomer (user *User) (err error){
+func (moderator *Moderator) DeleteUser(user *User) (err error){
 	err = user.Delete()
 	return
 }
